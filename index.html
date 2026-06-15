@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shahzad — Data Analyst & Data Journalist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0f0f0f;
+      --ink-soft: #4a4a4a;
+      --ink-mute: #888;
+      --paper: #f7f5f0;
+      --paper-2: #ede9e1;
+      --rule: #d6d1c8;
+      --accent: #1a3d6e;
+      --accent-light: #e6edf6;
+      --accent-vivid: #c0392b;
+      --mono: 'IBM Plex Mono', monospace;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'Inter', system-ui, sans-serif;
+      --col: 680px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 56px;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-family: var(--mono);
+      color: var(--ink-soft);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: var(--col);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    section { padding: 5rem 0; }
+
+    hr.rule {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 0;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      padding: 9rem 0 5rem;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-mute);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent-vivid);
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--ink-soft);
+      max-width: 520px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-stat-row {
+      display: flex;
+      gap: 2.5rem;
+      margin-bottom: 2.5rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .hero-stat .number {
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .hero-stat .label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-mute);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 0.25rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.4rem;
+      background: var(--accent);
+      color: #fff;
+      font-size: 14px;
+      font-family: var(--mono);
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .hero-cta:hover { background: #0d2a50; }
+
+    .hero-cta-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.4rem;
+      background: transparent;
+      color: var(--accent);
+      font-size: 14px;
+      font-family: var(--mono);
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      border: 1px solid var(--accent);
+      margin-left: 1rem;
+    }
+
+    .hero-cta-ghost:hover { background: var(--accent-light); }
+
+    /* ── SECTION HEADERS ── */
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent-vivid);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--paper-2); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--ink-soft);
+      margin-bottom: 1rem;
+      font-size: 0.975rem;
+    }
+
+    .about-focus {
+      background: var(--paper);
+      padding: 1.5rem;
+      border-left: 3px solid var(--accent);
+    }
+
+    .about-focus h4 {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      margin-bottom: 1rem;
+    }
+
+    .focus-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+    }
+
+    .focus-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-vivid);
+      flex-shrink: 0;
+      margin-top: 0.55rem;
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      padding: 1.75rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: start;
+      transition: border-color 0.15s;
+    }
+
+    .project-card:hover { border-color: var(--accent); }
+
+    .project-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-vivid);
+      margin-bottom: 0.5rem;
+    }
+
+    .project-title {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+      line-height: 1.65;
+    }
+
+    .project-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 1rem;
+    }
+
+    .tool-pill {
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 3px 10px;
+      background: var(--accent-light);
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+
+    .project-arrow {
+      font-size: 1.25rem;
+      color: var(--rule);
+      padding-top: 0.25rem;
+      transition: color 0.15s, transform 0.15s;
+    }
+
+    .project-card:hover .project-arrow {
+      color: var(--accent);
+      transform: translate(3px, -3px);
+    }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--paper-2); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .skill-block {
+      padding: 1.5rem;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+    }
+
+    .skill-block h4 {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      margin-bottom: 1rem;
+    }
+
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-tag {
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 4px 12px;
+      border: 1px solid var(--rule);
+      color: var(--ink-soft);
+      background: var(--paper-2);
+    }
+
+    /* ── WRITING ── */
+    .writing-list { display: grid; gap: 1px; border: 1px solid var(--rule); }
+
+    .writing-item {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.1rem 1.25rem;
+      background: var(--paper);
+      text-decoration: none;
+      color: var(--ink);
+      transition: background 0.12s;
+    }
+
+    .writing-item:hover { background: var(--accent-light); }
+
+    .writing-item + .writing-item { border-top: 1px solid var(--rule); }
+
+    .writing-item-title {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      flex: 1;
+    }
+
+    .writing-item-meta {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-mute);
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    /* ── CONTACT ── */
+    #contact { text-align: center; }
+
+    .contact-email {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      color: var(--accent);
+      text-decoration: none;
+      display: block;
+      margin: 1.5rem 0;
+    }
+
+    .contact-email:hover { color: var(--accent-vivid); }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .contact-link {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink-soft);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+
+    .contact-link:hover { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 1.5rem;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-mute);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .about-grid,
+      .skills-grid { grid-template-columns: 1fr; }
+      .hero-stat-row { gap: 1.5rem; }
+      nav { padding: 0 1rem; }
+      .nav-links { gap: 1.25rem; }
+      .hero-cta-ghost { margin-left: 0; margin-top: 0.75rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">ishexad.github.io</a>
+    <ul class="nav-links">
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#writing">writing</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="container">
+      <p class="hero-eyebrow">Data Analyst · Data Journalist</p>
+      <h1 class="hero-name">Turning data<br>into <em>stories</em><br>that matter.</h1>
+      <p class="hero-desc">
+        I work at the intersection of data analytics and public interest journalism —
+        uncovering patterns in democracy, global inequality, and economic power.
+      </p>
+
+      <div class="hero-stat-row">
+        <div class="hero-stat">
+          <div class="number">5+</div>
+          <div class="label">Years in data</div>
+        </div>
+        <div class="hero-stat">
+          <div class="number">3</div>
+          <div class="label">Focus domains</div>
+        </div>
+        <div class="hero-stat">
+          <div class="number">∞</div>
+          <div class="label">Curiosity</div>
+        </div>
+      </div>
+
+      <a href="#projects" class="hero-cta">View projects ↓</a>
+      <a href="#contact" class="hero-cta-ghost">Get in touch</a>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="section-label">About</p>
+          <h2 class="section-title">Data with<br>a point of view.</h2>
+          <p>
+            I'm a data analyst building a practice around data journalism —
+            using numbers to illuminate the structural forces that shape our world.
+            My work bridges the gap between statistical rigour and narrative clarity.
+          </p>
+          <p>
+            Based in the UK, I'm particularly drawn to questions where the data
+            tells a more complex story than the headline suggests — like how
+            between-country income convergence can coexist with rising inequality
+            within nations.
+          </p>
+        </div>
+
+        <div class="about-focus">
+          <h4>Current focus areas</h4>
+          <div class="focus-item">
+            <span class="focus-dot"></span>
+            <span>Within-country vs between-country inequality trends</span>
+          </div>
+          <div class="focus-item">
+            <span class="focus-dot"></span>
+            <span>Democratic governance and institutional resilience</span>
+          </div>
+          <div class="focus-item">
+            <span class="focus-dot"></span>
+            <span>China, India, and Sub-Saharan Africa as comparative cases</span>
+          </div>
+          <div class="focus-item">
+            <span class="focus-dot"></span>
+            <span>Translating statistics into compelling social media narratives</span>
+          </div>
+          <div class="focus-item">
+            <span class="focus-dot"></span>
+            <span>Global power imbalances in international institutions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <p class="section-label">Projects</p>
+      <h2 class="section-title">Selected work.</h2>
+
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div>
+            <p class="project-tag">Inequality · Economics</p>
+            <h3 class="project-title">The Great Divergence Within</h3>
+            <p class="project-desc">
+              An analysis of how GDP convergence between nations masks a simultaneous
+              rise in internal inequality — examining China, India, and Sub-Saharan
+              Africa through World Bank and SWIID datasets.
+            </p>
+            <div class="project-tools">
+              <span class="tool-pill">Python</span>
+              <span class="tool-pill">pandas</span>
+              <span class="tool-pill">matplotlib</span>
+              <span class="tool-pill">World Bank API</span>
+            </div>
+          </div>
+          <div class="project-arrow">↗</div>
+        </div>
+
+        <div class="project-card">
+          <div>
+            <p class="project-tag">Democracy · Governance</p>
+            <h3 class="project-title">Democracy Index Dashboard</h3>
+            <p class="project-desc">
+              Interactive dashboard tracking democratic backsliding across 167 countries
+              using V-Dem and EIU data. Highlights correlations between electoral integrity
+              and press freedom scores over the past two decades.
+            </p>
+            <div class="project-tools">
+              <span class="tool-pill">Python</span>
+              <span class="tool-pill">Plotly</span>
+              <span class="tool-pill">V-Dem API</span>
+              <span class="tool-pill">Streamlit</span>
+            </div>
+          </div>
+          <div class="project-arrow">↗</div>
+        </div>
+
+        <div class="project-card">
+          <div>
+            <p class="project-tag">Global Power · Institutions</p>
+            <h3 class="project-title">Who Runs the IMF?</h3>
+            <p class="project-desc">
+              A data-driven investigation into voting power distribution at the IMF and World Bank,
+              revealing how quota systems entrench historical power imbalances and disadvantage
+              emerging economies in crisis negotiations.
+            </p>
+            <div class="project-tools">
+              <span class="tool-pill">R</span>
+              <span class="tool-pill">ggplot2</span>
+              <span class="tool-pill">tidyverse</span>
+              <span class="tool-pill">Datawrapper</span>
+            </div>
+          </div>
+          <div class="project-arrow">↗</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <p class="section-label">Skills</p>
+      <h2 class="section-title">Tools of the trade.</h2>
+
+      <div class="skills-grid">
+        <div class="skill-block">
+          <h4>Languages & analysis</h4>
+          <div class="skill-list">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">R</span>
+            <span class="skill-tag">SQL</span>
+            <span class="skill-tag">pandas</span>
+            <span class="skill-tag">NumPy</span>
+            <span class="skill-tag">tidyverse</span>
+          </div>
+        </div>
+
+        <div class="skill-block">
+          <h4>Visualisation</h4>
+          <div class="skill-list">
+            <span class="skill-tag">matplotlib</span>
+            <span class="skill-tag">seaborn</span>
+            <span class="skill-tag">Plotly</span>
+            <span class="skill-tag">ggplot2</span>
+            <span class="skill-tag">Datawrapper</span>
+            <span class="skill-tag">Flourish</span>
+          </div>
+        </div>
+
+        <div class="skill-block">
+          <h4>Data & platforms</h4>
+          <div class="skill-list">
+            <span class="skill-tag">World Bank API</span>
+            <span class="skill-tag">V-Dem</span>
+            <span class="skill-tag">SWIID</span>
+            <span class="skill-tag">UN Comtrade</span>
+            <span class="skill-tag">PostgreSQL</span>
+          </div>
+        </div>
+
+        <div class="skill-block">
+          <h4>Publishing & tools</h4>
+          <div class="skill-list">
+            <span class="skill-tag">Jupyter</span>
+            <span class="skill-tag">Streamlit</span>
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">GitHub Actions</span>
+            <span class="skill-tag">Quarto</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- WRITING -->
+  <section id="writing">
+    <div class="container">
+      <p class="section-label">Writing & threads</p>
+      <h2 class="section-title">Data journalism.</h2>
+
+      <div class="writing-list">
+
+        <a class="writing-item" href="#" target="_blank" rel="noopener">
+          <span class="writing-item-title">When nations get richer but people don't — the within-country inequality paradox</span>
+          <span class="writing-item-meta">X Thread · 2025</span>
+        </a>
+
+        <a class="writing-item" href="#" target="_blank" rel="noopener">
+          <span class="writing-item-title">The GDP number that hides a continent: Sub-Saharan Africa's data problem</span>
+          <span class="writing-item-meta">X Thread · 2025</span>
+        </a>
+
+        <a class="writing-item" href="#" target="_blank" rel="noopener">
+          <span class="writing-item-title">India's Gini coefficient has barely moved in 30 years — so why does it feel like inequality is exploding?</span>
+          <span class="writing-item-meta">Analysis · 2025</span>
+        </a>
+
+        <a class="writing-item" href="#" target="_blank" rel="noopener">
+          <span class="writing-item-title">5 charts that show how democracy scores correlate with economic openness</span>
+          <span class="writing-item-meta">X Thread · 2024</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <p class="section-label">Contact</p>
+      <h2 class="section-title">Let's work together.</h2>
+      <p style="color: var(--ink-soft); max-width: 420px; margin: 0 auto 1rem;">
+        Open to collaborations, commissions, and conversations about data, democracy, and inequality.
+      </p>
+      <a class="contact-email" href="mailto:hello@ishexad.github.io">hello@ishexad.github.io</a>
+
+      <div class="contact-links">
+        <a class="contact-link" href="https://x.com/ishexad" target="_blank" rel="noopener">X / Twitter ↗</a>
+        <a class="contact-link" href="https://github.com/ishexad" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="contact-link" href="https://linkedin.com/in/ishexad" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Shahzad · Built with HTML/CSS · Hosted on GitHub Pages</p>
+  </footer>
+
+</body>
+</html>
