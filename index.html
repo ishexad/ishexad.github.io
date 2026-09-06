@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shahzad — Data Analyst & Data Journalist</title>
+  <title>Shahzad Shakeel — Data & Insights Analyst</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -264,6 +264,54 @@
       margin-top: 0.55rem;
     }
 
+    /* ── EXPERIENCE ── */
+    .timeline {
+      display: grid;
+      gap: 0;
+      border-left: 2px solid var(--rule);
+      padding-left: 1.75rem;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 2rem;
+    }
+
+    .timeline-item:last-child { padding-bottom: 0; }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.15rem;
+      top: 0.35rem;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .timeline-role {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    .timeline-org {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent-vivid);
+      letter-spacing: 0.03em;
+      margin: 0.35rem 0 0.6rem;
+    }
+
+    .timeline-desc {
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+      line-height: 1.65;
+      max-width: 560px;
+    }
+
     /* ── PROJECTS ── */
     .projects-grid {
       display: grid;
@@ -470,6 +518,7 @@
   <nav>
     <a class="nav-logo" href="#">ishexad.github.io</a>
     <ul class="nav-links">
+      <li><a href="#experience">experience</a></li>
       <li><a href="#projects">projects</a></li>
       <li><a href="#skills">skills</a></li>
       <li><a href="#writing">writing</a></li>
@@ -480,25 +529,26 @@
   <!-- HERO -->
   <section id="hero">
     <div class="container">
-      <p class="hero-eyebrow">Data Analyst · Data Journalist</p>
-      <h1 class="hero-name">Turning data<br>into <em>stories</em><br>that matter.</h1>
+      <p class="hero-eyebrow">Data & Insights Analyst · Oxfam International</p>
+      <h1 class="hero-name">Data that moves<br>from the <em>field</em><br>to the boardroom.</h1>
       <p class="hero-desc">
-        I work at the intersection of data analytics and public interest journalism —
-        uncovering patterns in democracy, global inequality, and economic power.
+        I lead data and insights work for a global NGO confederation — turning complex,
+        multi-country data into board-level insight, and building the digital tools and
+        training that embed a stronger data culture across teams.
       </p>
 
       <div class="hero-stat-row">
         <div class="hero-stat">
-          <div class="number">5+</div>
-          <div class="label">Years in data</div>
+          <div class="number">10+</div>
+          <div class="label">Years in int'l development</div>
+        </div>
+        <div class="hero-stat">
+          <div class="number">60+</div>
+          <div class="label">Countries reached</div>
         </div>
         <div class="hero-stat">
           <div class="number">3</div>
-          <div class="label">Focus domains</div>
-        </div>
-        <div class="hero-stat">
-          <div class="number">∞</div>
-          <div class="label">Curiosity</div>
+          <div class="label">Digital apps led</div>
         </div>
       </div>
 
@@ -515,43 +565,128 @@
       <div class="about-grid">
         <div class="about-text">
           <p class="section-label">About</p>
-          <h2 class="section-title">Data with<br>a point of view.</h2>
+          <h2 class="section-title">Insight with<br>an audience of decision-makers.</h2>
           <p>
-            I'm a data analyst building a practice around data journalism —
-            using numbers to illuminate the structural forces that shape our world.
-            My work bridges the gap between statistical rigour and narrative clarity.
+            I'm a Data and Insights Analyst with over a decade of international NGO
+            experience, including several years leading data and insights work for
+            Oxfam International's global confederation. My work turns complex,
+            multi-country data into clear, board-level insight — and builds the
+            digital tools, dashboards, and training that embed a stronger data
+            culture across teams.
           </p>
           <p>
-            Based in the UK, I'm particularly drawn to questions where the data
-            tells a more complex story than the headline suggests — like how
-            between-country income convergence can coexist with rising inequality
-            within nations.
+            Based in Preston, UK, I've led cross-functional and international work,
+            partnered with senior leadership on strategy, and represented staff
+            interests at board level as an elected Staff Forum Chairperson. My track
+            record: replacing fragmented, offline processes with shared digital
+            systems, and turning data into insight that shapes organisational
+            decision-making.
           </p>
         </div>
 
         <div class="about-focus">
-          <h4>Current focus areas</h4>
+          <h4>Education & certifications</h4>
           <div class="focus-item">
             <span class="focus-dot"></span>
-            <span>Within-country vs between-country inequality trends</span>
+            <span>MS, Management Sciences — SZABIST, Islamabad (2014)</span>
           </div>
           <div class="focus-item">
             <span class="focus-dot"></span>
-            <span>Democratic governance and institutional resilience</span>
+            <span>BBA (Hons), Business Administration — GC University, Faisalabad (2009)</span>
           </div>
           <div class="focus-item">
             <span class="focus-dot"></span>
-            <span>China, India, and Sub-Saharan Africa as comparative cases</span>
+            <span>Google Data Analytics Professional Certificate</span>
           </div>
           <div class="focus-item">
             <span class="focus-dot"></span>
-            <span>Translating statistics into compelling social media narratives</span>
+            <span>Social Impact Strategy — University of Pennsylvania</span>
           </div>
           <div class="focus-item">
             <span class="focus-dot"></span>
-            <span>Global power imbalances in international institutions</span>
+            <span>Human-Centred Design Approach (HCD) training, 2017</span>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="container">
+      <p class="section-label">Experience</p>
+      <h2 class="section-title">A decade in international development.</h2>
+
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-role">Data and Insights Analyst</div>
+          <div class="timeline-org">Oxfam International Secretariat · Mar 2021 – Present</div>
+          <p class="timeline-desc">
+            Led the development of three apps that digitised data collection across
+            60+ countries, saving significant staff hours and improving cross-team
+            collaboration. Produce Oxfam's annual global insight reports, presented
+            to the executive board, and led development of Oxfam's knowledge and
+            learning database.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-role">Member, Staff Forum Leadership Team & Chairperson</div>
+          <div class="timeline-org">Oxfam International Secretariat · May 2021 – Aug 2022</div>
+          <p class="timeline-desc">
+            Elected to represent staff interests at board level. Partnered with HR
+            and executive leadership on pay reviews and staff-friendly policy, and
+            provided strategic input on horizon planning and organisational strategy.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-role">Project Coordinator, Empower Youth for Work</div>
+          <div class="timeline-org">Oxfam GB · Oct 2020 – Mar 2021</div>
+          <p class="timeline-desc">
+            Led development and rollout of a digital learning platform for
+            climate-affected rural youth, increasing the inclusion of rural young
+            women in digital jobs and freelancing. Owned annual reporting and budget
+            allocation for the programme, aligning spend with activities.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-role">Project Officer – Youth</div>
+          <div class="timeline-org">Oxfam GB, Pakistan · Jan 2017 – Jun 2020</div>
+          <p class="timeline-desc">
+            Led a digital project reporting web app from concept to rollout and
+            established a digital dashboard for internal reporting, replacing an
+            offline mechanism used for management decision-making. Used
+            Human-Centred Design to co-create digital and non-digital learning
+            solutions with young people.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-role">Programme Monitoring Officer</div>
+          <div class="timeline-org">Oxfam Novib, Pakistan · May 2015 – Dec 2016</div>
+          <p class="timeline-desc">
+            Monitored 8 implementing partners across 13 disadvantaged districts on
+            life-skills programming for young women, and strengthened partners'
+            MEAL systems against Oxfam's CAMSA standards.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-role">Earlier roles</div>
+          <div class="timeline-org">Oxfam Novib / Orbit Limousine, Pakistan · 2012 – 2015</div>
+          <p class="timeline-desc">
+            Staff Representative and Programme Support Officer at Oxfam Novib, and
+            Procurement & Logistics Officer at Orbit Limousine — spanning staff
+            representation, humanitarian procurement, and digitising offline
+            operational systems.
+          </p>
+        </div>
+
       </div>
     </div>
   </section>
@@ -566,57 +701,77 @@
 
       <div class="projects-grid">
 
-        <a class="project-card" href="https://medium.com/@ishexad/when-nations-get-richer-but-people-dont-the-within-country-inequality-paradox-0fbe9620aa01" target="_blank" rel="noopener">
+        <div class="project-card" style="grid-template-columns: 1fr;">
           <div>
-            <p class="project-tag">Inequality · Economics</p>
-            <h3 class="project-title">When Nations Get Richer but People Don’t: The Within-Country Inequality Paradox</h3>
+            <p class="project-tag">Empower Youth for Work · Oxfam GB</p>
+            <h3 class="project-title">Digital Learning Platform for Rural Youth</h3>
             <p class="project-desc">
-              An analysis of the GDP and GNI illusion: why countries appear richer while people continue to be pushed into inequality. Case studies from India, China, and Sub-Saharan Africa.
+              Led development and rollout of a digital learning platform for climate-affected
+              youth, increasing the inclusion of rural young women in digital jobs and
+              freelancing. Paired it with a gamified "game of change" to help participants
+              navigate their journey to economic empowerment.
             </p>
             <div class="project-tools">
-              <span class="tool-pill">Python</span>
-              <span class="tool-pill">pandas</span>
-              <span class="tool-pill">matplotlib</span>
-              <span class="tool-pill">World Bank API</span>
+              <span class="tool-pill">Digital Inclusion</span>
+              <span class="tool-pill">Gamification</span>
+              <span class="tool-pill">Human-Centred Design</span>
             </div>
+          </div>
+        </div>
+
+        <div class="project-card" style="grid-template-columns: 1fr;">
+          <div>
+            <p class="project-tag">Oxfam GB, Pakistan</p>
+            <h3 class="project-title">Project Reporting & Budget Management System</h3>
+            <p class="project-desc">
+              Took a digital project-reporting web app from concept to rollout, and built an
+              internal dashboard that replaced an offline reporting mechanism — giving
+              management real-time visibility for budget allocation, spend tracking, and
+              informed decision-making.
+            </p>
+            <div class="project-tools">
+              <span class="tool-pill">Web App</span>
+              <span class="tool-pill">Dashboards</span>
+              <span class="tool-pill">Budget Management</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" style="grid-template-columns: 1fr;">
+          <div>
+            <p class="project-tag">Oxfam International Secretariat</p>
+            <h3 class="project-title">Global Data Digitisation Initiative</h3>
+            <p class="project-desc">
+              Led the development of three apps to digitise data collection from 60+
+              countries, cutting reporting hours dramatically and improving collaboration
+              between country, regional, and global teams.
+            </p>
+            <div class="project-tools">
+              <span class="tool-pill">App Development</span>
+              <span class="tool-pill">Data Systems</span>
+              <span class="tool-pill">Cross-team Collaboration</span>
+            </div>
+          </div>
+        </div>
+
+        <a class="project-card" href="https://squadkitty.com" target="_blank" rel="noopener">
+          <div>
+            <p class="project-tag">Personal Project</p>
+            <h3 class="project-title">SquadKitty</h3>
+            <p class="project-desc">
+              An independent project — visit squadkitty.com to learn more.
+            </p>
           </div>
           <div class="project-arrow">↗</div>
         </a>
 
-        <a class="project-card" href="https://medium.com/@ishexad/when-nations-get-richer-but-people-dont-the-within-country-inequality-paradox-0fbe9620aa01" target="_blank" rel="noopener">
+        <a class="project-card" href="https://dataexact.io" target="_blank" rel="noopener">
           <div>
-            <p class="project-tag">Democracy · Governance</p>
-            <h3 class="project-title">Democracy Index Dashboard</h3>
+            <p class="project-tag">Personal Project</p>
+            <h3 class="project-title">DataExact</h3>
             <p class="project-desc">
-              Interactive dashboard tracking democratic backsliding across 167 countries
-              using V-Dem and EIU data. Highlights correlations between electoral integrity
-              and press freedom scores over the past two decades.
+              An independent project — visit dataexact.io to learn more.
             </p>
-            <div class="project-tools">
-              <span class="tool-pill">Python</span>
-              <span class="tool-pill">Plotly</span>
-              <span class="tool-pill">V-Dem API</span>
-              <span class="tool-pill">Streamlit</span>
-            </div>
-          </div>
-          <div class="project-arrow">↗</div>
-        </a>
-
-        <a class="project-card" href="https://medium.com/@ishexad/when-nations-get-richer-but-people-dont-the-within-country-inequality-paradox-0fbe9620aa01" target="_blank" rel="noopener">
-          <div>
-            <p class="project-tag">Global Power · Institutions</p>
-            <h3 class="project-title">Who Runs the IMF?</h3>
-            <p class="project-desc">
-              A data-driven investigation into voting power distribution at the IMF and World Bank,
-              revealing how quota systems entrench historical power imbalances and disadvantage
-              emerging economies in crisis negotiations.
-            </p>
-            <div class="project-tools">
-              <span class="tool-pill">R</span>
-              <span class="tool-pill">ggplot2</span>
-              <span class="tool-pill">tidyverse</span>
-              <span class="tool-pill">Datawrapper</span>
-            </div>
           </div>
           <div class="project-arrow">↗</div>
         </a>
@@ -635,48 +790,42 @@
 
       <div class="skills-grid">
         <div class="skill-block">
-          <h4>Languages & analysis</h4>
+          <h4>Strategy & insight</h4>
           <div class="skill-list">
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">R</span>
-            <span class="skill-tag">SQL</span>
-            <span class="skill-tag">pandas</span>
-            <span class="skill-tag">NumPy</span>
-            <span class="skill-tag">tidyverse</span>
+            <span class="skill-tag">Data & Insight Strategy</span>
+            <span class="skill-tag">Board-level Reporting</span>
+            <span class="skill-tag">Data Storytelling</span>
+            <span class="skill-tag">Horizon Planning</span>
           </div>
         </div>
 
         <div class="skill-block">
-          <h4>Visualisation</h4>
+          <h4>Digital tools & dashboards</h4>
           <div class="skill-list">
-            <span class="skill-tag">matplotlib</span>
-            <span class="skill-tag">seaborn</span>
-            <span class="skill-tag">Plotly</span>
-            <span class="skill-tag">ggplot2</span>
-            <span class="skill-tag">Datawrapper</span>
-            <span class="skill-tag">Flourish</span>
+            <span class="skill-tag">App Development Leadership</span>
+            <span class="skill-tag">Dashboard Design</span>
+            <span class="skill-tag">Knowledge & Learning Databases</span>
+            <span class="skill-tag">Digital Transformation</span>
           </div>
         </div>
 
         <div class="skill-block">
-          <h4>Data & platforms</h4>
+          <h4>Research & evaluation</h4>
           <div class="skill-list">
-            <span class="skill-tag">World Bank API</span>
-            <span class="skill-tag">V-Dem</span>
-            <span class="skill-tag">SWIID</span>
-            <span class="skill-tag">UN Comtrade</span>
-            <span class="skill-tag">PostgreSQL</span>
+            <span class="skill-tag">Human-Centred Design</span>
+            <span class="skill-tag">Qualitative & Quantitative Research</span>
+            <span class="skill-tag">Baseline / Midline / Endline Evaluations</span>
+            <span class="skill-tag">MEAL (CAMSA)</span>
           </div>
         </div>
 
         <div class="skill-block">
-          <h4>Publishing & tools</h4>
+          <h4>Leadership & capability building</h4>
           <div class="skill-list">
-            <span class="skill-tag">Jupyter</span>
-            <span class="skill-tag">Streamlit</span>
-            <span class="skill-tag">Git</span>
-            <span class="skill-tag">GitHub Actions</span>
-            <span class="skill-tag">Quarto</span>
+            <span class="skill-tag">Stakeholder & Team Leadership</span>
+            <span class="skill-tag">Staff Representation</span>
+            <span class="skill-tag">Training & Webinars</span>
+            <span class="skill-tag">Budget & Governance</span>
           </div>
         </div>
       </div>
@@ -688,30 +837,20 @@
   <!-- WRITING -->
   <section id="writing">
     <div class="container">
-      <p class="section-label">Writing & threads</p>
-      <h2 class="section-title">Data journalism.</h2>
+      <p class="section-label">Research & publications</p>
+      <h2 class="section-title">Written & published.</h2>
 
       <div class="writing-list">
 
-        <a class="writing-item" href="#" target="_blank" rel="noopener">
-          <span class="writing-item-title">When nations get richer but people don't — the within-country inequality paradox</span>
-          <span class="writing-item-meta">X Thread · 2025</span>
-        </a>
+        <div class="writing-item">
+          <span class="writing-item-title">Qualitative research on social norms in Pakistan</span>
+          <span class="writing-item-meta">Oxfam Policy & Practice · Oct 2019</span>
+        </div>
 
-        <a class="writing-item" href="#" target="_blank" rel="noopener">
-          <span class="writing-item-title">The GDP number that hides a continent: Sub-Saharan Africa's data problem</span>
-          <span class="writing-item-meta">X Thread · 2025</span>
-        </a>
-
-        <a class="writing-item" href="#" target="_blank" rel="noopener">
-          <span class="writing-item-title">India's Gini coefficient has barely moved in 30 years — so why does it feel like inequality is exploding?</span>
-          <span class="writing-item-meta">Analysis · 2025</span>
-        </a>
-
-        <a class="writing-item" href="#" target="_blank" rel="noopener">
-          <span class="writing-item-title">5 charts that show how democracy scores correlate with economic openness</span>
-          <span class="writing-item-meta">X Thread · 2024</span>
-        </a>
+        <div class="writing-item">
+          <span class="writing-item-title">Context Analysis of Youth Social & Economic Empowerment Sector in Pakistan</span>
+          <span class="writing-item-meta">National Research · Oxfam GB</span>
+        </div>
 
       </div>
     </div>
@@ -725,9 +864,10 @@
       <p class="section-label">Contact</p>
       <h2 class="section-title">Let's work together.</h2>
       <p style="color: var(--ink-soft); max-width: 420px; margin: 0 auto 1rem;">
-        Open to collaborations, commissions, and conversations about data, democracy, and inequality.
+        Open to conversations about data and insight strategy, digital tools for
+        international development, and senior data leadership roles.
       </p>
-      <a class="contact-email" href="mailto:hello@ishexad.github.io">hello@ishexad.github.io</a>
+      <a class="contact-email" href="mailto:shahzadshakeel98@gmail.com">shahzadshakeel98@gmail.com</a>
 
       <div class="contact-links">
         <a class="contact-link" href="https://x.com/ishexad" target="_blank" rel="noopener">X / Twitter ↗</a>
@@ -738,7 +878,7 @@
   </section>
 
   <footer>
-    <p>© 2026 Shahzad · Built with HTML/CSS · Hosted on GitHub Pages</p>
+    <p>© 2026 Shahzad Shakeel · Built with HTML/CSS · Hosted on GitHub Pages</p>
   </footer>
 
 </body>
