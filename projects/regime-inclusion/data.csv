@@ -1,0 +1,20 @@
+country,iso3,region,regime_type,female_labor_force_participation
+Norway,NOR,Europe & Central Asia,Liberal Democracy,61
+Sweden,SWE,Europe & Central Asia,Liberal Democracy,60
+Costa Rica,CRI,Latin America & Caribbean,Liberal Democracy,48
+South Africa,ZAF,Sub-Saharan Africa,Liberal Democracy,51
+Canada,CAN,North America,Electoral Democracy,61
+Brazil,BRA,Latin America & Caribbean,Electoral Democracy,54
+Kenya,KEN,Sub-Saharan Africa,Electoral Democracy,72
+Nigeria,NGA,Sub-Saharan Africa,Electoral Democracy,48
+Indonesia,IDN,East Asia & Pacific,Electoral Autocracy,54
+India,IND,South Asia,Electoral Autocracy,24
+Bangladesh,BGD,South Asia,Electoral Autocracy,38
+Pakistan,PAK,South Asia,Electoral Autocracy,23
+Turkey,TUR,Europe & Central Asia,Electoral Autocracy,34
+Hungary,HUN,Europe & Central Asia,Electoral Autocracy,55
+Ethiopia,ETH,Sub-Saharan Africa,Electoral Autocracy,68
+Saudi Arabia,SAU,Middle East & North Africa,Closed Autocracy,36
+China,CHN,East Asia & Pacific,Closed Autocracy,61
+Vietnam,VNM,East Asia & Pacific,Closed Autocracy,69
+Afghanistan,AFG,South Asia,Closed Autocracy,15

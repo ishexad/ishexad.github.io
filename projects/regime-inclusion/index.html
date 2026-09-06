@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regime Type & Women's Labour Force Participation — Shahzad Shakeel</title>
+  <meta name="description" content="An interactive explorer comparing female labour force participation across regime types, with regime classifications from V-Dem and live World Bank data — by Shahzad Shakeel, Data & Insights Analyst." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #201b00;
+      --ink-soft: #5c4f00;
+      --ink-mute: #8f8140;
+      --paper: #fffef5;
+      --paper-2: #fff6c9;
+      --rule: #f0e18f;
+      --accent: #0072ce;
+      --accent-light: #dcefff;
+      --accent-vivid: #a3690b;
+      --mono: 'IBM Plex Mono', monospace;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'Inter', system-ui, sans-serif;
+      --col: 920px;
+
+      /* Ordinal regime-type ramp — one hue, light to dark, validated 2:1+ on --paper */
+      --step-closed: #86b6ef;
+      --step-electoral-auto: #559ee2;
+      --step-electoral-dem: #2f7ac9;
+      --step-liberal: #0c4a86;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .container { max-width: var(--col); margin: 0 auto; padding: 0 1.5rem; }
+
+    section { padding: 3rem 0; }
+
+    hr.rule { border: none; border-top: 1px solid var(--rule); margin: 0; }
+
+    a { color: inherit; }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--rule);
+      max-width: var(--col);
+      margin: 0 auto;
+    }
+
+    .back-link {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink-soft);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .back-link:hover { color: var(--accent); }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 0.03em;
+      text-decoration: none;
+    }
+
+    /* ── HEADER ── */
+    #header { padding: 3.5rem 0 2rem; }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-mute);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent-vivid); }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.12;
+      margin-bottom: 1.25rem;
+      text-wrap: balance;
+    }
+
+    .lede {
+      max-width: 62ch;
+      color: var(--ink-soft);
+      font-size: 1.02rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .status-banner {
+      display: flex;
+      gap: 0.9rem;
+      align-items: flex-start;
+      background: var(--paper-2);
+      border: 1px solid var(--rule);
+      border-left: 3px solid var(--accent-vivid);
+      padding: 1rem 1.25rem;
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+    }
+
+    .status-banner.is-live { border-left-color: var(--step-electoral-dem); }
+
+    .status-banner .badge {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-vivid);
+      background: var(--paper);
+      border: 1px solid var(--accent-vivid);
+      padding: 2px 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+
+    .status-banner.is-live .badge {
+      color: var(--step-electoral-dem);
+      border-color: var(--step-electoral-dem);
+    }
+
+    .status-banner .live-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--step-electoral-dem);
+      margin-right: 5px;
+    }
+
+    .status-banner code {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      padding: 1px 5px;
+    }
+
+    /* ── SECTION LABELS ── */
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent-vivid);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 3vw, 1.85rem);
+      margin-bottom: 1.5rem;
+      text-wrap: balance;
+    }
+
+    /* ── KPI ROW ── */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .kpi-tile {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-top: 4px solid var(--kpi-color, var(--accent));
+      padding: 1.1rem 1.15rem;
+    }
+
+    .kpi-tile .kpi-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      margin-bottom: 0.6rem;
+      line-height: 1.4;
+    }
+
+    .kpi-tile .kpi-value {
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .kpi-tile .kpi-sub {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--ink-mute);
+      margin-top: 0.4rem;
+    }
+
+    /* ── CHART ── */
+    #chart-section { background: var(--paper-2); }
+
+    .chart-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-group { display: flex; align-items: center; gap: 0.6rem; }
+
+    .filter-group label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-mute);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    select {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: var(--ink);
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      padding: 0.4rem 0.6rem;
+      cursor: pointer;
+    }
+
+    select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+    .legend {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--ink-soft);
+    }
+
+    .legend-item { display: flex; align-items: center; gap: 0.4rem; }
+
+    .legend-swatch { width: 10px; height: 10px; border-radius: 50%; }
+
+    .chart-frame {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      padding: 1.5rem 1.5rem 1rem;
+      position: relative;
+    }
+
+    .chart-scroll { overflow-x: auto; }
+
+    .scroll-hint {
+      display: none;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--ink-mute);
+      margin-top: 0.6rem;
+    }
+
+    @media (max-width: 680px) {
+      .scroll-hint { display: block; }
+    }
+
+    #chart-svg { display: block; width: 100%; min-width: 640px; height: auto; overflow: visible; }
+
+    .band-label {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      fill: var(--ink-soft);
+    }
+
+    .axis-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      fill: var(--ink-mute);
+    }
+
+    .grid-line { stroke: var(--rule); stroke-width: 1; }
+
+    .mean-line { stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 3 2; }
+
+    .mean-value {
+      font-family: var(--serif);
+      font-size: 13px;
+      fill: var(--ink);
+    }
+
+    .country-dot {
+      stroke: var(--paper);
+      stroke-width: 2;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .country-dot.dimmed { opacity: 0.12; pointer-events: none; }
+
+    .tooltip {
+      position: absolute;
+      pointer-events: none;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      box-shadow: 0 4px 14px rgba(32, 27, 0, 0.12);
+      padding: 0.6rem 0.75rem;
+      font-size: 0.82rem;
+      max-width: 220px;
+      opacity: 0;
+      transition: opacity 0.1s;
+      z-index: 10;
+    }
+
+    .tooltip.visible { opacity: 1; }
+
+    .tooltip .t-country {
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+    }
+
+    .tooltip .t-row {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--ink-soft);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    /* ── TABLE ── */
+    .table-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    #search {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: var(--ink);
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      padding: 0.45rem 0.7rem;
+      min-width: 220px;
+    }
+
+    #search:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+    .table-wrap { overflow-x: auto; border: 1px solid var(--rule); }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; min-width: 640px; }
+
+    thead th {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-mute);
+      text-align: left;
+      padding: 0.7rem 0.9rem;
+      background: var(--paper-2);
+      border-bottom: 1px solid var(--rule);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    thead th:hover { color: var(--ink); }
+
+    thead th.sorted { color: var(--accent); }
+
+    tbody td {
+      padding: 0.6rem 0.9rem;
+      border-bottom: 1px solid var(--rule);
+      color: var(--ink-soft);
+      font-variant-numeric: tabular-nums;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+
+    tbody td.country-cell { color: var(--ink); font-weight: 500; }
+
+    .regime-chip {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+    }
+
+    /* ── FOOTER ── */
+    #methodology {
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+    }
+
+    #methodology p { margin-bottom: 0.85rem; max-width: 68ch; }
+
+    #methodology code {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      background: var(--paper-2);
+      border: 1px solid var(--rule);
+      padding: 1px 5px;
+    }
+
+    footer.site-footer {
+      border-top: 1px solid var(--rule);
+      padding: 1.5rem;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-mute);
+    }
+
+    @media (max-width: 720px) {
+      .kpi-row { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .kpi-row { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="back-link" href="../../index.html">&larr; Back to profile</a>
+    <a class="nav-logo" href="../../index.html">ishexad.github.io</a>
+  </nav>
+
+  <header id="header">
+    <div class="container">
+      <p class="eyebrow">Data & Insights · Live Demo</p>
+      <h1>Does regime type shape women's<br>labour force participation?</h1>
+      <p class="lede">
+        An interactive explorer comparing female labour force participation against
+        regime type across 19 countries — the same kind of multi-country insight work
+        behind Oxfam's Gender Justice Team evaluations and the Women Entrepreneurship
+        Development project. Filter by region, sort the table, hover a country for detail.
+      </p>
+      <div class="status-banner" id="statusBanner">
+        <span class="badge" id="statusBadge">Loading</span>
+        <span id="statusText">
+          Regime types are V-Dem's 2024/25 Regimes of the World classification (sourced
+          this session; see Methodology below). Fetching live female labour force
+          participation from the World Bank API — falling back to a cached reference
+          snapshot if that request fails or is blocked.
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <hr class="rule" />
+
+  <section id="kpi-section">
+    <div class="container">
+      <p class="section-label">At a glance</p>
+      <h2 class="section-title">Average female labour force participation, by regime type.</h2>
+      <div class="kpi-row" id="kpiRow"></div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <section id="chart-section">
+    <div class="container">
+      <p class="section-label">Explorer</p>
+      <h2 class="section-title">Every country, plotted by regime type.</h2>
+
+      <div class="chart-controls">
+        <div class="filter-group">
+          <label for="regionFilter">Region</label>
+          <select id="regionFilter"><option value="">All regions</option></select>
+        </div>
+        <div class="legend" id="legend"></div>
+      </div>
+
+      <div class="chart-frame">
+        <div class="chart-scroll">
+          <svg id="chart-svg" viewBox="0 0 860 420" role="img" aria-label="Scatter of countries by regime type and female labour force participation rate"></svg>
+        </div>
+        <div class="tooltip" id="tooltip"></div>
+        <p class="scroll-hint">&larr; Scroll to see all four regime types &rarr;</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <section id="table-section">
+    <div class="container">
+      <p class="section-label">Full dataset</p>
+      <h2 class="section-title">Country by country.</h2>
+
+      <div class="table-controls">
+        <input id="search" type="text" placeholder="Search countries…" />
+        <span style="font-family: var(--mono); font-size: 11px; color: var(--ink-mute);" id="rowCount"></span>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-key="country">Country</th>
+              <th data-key="region">Region</th>
+              <th data-key="regime_type">Regime type</th>
+              <th data-key="female_labor_force_participation">Female labour force %</th>
+              <th data-key="participation_source">Source</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <section id="methodology">
+    <div class="container">
+      <p class="section-label">Methodology</p>
+      <h2 class="section-title">Where the numbers come from.</h2>
+      <p>
+        <strong style="color:var(--ink)">Regime type</strong> follows the V-Dem
+        Institute's four-category Regimes of the World typology (Closed Autocracy,
+        Electoral Autocracy, Electoral Democracy, Liberal Democracy), based on the
+        classifications reported in V-Dem's 2024–2026 Democracy Reports — including
+        two 2024 revisions worth noting: Canada sits in Electoral rather than Liberal
+        Democracy, and South Africa regained Liberal Democracy status. Kenya, Nigeria,
+        and Indonesia sit in V-Dem's "grey zone" near a category boundary; this page
+        uses V-Dem's best-estimate category for each. These are static classifications
+        — V-Dem publishes no live API — refreshed by hand from the source reports
+        rather than fetched at page load.
+      </p>
+      <p>
+        <strong style="color:var(--ink)">Female labour force participation</strong>
+        (% of female population ages 15+, modeled ILO estimate) is fetched live, in
+        your browser, from the World Bank Indicators API
+        (<code>SL.TLF.CACT.FE.ZS</code>) each time this page loads — see the
+        <code>fetchLiveParticipation()</code> function in this page's source. If that
+        request fails or is blocked by your network, the chart and table fall back to
+        the reference snapshot bundled in <code>data.csv</code>, and the banner above
+        says so.
+      </p>
+      <p>
+        To point this at a different question entirely, replace <code>data.csv</code>
+        — columns: <code>country, iso3, region, regime_type,
+        female_labor_force_participation</code> — and swap the World Bank indicator
+        code in the fetch call for another (wage gap, access to credit, entrepreneurship
+        rate) to explore a different dimension of economic inclusion.
+      </p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>Built by Shahzad Shakeel · <a href="../../index.html">ishexad.github.io</a></p>
+  </footer>
+
+  <script>
+    const REGIME_ORDER = ['Closed Autocracy', 'Electoral Autocracy', 'Electoral Democracy', 'Liberal Democracy'];
+    const REGIME_COLOR = {
+      'Closed Autocracy': 'var(--step-closed)',
+      'Electoral Autocracy': 'var(--step-electoral-auto)',
+      'Electoral Democracy': 'var(--step-electoral-dem)',
+      'Liberal Democracy': 'var(--step-liberal)'
+    };
+    const REGIME_HEX = {
+      'Closed Autocracy': '#86b6ef',
+      'Electoral Autocracy': '#559ee2',
+      'Electoral Democracy': '#2f7ac9',
+      'Liberal Democracy': '#0c4a86'
+    };
+
+    const WB_INDICATOR = 'SL.TLF.CACT.FE.ZS';
+
+    let DATA = [];
+    let state = { region: '', search: '', sortKey: 'female_labor_force_participation', sortDir: 'desc' };
+
+    function parseCSV(text) {
+      const lines = text.trim().split('\n');
+      const headers = lines[0].split(',').map(h => h.trim());
+      return lines.slice(1).map(line => {
+        const cells = line.split(',').map(c => c.trim());
+        const row = {};
+        headers.forEach((h, i) => { row[h] = cells[i]; });
+        row.female_labor_force_participation = Number(row.female_labor_force_participation);
+        row.participation_source = 'cached snapshot';
+        row.participation_year = null;
+        return row;
+      });
+    }
+
+    function setStatus(mode, text) {
+      const banner = document.getElementById('statusBanner');
+      const badge = document.getElementById('statusBadge');
+      const body = document.getElementById('statusText');
+      banner.classList.toggle('is-live', mode === 'live');
+      badge.textContent = mode === 'live' ? 'Live' : mode === 'error' ? 'Cached' : 'Loading';
+      body.innerHTML = text;
+    }
+
+    function fetchLiveParticipation() {
+      const iso3List = DATA.map(d => d.iso3).join(';');
+      const url = `https://api.worldbank.org/v2/country/${iso3List}/indicator/${WB_INDICATOR}?format=json&mrnev=1&per_page=300`;
+
+      fetch(url)
+        .then(r => {
+          if (!r.ok) throw new Error(`World Bank API responded ${r.status}`);
+          return r.json();
+        })
+        .then(json => {
+          const rows = (json && json[1]) || [];
+          if (!rows.length) throw new Error('empty response');
+          let matched = 0;
+          rows.forEach(r => {
+            const row = DATA.find(d => d.iso3 === r.countryiso3code);
+            if (row && r.value !== null && r.value !== undefined) {
+              row.female_labor_force_participation = Math.round(r.value * 10) / 10;
+              row.participation_source = `World Bank, ${r.date}`;
+              row.participation_year = r.date;
+              matched++;
+            }
+          });
+          if (!matched) throw new Error('no matching countries in response');
+          setStatus('live', `Live from the World Bank API (<code>${WB_INDICATOR}</code>), fetched just now for ${matched} of ${DATA.length} countries. Regime types remain V-Dem's static 2024–26 classification, sourced above in Methodology.`);
+          renderAll();
+        })
+        .catch(err => {
+          setStatus('error', `Live World Bank fetch didn't complete (${err.message}) — showing the cached reference snapshot in <code>data.csv</code> instead. This is common in sandboxed or offline environments; a normal browser on the published site should reach the API directly.`);
+        });
+    }
+
+    function mean(arr) { return arr.reduce((a, b) => a + b, 0) / arr.length; }
+
+    function renderLegend() {
+      const legend = document.getElementById('legend');
+      legend.innerHTML = REGIME_ORDER.map(r => `
+        <span class="legend-item">
+          <span class="legend-swatch" style="background:${REGIME_HEX[r]}"></span>${r}
+        </span>
+      `).join('');
+    }
+
+    function renderRegionFilter() {
+      const select = document.getElementById('regionFilter');
+      const regions = [...new Set(DATA.map(d => d.region))].sort();
+      regions.forEach(r => {
+        const opt = document.createElement('option');
+        opt.value = r; opt.textContent = r;
+        select.appendChild(opt);
+      });
+      select.addEventListener('change', () => { state.region = select.value; renderAll(); });
+    }
+
+    function renderKPIs() {
+      const row = document.getElementById('kpiRow');
+      row.innerHTML = REGIME_ORDER.map(regime => {
+        const group = DATA.filter(d => d.regime_type === regime);
+        const avg = group.length ? mean(group.map(d => d.female_labor_force_participation)) : 0;
+        return `
+          <div class="kpi-tile" style="--kpi-color:${REGIME_HEX[regime]}">
+            <div class="kpi-label">${regime}</div>
+            <div class="kpi-value">${avg.toFixed(0)}%</div>
+            <div class="kpi-sub">avg female labour force · n=${group.length}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filteredData() {
+      return DATA.filter(d => !state.region || d.region === state.region);
+    }
+
+    function renderChart() {
+      const svg = document.getElementById('chart-svg');
+      const W = 860, H = 420;
+      const marginL = 50, marginR = 20, marginT = 20, marginB = 50;
+      const plotW = W - marginL - marginR, plotH = H - marginT - marginB;
+      const bandW = plotW / REGIME_ORDER.length;
+
+      const yScale = v => marginT + plotH - (v / 100) * plotH;
+
+      let svgContent = '';
+
+      for (let v = 0; v <= 100; v += 20) {
+        const y = yScale(v);
+        svgContent += `<line class="grid-line" x1="${marginL}" x2="${W - marginR}" y1="${y}" y2="${y}" />`;
+        svgContent += `<text class="axis-label" x="${marginL - 10}" y="${y + 3}" text-anchor="end">${v}%</text>`;
+      }
+
+      svgContent += `<text class="axis-label" x="${marginL}" y="12" text-anchor="start">Female labour force participation rate</text>`;
+
+      const filtered = filteredData();
+
+      REGIME_ORDER.forEach((regime, i) => {
+        const bandX = marginL + i * bandW;
+        svgContent += `<text class="band-label" x="${bandX + bandW / 2}" y="${H - marginB + 20}" text-anchor="middle">${regime.replace(' ', ' ')}</text>`;
+
+        const group = DATA.filter(d => d.regime_type === regime);
+        if (group.length) {
+          const avg = mean(group.map(d => d.female_labor_force_participation));
+          const y = yScale(avg);
+          svgContent += `<line class="mean-line" x1="${bandX + 8}" x2="${bandX + bandW - 8}" y1="${y}" y2="${y}" />`;
+          svgContent += `<text class="mean-value" x="${bandX + bandW - 10}" y="${y - 8}" text-anchor="end">${avg.toFixed(0)}%</text>`;
+        }
+
+        const spread = bandW * 0.5;
+        group.forEach((d, j) => {
+          const jitter = ((j % 7) / 7 - 0.5) * spread;
+          const cx = bandX + bandW / 2 + jitter;
+          const cy = yScale(d.female_labor_force_participation);
+          const isVisible = !state.region || d.region === state.region;
+          svgContent += `<circle class="country-dot ${isVisible ? '' : 'dimmed'}" cx="${cx}" cy="${cy}" r="7" fill="${REGIME_HEX[regime]}"
+            data-country="${d.country}" data-region="${d.region}" data-regime="${d.regime_type}"
+            data-participation="${d.female_labor_force_participation}" data-source="${d.participation_source}" />`;
+        });
+      });
+
+      svg.innerHTML = svgContent;
+      attachTooltips();
+    }
+
+    function attachTooltips() {
+      const tooltip = document.getElementById('tooltip');
+      const frame = document.querySelector('.chart-frame');
+      document.querySelectorAll('.country-dot').forEach(dot => {
+        dot.addEventListener('mouseenter', () => {
+          tooltip.innerHTML = `
+            <div class="t-country">${dot.dataset.country}</div>
+            <div class="t-row"><span>Region</span><span>${dot.dataset.region}</span></div>
+            <div class="t-row"><span>Regime type</span><span>${dot.dataset.regime}</span></div>
+            <div class="t-row"><span>Female labour force</span><span>${dot.dataset.participation}%</span></div>
+            <div class="t-row"><span>Source</span><span>${dot.dataset.source}</span></div>
+          `;
+          tooltip.classList.add('visible');
+        });
+        dot.addEventListener('mousemove', (e) => {
+          const rect = frame.getBoundingClientRect();
+          tooltip.style.left = (e.clientX - rect.left + 14) + 'px';
+          tooltip.style.top = (e.clientY - rect.top - 10) + 'px';
+        });
+        dot.addEventListener('mouseleave', () => tooltip.classList.remove('visible'));
+      });
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('tableBody');
+      let rows = filteredData().filter(d =>
+        !state.search || d.country.toLowerCase().includes(state.search.toLowerCase())
+      );
+
+      rows.sort((a, b) => {
+        let av = a[state.sortKey], bv = b[state.sortKey];
+        if (typeof av === 'string') { av = av.toLowerCase(); bv = bv.toLowerCase(); }
+        if (av < bv) return state.sortDir === 'asc' ? -1 : 1;
+        if (av > bv) return state.sortDir === 'asc' ? 1 : -1;
+        return 0;
+      });
+
+      tbody.innerHTML = rows.map(d => `
+        <tr>
+          <td class="country-cell">${d.country}</td>
+          <td>${d.region}</td>
+          <td><span class="regime-chip" style="background:${REGIME_HEX[d.regime_type]}"></span>${d.regime_type}</td>
+          <td>${d.female_labor_force_participation}%</td>
+          <td>${d.participation_source}</td>
+        </tr>
+      `).join('');
+
+      document.getElementById('rowCount').textContent = `${rows.length} of ${DATA.length} countries`;
+
+      document.querySelectorAll('thead th').forEach(th => {
+        th.classList.toggle('sorted', th.dataset.key === state.sortKey);
+      });
+    }
+
+    function renderAll() {
+      renderKPIs();
+      renderChart();
+      renderTable();
+    }
+
+    document.querySelectorAll('thead th').forEach(th => {
+      th.addEventListener('click', () => {
+        const key = th.dataset.key;
+        if (state.sortKey === key) {
+          state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc';
+        } else {
+          state.sortKey = key;
+          state.sortDir = 'desc';
+        }
+        renderTable();
+      });
+    });
+
+    document.getElementById('search').addEventListener('input', (e) => {
+      state.search = e.target.value;
+      renderTable();
+    });
+
+    fetch('./data.csv')
+      .then(r => r.text())
+      .then(text => {
+        DATA = parseCSV(text);
+        renderLegend();
+        renderRegionFilter();
+        renderAll();
+        fetchLiveParticipation();
+      })
+      .catch(err => {
+        document.querySelector('.container').insertAdjacentHTML('afterbegin',
+          `<p style="color:var(--accent-vivid)">Could not load data.csv — ${err.message}</p>`);
+      });
+  </script>
+</body>
+</html>
