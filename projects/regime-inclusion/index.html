@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Regime Type & Women's Economic Inclusion — Shahzad Shakeel</title>
-  <meta name="description" content="An interactive explorer comparing women's economic inclusion across regime types — a demo dashboard by Shahzad Shakeel, Data & Insights Analyst." />
+  <title>Regime Type & Women's Labour Force Participation — Shahzad Shakeel</title>
+  <meta name="description" content="An interactive explorer comparing female labour force participation across regime types, with regime classifications from V-Dem and live World Bank data — by Shahzad Shakeel, Data & Insights Analyst." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -112,7 +112,7 @@
       margin-bottom: 1.5rem;
     }
 
-    .sample-banner {
+    .status-banner {
       display: flex;
       gap: 0.9rem;
       align-items: flex-start;
@@ -124,7 +124,9 @@
       color: var(--ink-soft);
     }
 
-    .sample-banner .badge {
+    .status-banner.is-live { border-left-color: var(--step-electoral-dem); }
+
+    .status-banner .badge {
       font-family: var(--mono);
       font-size: 10.5px;
       letter-spacing: 0.08em;
@@ -138,7 +140,21 @@
       margin-top: 0.15rem;
     }
 
-    .sample-banner code {
+    .status-banner.is-live .badge {
+      color: var(--step-electoral-dem);
+      border-color: var(--step-electoral-dem);
+    }
+
+    .status-banner .live-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--step-electoral-dem);
+      margin-right: 5px;
+    }
+
+    .status-banner code {
       font-family: var(--mono);
       font-size: 0.82rem;
       background: var(--paper);
@@ -445,20 +461,21 @@
 
   <header id="header">
     <div class="container">
-      <p class="eyebrow">Demo · Data & Insights</p>
-      <h1>Does regime type shape women's<br>economic inclusion?</h1>
+      <p class="eyebrow">Data & Insights · Live Demo</p>
+      <h1>Does regime type shape women's<br>labour force participation?</h1>
       <p class="lede">
-        An interactive explorer comparing a women's economic inclusion index against
+        An interactive explorer comparing female labour force participation against
         regime type across 19 countries — the same kind of multi-country insight work
         behind Oxfam's Gender Justice Team evaluations and the Women Entrepreneurship
         Development project. Filter by region, sort the table, hover a country for detail.
       </p>
-      <div class="sample-banner">
-        <span class="badge">Sample data</span>
-        <span>
-          The figures below are illustrative placeholders, not published statistics.
-          Swap in your own export — see <code>data.csv</code> and the schema notes
-          at the bottom of this page — and every chart and table updates automatically.
+      <div class="status-banner" id="statusBanner">
+        <span class="badge" id="statusBadge">Loading</span>
+        <span id="statusText">
+          Regime types are V-Dem's 2024/25 Regimes of the World classification (sourced
+          this session; see Methodology below). Fetching live female labour force
+          participation from the World Bank API — falling back to a cached reference
+          snapshot if that request fails or is blocked.
         </span>
       </div>
     </div>
@@ -469,7 +486,7 @@
   <section id="kpi-section">
     <div class="container">
       <p class="section-label">At a glance</p>
-      <h2 class="section-title">Average inclusion index, by regime type.</h2>
+      <h2 class="section-title">Average female labour force participation, by regime type.</h2>
       <div class="kpi-row" id="kpiRow"></div>
     </div>
   </section>
@@ -491,7 +508,7 @@
 
       <div class="chart-frame">
         <div class="chart-scroll">
-          <svg id="chart-svg" viewBox="0 0 860 420" role="img" aria-label="Scatter of countries by regime type and women's economic inclusion index"></svg>
+          <svg id="chart-svg" viewBox="0 0 860 420" role="img" aria-label="Scatter of countries by regime type and female labour force participation rate"></svg>
         </div>
         <div class="tooltip" id="tooltip"></div>
         <p class="scroll-hint">&larr; Scroll to see all four regime types &rarr;</p>
@@ -518,8 +535,8 @@
               <th data-key="country">Country</th>
               <th data-key="region">Region</th>
               <th data-key="regime_type">Regime type</th>
-              <th data-key="womens_inclusion_index">Inclusion index</th>
               <th data-key="female_labor_force_participation">Female labour force %</th>
+              <th data-key="participation_source">Source</th>
             </tr>
           </thead>
           <tbody id="tableBody"></tbody>
@@ -533,22 +550,35 @@
   <section id="methodology">
     <div class="container">
       <p class="section-label">Methodology</p>
-      <h2 class="section-title">How to make this real.</h2>
+      <h2 class="section-title">Where the numbers come from.</h2>
       <p>
-        Regime-type groupings follow the four-category typology used by the V-Dem
-        Institute (Closed Autocracy, Electoral Autocracy, Electoral Democracy,
-        Liberal Democracy). To replace the sample data, export a country-year table
-        from <code>v-dem.net</code> for regime type, and a women's economic
-        indicator — female labour force participation from the World Bank
-        (<code>SL.TLF.CACT.FE.ZS</code>) or ILOSTAT — then map both onto the columns
-        in <code>data.csv</code>: <code>country, iso3, region, regime_type,
-        womens_inclusion_index, female_labor_force_participation</code>.
+        <strong style="color:var(--ink)">Regime type</strong> follows the V-Dem
+        Institute's four-category Regimes of the World typology (Closed Autocracy,
+        Electoral Autocracy, Electoral Democracy, Liberal Democracy), based on the
+        classifications reported in V-Dem's 2024–2026 Democracy Reports — including
+        two 2024 revisions worth noting: Canada sits in Electoral rather than Liberal
+        Democracy, and South Africa regained Liberal Democracy status. Kenya, Nigeria,
+        and Indonesia sit in V-Dem's "grey zone" near a category boundary; this page
+        uses V-Dem's best-estimate category for each. These are static classifications
+        — V-Dem publishes no live API — refreshed by hand from the source reports
+        rather than fetched at page load.
       </p>
       <p>
-        The inclusion index here is a placeholder composite (0–100). A real version
-        might blend labour force participation, wage gap, and access-to-credit
-        indicators — the same kind of composite scoring used for Oxfam's annual
-        global insight reporting.
+        <strong style="color:var(--ink)">Female labour force participation</strong>
+        (% of female population ages 15+, modeled ILO estimate) is fetched live, in
+        your browser, from the World Bank Indicators API
+        (<code>SL.TLF.CACT.FE.ZS</code>) each time this page loads — see the
+        <code>fetchLiveParticipation()</code> function in this page's source. If that
+        request fails or is blocked by your network, the chart and table fall back to
+        the reference snapshot bundled in <code>data.csv</code>, and the banner above
+        says so.
+      </p>
+      <p>
+        To point this at a different question entirely, replace <code>data.csv</code>
+        — columns: <code>country, iso3, region, regime_type,
+        female_labor_force_participation</code> — and swap the World Bank indicator
+        code in the fetch call for another (wage gap, access to credit, entrepreneurship
+        rate) to explore a different dimension of economic inclusion.
       </p>
     </div>
   </section>
@@ -572,8 +602,10 @@
       'Liberal Democracy': '#0c4a86'
     };
 
+    const WB_INDICATOR = 'SL.TLF.CACT.FE.ZS';
+
     let DATA = [];
-    let state = { region: '', search: '', sortKey: 'womens_inclusion_index', sortDir: 'desc' };
+    let state = { region: '', search: '', sortKey: 'female_labor_force_participation', sortDir: 'desc' };
 
     function parseCSV(text) {
       const lines = text.trim().split('\n');
@@ -582,10 +614,51 @@
         const cells = line.split(',').map(c => c.trim());
         const row = {};
         headers.forEach((h, i) => { row[h] = cells[i]; });
-        row.womens_inclusion_index = Number(row.womens_inclusion_index);
         row.female_labor_force_participation = Number(row.female_labor_force_participation);
+        row.participation_source = 'cached snapshot';
+        row.participation_year = null;
         return row;
       });
+    }
+
+    function setStatus(mode, text) {
+      const banner = document.getElementById('statusBanner');
+      const badge = document.getElementById('statusBadge');
+      const body = document.getElementById('statusText');
+      banner.classList.toggle('is-live', mode === 'live');
+      badge.textContent = mode === 'live' ? 'Live' : mode === 'error' ? 'Cached' : 'Loading';
+      body.innerHTML = text;
+    }
+
+    function fetchLiveParticipation() {
+      const iso3List = DATA.map(d => d.iso3).join(';');
+      const url = `https://api.worldbank.org/v2/country/${iso3List}/indicator/${WB_INDICATOR}?format=json&mrnev=1&per_page=300`;
+
+      fetch(url)
+        .then(r => {
+          if (!r.ok) throw new Error(`World Bank API responded ${r.status}`);
+          return r.json();
+        })
+        .then(json => {
+          const rows = (json && json[1]) || [];
+          if (!rows.length) throw new Error('empty response');
+          let matched = 0;
+          rows.forEach(r => {
+            const row = DATA.find(d => d.iso3 === r.countryiso3code);
+            if (row && r.value !== null && r.value !== undefined) {
+              row.female_labor_force_participation = Math.round(r.value * 10) / 10;
+              row.participation_source = `World Bank, ${r.date}`;
+              row.participation_year = r.date;
+              matched++;
+            }
+          });
+          if (!matched) throw new Error('no matching countries in response');
+          setStatus('live', `Live from the World Bank API (<code>${WB_INDICATOR}</code>), fetched just now for ${matched} of ${DATA.length} countries. Regime types remain V-Dem's static 2024–26 classification, sourced above in Methodology.`);
+          renderAll();
+        })
+        .catch(err => {
+          setStatus('error', `Live World Bank fetch didn't complete (${err.message}) — showing the cached reference snapshot in <code>data.csv</code> instead. This is common in sandboxed or offline environments; a normal browser on the published site should reach the API directly.`);
+        });
     }
 
     function mean(arr) { return arr.reduce((a, b) => a + b, 0) / arr.length; }
@@ -614,12 +687,12 @@
       const row = document.getElementById('kpiRow');
       row.innerHTML = REGIME_ORDER.map(regime => {
         const group = DATA.filter(d => d.regime_type === regime);
-        const avg = group.length ? mean(group.map(d => d.womens_inclusion_index)) : 0;
+        const avg = group.length ? mean(group.map(d => d.female_labor_force_participation)) : 0;
         return `
           <div class="kpi-tile" style="--kpi-color:${REGIME_HEX[regime]}">
             <div class="kpi-label">${regime}</div>
-            <div class="kpi-value">${avg.toFixed(0)}</div>
-            <div class="kpi-sub">avg inclusion index · n=${group.length}</div>
+            <div class="kpi-value">${avg.toFixed(0)}%</div>
+            <div class="kpi-sub">avg female labour force · n=${group.length}</div>
           </div>
         `;
       }).join('');
@@ -643,8 +716,10 @@
       for (let v = 0; v <= 100; v += 20) {
         const y = yScale(v);
         svgContent += `<line class="grid-line" x1="${marginL}" x2="${W - marginR}" y1="${y}" y2="${y}" />`;
-        svgContent += `<text class="axis-label" x="${marginL - 10}" y="${y + 3}" text-anchor="end">${v}</text>`;
+        svgContent += `<text class="axis-label" x="${marginL - 10}" y="${y + 3}" text-anchor="end">${v}%</text>`;
       }
+
+      svgContent += `<text class="axis-label" x="${marginL}" y="12" text-anchor="start">Female labour force participation rate</text>`;
 
       const filtered = filteredData();
 
@@ -654,21 +729,21 @@
 
         const group = DATA.filter(d => d.regime_type === regime);
         if (group.length) {
-          const avg = mean(group.map(d => d.womens_inclusion_index));
+          const avg = mean(group.map(d => d.female_labor_force_participation));
           const y = yScale(avg);
           svgContent += `<line class="mean-line" x1="${bandX + 8}" x2="${bandX + bandW - 8}" y1="${y}" y2="${y}" />`;
-          svgContent += `<text class="mean-value" x="${bandX + bandW - 10}" y="${y - 8}" text-anchor="end">${avg.toFixed(0)}</text>`;
+          svgContent += `<text class="mean-value" x="${bandX + bandW - 10}" y="${y - 8}" text-anchor="end">${avg.toFixed(0)}%</text>`;
         }
 
         const spread = bandW * 0.5;
         group.forEach((d, j) => {
           const jitter = ((j % 7) / 7 - 0.5) * spread;
           const cx = bandX + bandW / 2 + jitter;
-          const cy = yScale(d.womens_inclusion_index);
+          const cy = yScale(d.female_labor_force_participation);
           const isVisible = !state.region || d.region === state.region;
           svgContent += `<circle class="country-dot ${isVisible ? '' : 'dimmed'}" cx="${cx}" cy="${cy}" r="7" fill="${REGIME_HEX[regime]}"
             data-country="${d.country}" data-region="${d.region}" data-regime="${d.regime_type}"
-            data-index="${d.womens_inclusion_index}" data-participation="${d.female_labor_force_participation}" />`;
+            data-participation="${d.female_labor_force_participation}" data-source="${d.participation_source}" />`;
         });
       });
 
@@ -685,8 +760,8 @@
             <div class="t-country">${dot.dataset.country}</div>
             <div class="t-row"><span>Region</span><span>${dot.dataset.region}</span></div>
             <div class="t-row"><span>Regime type</span><span>${dot.dataset.regime}</span></div>
-            <div class="t-row"><span>Inclusion index</span><span>${dot.dataset.index}</span></div>
             <div class="t-row"><span>Female labour force</span><span>${dot.dataset.participation}%</span></div>
+            <div class="t-row"><span>Source</span><span>${dot.dataset.source}</span></div>
           `;
           tooltip.classList.add('visible');
         });
@@ -718,8 +793,8 @@
           <td class="country-cell">${d.country}</td>
           <td>${d.region}</td>
           <td><span class="regime-chip" style="background:${REGIME_HEX[d.regime_type]}"></span>${d.regime_type}</td>
-          <td>${d.womens_inclusion_index}</td>
           <td>${d.female_labor_force_participation}%</td>
+          <td>${d.participation_source}</td>
         </tr>
       `).join('');
 
@@ -761,6 +836,7 @@
         renderLegend();
         renderRegionFilter();
         renderAll();
+        fetchLiveParticipation();
       })
       .catch(err => {
         document.querySelector('.container').insertAdjacentHTML('afterbegin',
