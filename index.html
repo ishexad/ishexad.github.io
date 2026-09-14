@@ -5,236 +5,341 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Shahzad Shakeel — Data & Insights Analyst</title>
+  <meta name="description" content="Data and Insights Analyst leading board-level insight and digital tools for Oxfam International's global confederation." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink: #201b00;
-      --ink-soft: #5c4f00;
-      --ink-mute: #8f8140;
-      --paper: #fffef5;
-      --paper-2: #fff6c9;
-      --rule: #f0e18f;
-      --accent: #0072ce;
-      --accent-light: #dcefff;
-      --accent-vivid: #a3690b;
-      --mono: 'IBM Plex Mono', monospace;
-      --serif: 'DM Serif Display', Georgia, serif;
+      --void: #07060c;
+      --void-2: #0d0b18;
+      --ink: #0b0b12;
+      --paper: #f3f4fa;
+      --paper-2: #ffffff;
+      --white: #f6f7fb;
+
+      --blue: #3ec1ff;
+      --violet: #8b5cff;
+      --pink: #ff4fa3;
+      --orange: #ff6b35;
+      --teal: #14e0b4;
+      --lime: #d6ff3d;
+
+      --display: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
       --sans: 'Inter', system-ui, sans-serif;
-      --col: 680px;
+      --mono: 'JetBrains Mono', monospace;
+      --col: 1120px;
     }
 
     html { scroll-behavior: smooth; }
 
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    }
+
     body {
       font-family: var(--sans);
-      background: var(--paper);
+      background: var(--white);
       color: var(--ink);
       font-size: 16px;
-      line-height: 1.7;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
     }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      pointer-events: none;
+      opacity: 0.035;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    }
+
+    .container { max-width: var(--col); margin: 0 auto; padding: 0 1.75rem; }
+
+    ::selection { background: var(--violet); color: #fff; }
 
     /* ── NAV ── */
     nav {
       position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 2rem;
-      height: 56px;
-      background: var(--paper);
-      border-bottom: 1px solid var(--rule);
+      gap: 2rem;
+      width: min(94%, 780px);
+      padding: 0.8rem 0.85rem 0.8rem 1.4rem;
+      background: rgba(9, 8, 16, 0.62);
+      backdrop-filter: blur(18px) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 999px;
+    }
+
+    .nav-logo, .nav-links a {
+      color: #fff;
+      text-decoration: none;
     }
 
     .nav-logo {
       font-family: var(--mono);
       font-size: 13px;
-      font-weight: 500;
-      color: var(--accent);
       letter-spacing: 0.04em;
-      text-decoration: none;
+      font-weight: 500;
+      white-space: nowrap;
     }
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      align-items: center;
+      gap: 1.6rem;
       list-style: none;
     }
 
     .nav-links a {
       font-size: 13px;
       font-family: var(--mono);
-      color: var(--ink-soft);
-      text-decoration: none;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.02em;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+      position: relative;
     }
 
-    .nav-links a:hover { color: var(--ink); }
+    .nav-links a.active,
+    .nav-links a:hover { opacity: 1; }
 
-    /* ── LAYOUT ── */
-    .container {
-      max-width: var(--col);
-      margin: 0 auto;
-      padding: 0 1.5rem;
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: -6px;
+      height: 2px;
+      background: #fff;
     }
 
-    section { padding: 5rem 0; }
-
-    hr.rule {
+    .nav-toggle {
+      display: none;
+      background: rgba(255,255,255,0.1);
       border: none;
-      border-top: 1px solid var(--rule);
-      margin: 0;
+      color: #fff;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      font-family: var(--mono);
+      font-size: 16px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
     }
+
+    @media (max-width: 680px) {
+      nav { padding: 0.7rem 0.7rem 0.7rem 1.1rem; top: 0.8rem; }
+      .nav-toggle { display: flex; }
+      .nav-links {
+        position: absolute;
+        top: calc(100% + 0.6rem);
+        right: 0;
+        left: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        background: rgba(9, 8, 16, 0.92);
+        backdrop-filter: blur(18px);
+        border: 1px solid rgba(255,255,255,0.09);
+        border-radius: 20px;
+        padding: 0.5rem;
+        opacity: 0;
+        transform: translateY(-8px);
+        pointer-events: none;
+        transition: opacity 0.2s, transform 0.2s;
+      }
+      .nav-links.open {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+      .nav-links a {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        opacity: 0.8;
+      }
+      .nav-links a.active::after { display: none; }
+      .nav-links a.active { opacity: 1; color: var(--blue); }
+    }
+
+    /* ── shared section rhythm ── */
+    section { padding: 8rem 0; position: relative; }
+    .section-pad-sm { padding: 6rem 0; }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .eyebrow::before {
+      content: '';
+      width: 22px; height: 1px;
+      background: currentColor;
+      display: inline-block;
+    }
+
+    .headline {
+      font-family: var(--display);
+      font-weight: 700;
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+    }
+
+    .section-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(2.1rem, 5vw, 3.4rem);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(.2,.7,.2,1), transform 0.7s cubic-bezier(.2,.7,.2,1);
+    }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
 
     /* ── HERO ── */
     #hero {
-      padding: 9rem 0 5rem;
-    }
-
-    .hero-eyebrow {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--ink-mute);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
+      min-height: 100svh;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      background: radial-gradient(600px 500px at var(--mx, 50%) var(--my, 35%), rgba(139,92,255,0.35), transparent 60%),
+                  radial-gradient(500px 420px at calc(var(--mx, 50%) + 20%) calc(var(--my, 35%) + 30%), rgba(62,193,255,0.25), transparent 60%),
+                  var(--void);
+      color: #fff;
+      overflow: hidden;
+      padding-top: 6rem;
     }
 
-    .hero-eyebrow::before {
-      content: '';
-      display: inline-block;
-      width: 24px;
-      height: 1px;
-      background: var(--accent-vivid);
-    }
+    .hero-eyebrow { color: var(--blue); }
 
     .hero-name {
-      font-family: var(--serif);
-      font-size: clamp(3rem, 8vw, 5.5rem);
-      line-height: 1.05;
-      letter-spacing: -0.01em;
-      color: var(--ink);
+      font-size: clamp(2.6rem, 7.2vw, 5.6rem);
       margin-bottom: 1.75rem;
     }
 
-    .hero-name em {
-      font-style: italic;
-      color: var(--accent);
+    .hero-name .grad {
+      background: linear-gradient(100deg, var(--blue), var(--violet) 55%, var(--pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .hero-desc {
-      font-size: 1.1rem;
-      color: var(--ink-soft);
-      max-width: 520px;
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.72);
+      max-width: 560px;
       line-height: 1.8;
       margin-bottom: 2.5rem;
     }
 
     .hero-stat-row {
       display: flex;
-      gap: 2.5rem;
-      margin-bottom: 2.5rem;
-      padding: 1.5rem 0;
-      border-top: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
+      gap: 2.75rem;
+      margin-bottom: 2.75rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid rgba(255,255,255,0.14);
     }
 
     .hero-stat .number {
-      font-family: var(--serif);
-      font-size: 2rem;
-      color: var(--accent);
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 2.1rem;
       line-height: 1;
+      background: linear-gradient(100deg, var(--teal), var(--blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .hero-stat .label {
       font-family: var(--mono);
       font-size: 11px;
-      color: var(--ink-mute);
-      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      margin-top: 0.25rem;
+      margin-top: 0.35rem;
     }
 
-    .hero-cta {
+    .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.65rem 1.4rem;
-      background: var(--accent);
-      color: #fff;
+      padding: 0.85rem 1.6rem;
+      border-radius: 999px;
       font-size: 14px;
       font-family: var(--mono);
-      letter-spacing: 0.03em;
+      letter-spacing: 0.02em;
       text-decoration: none;
       border: none;
       cursor: pointer;
+      transition: transform 0.15s ease;
+      will-change: transform;
     }
 
-    .hero-cta:hover { background: #005a9e; }
+    .btn-solid {
+      background: linear-gradient(100deg, var(--violet), var(--pink));
+      color: #fff;
+    }
 
-    .hero-cta-ghost {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.65rem 1.4rem;
+    .btn-ghost {
       background: transparent;
-      color: var(--accent);
-      font-size: 14px;
-      font-family: var(--mono);
-      letter-spacing: 0.03em;
-      text-decoration: none;
-      border: 1px solid var(--accent);
-      margin-left: 1rem;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.35);
+    }
+    .btn-ghost:hover { border-color: #fff; }
+
+    /* ── ABOUT (flat vivid block) ── */
+    #about {
+      background: var(--orange);
+      color: #1a0c02;
     }
 
-    .hero-cta-ghost:hover { background: var(--accent-light); }
-
-    /* ── SECTION HEADERS ── */
-    .section-label {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--accent-vivid);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .section-title {
-      font-family: var(--serif);
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
-      line-height: 1.15;
-      color: var(--ink);
-      margin-bottom: 1.5rem;
-    }
-
-    /* ── ABOUT ── */
-    #about { background: var(--paper-2); }
+    #about .eyebrow { color: rgba(26,12,2,0.65); }
 
     .about-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3.5rem;
       align-items: start;
     }
 
     .about-text p {
-      color: var(--ink-soft);
-      margin-bottom: 1rem;
-      font-size: 0.975rem;
+      margin-bottom: 1.1rem;
+      font-size: 1.02rem;
+      max-width: 560px;
+      color: rgba(26,12,2,0.86);
     }
 
     .about-focus {
-      background: var(--paper);
-      padding: 1.5rem;
-      border-left: 3px solid var(--accent);
+      background: rgba(255,255,255,0.35);
+      border: 1px solid rgba(26,12,2,0.15);
+      border-radius: 20px;
+      padding: 1.75rem;
+      backdrop-filter: blur(6px);
     }
 
     .about-focus h4 {
@@ -242,34 +347,31 @@
       font-size: 11px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--ink-mute);
-      margin-bottom: 1rem;
+      margin-bottom: 1.1rem;
+      opacity: 0.7;
     }
 
     .focus-item {
       display: flex;
-      align-items: flex-start;
       gap: 0.75rem;
-      margin-bottom: 0.75rem;
-      font-size: 0.9rem;
-      color: var(--ink-soft);
+      align-items: flex-start;
+      margin-bottom: 0.85rem;
+      font-size: 0.92rem;
     }
 
     .focus-dot {
-      width: 6px;
-      height: 6px;
+      width: 7px; height: 7px;
       border-radius: 50%;
-      background: var(--accent-vivid);
+      background: #1a0c02;
+      margin-top: 0.5rem;
       flex-shrink: 0;
-      margin-top: 0.55rem;
     }
 
     .about-aside {
       margin-top: 2.5rem;
       padding-top: 1.5rem;
-      border-top: 1px solid var(--rule);
-      font-size: 0.9rem;
-      color: var(--ink-soft);
+      border-top: 1px solid rgba(26,12,2,0.18);
+      font-size: 0.95rem;
     }
 
     .about-aside strong {
@@ -277,116 +379,132 @@
       font-size: 11px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--ink-mute);
-      font-weight: 500;
-      margin-right: 0.5rem;
+      margin-right: 0.6rem;
     }
 
-    /* ── EXPERIENCE ── */
-    .timeline {
-      display: grid;
-      gap: 0;
-      border-left: 2px solid var(--rule);
-      padding-left: 1.75rem;
+    /* ── EXPERIENCE (dark) ── */
+    #experience {
+      background: linear-gradient(180deg, #0c0a1a, #100c26 60%, #0c0a1a);
+      color: #fff;
     }
+
+    #experience .eyebrow { color: var(--teal); }
+
+    .timeline { display: grid; gap: 0; }
 
     .timeline-item {
       position: relative;
-      padding-bottom: 2rem;
+      padding: 2rem 0 2rem 2.25rem;
+      border-left: 2px solid rgba(255,255,255,0.12);
     }
-
-    .timeline-item:last-child { padding-bottom: 0; }
 
     .timeline-item::before {
       content: '';
       position: absolute;
-      left: -2.15rem;
-      top: 0.35rem;
-      width: 9px;
-      height: 9px;
+      left: -7px; top: 2.35rem;
+      width: 12px; height: 12px;
       border-radius: 50%;
-      background: var(--accent);
+      background: var(--dot, var(--blue));
+      box-shadow: 0 0 0 5px rgba(255,255,255,0.05);
     }
 
     .timeline-role {
-      font-family: var(--serif);
-      font-size: 1.15rem;
-      color: var(--ink);
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 1.3rem;
       line-height: 1.3;
     }
 
     .timeline-org {
       font-family: var(--mono);
       font-size: 12px;
-      color: var(--accent-vivid);
-      letter-spacing: 0.03em;
-      margin: 0.35rem 0 0.6rem;
+      color: var(--dot, var(--blue));
+      margin: 0.5rem 0 0.75rem;
+      letter-spacing: 0.02em;
     }
 
     .timeline-desc {
-      font-size: 0.9rem;
-      color: var(--ink-soft);
-      line-height: 1.65;
-      max-width: 560px;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.68);
+      line-height: 1.7;
+      max-width: 620px;
     }
 
     /* ── PROJECTS ── */
-    .projects-grid {
-      display: grid;
-      gap: 1.5rem;
-    }
+    #projects { background: var(--white); }
+    #projects .eyebrow { color: var(--violet); }
+
+    .projects-grid { display: grid; gap: 1.5rem; }
 
     .project-card {
-      background: var(--paper);
-      border: 1px solid var(--rule);
-      padding: 1.75rem;
+      --accent: var(--blue);
+      position: relative;
+      background: var(--paper-2);
+      border: 1px solid rgba(11,11,18,0.08);
+      border-radius: 22px;
+      padding: 2rem;
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 1rem;
       align-items: start;
-      transition: border-color 0.15s;
       text-decoration: none;
       color: inherit;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      transform: perspective(800px);
     }
 
-    .project-card:hover { border-color: var(--accent); }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 5px;
+      background: var(--accent);
+    }
+
+    .project-card:hover {
+      border-color: transparent;
+      box-shadow: 0 24px 48px -20px color-mix(in srgb, var(--accent) 55%, transparent);
+    }
 
     .project-tag {
       font-family: var(--mono);
       font-size: 11px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--accent-vivid);
-      margin-bottom: 0.5rem;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+      font-weight: 500;
     }
 
     .project-title {
-      font-family: var(--serif);
-      font-size: 1.3rem;
-      color: var(--ink);
-      margin-bottom: 0.5rem;
-      line-height: 1.3;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 1.45rem;
+      margin-bottom: 0.6rem;
+      line-height: 1.25;
     }
 
     .project-desc {
-      font-size: 0.9rem;
-      color: var(--ink-soft);
-      line-height: 1.65;
+      font-size: 0.94rem;
+      color: #4a4a58;
+      line-height: 1.7;
     }
 
     .project-stats {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.5rem;
-      margin: 0.9rem 0 1.1rem;
-      padding: 0.7rem 0;
-      border-top: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
+      gap: 1.75rem;
+      margin: 1.1rem 0 1.2rem;
+      padding: 0.9rem 0;
+      border-top: 1px solid rgba(11,11,18,0.08);
+      border-bottom: 1px solid rgba(11,11,18,0.08);
     }
 
     .project-stat .num {
-      font-family: var(--serif);
-      font-size: 1.2rem;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 1.3rem;
       color: var(--accent);
       line-height: 1;
     }
@@ -394,53 +512,45 @@
     .project-stat .lbl {
       font-family: var(--mono);
       font-size: 9.5px;
-      color: var(--ink-mute);
+      color: #8a8a99;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      margin-top: 0.25rem;
+      margin-top: 0.3rem;
     }
 
-    .project-tools {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 1rem;
-    }
+    .project-tools { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
 
     .tool-pill {
       font-family: var(--mono);
       font-size: 11px;
-      padding: 3px 10px;
-      background: var(--accent-light);
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
       color: var(--accent);
-      letter-spacing: 0.04em;
+      font-weight: 500;
     }
 
     .project-arrow {
-      font-size: 1.25rem;
-      color: var(--rule);
-      padding-top: 0.25rem;
-      transition: color 0.15s, transform 0.15s;
-    }
-
-    .project-card:hover .project-arrow {
+      font-size: 1.3rem;
       color: var(--accent);
-      transform: translate(3px, -3px);
+      opacity: 0.3;
+      padding-top: 0.25rem;
+      transition: transform 0.25s, opacity 0.25s;
     }
 
-    /* ── SKILLS ── */
-    #skills { background: var(--paper-2); }
+    .project-card:hover .project-arrow { opacity: 1; transform: translate(4px, -4px); }
 
-    .skills-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
+    /* ── SKILLS (dark, neon) ── */
+    #skills { background: var(--void); color: #fff; }
+    #skills .eyebrow { color: var(--pink); }
+
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
 
     .skill-block {
-      padding: 1.5rem;
-      background: var(--paper);
-      border: 1px solid var(--rule);
+      padding: 1.75rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
     }
 
     .skill-block h4 {
@@ -448,46 +558,50 @@
       font-size: 11px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--ink-mute);
-      margin-bottom: 1rem;
+      margin-bottom: 1.1rem;
+      color: var(--hue, var(--blue));
     }
 
-    .skill-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
+    .skill-list { display: flex; flex-wrap: wrap; gap: 0.55rem; }
 
     .skill-tag {
       font-family: var(--mono);
       font-size: 12px;
-      padding: 4px 12px;
-      border: 1px solid var(--rule);
-      color: var(--ink-soft);
-      background: var(--paper-2);
+      padding: 5px 14px;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--hue, var(--blue)) 45%, transparent);
+      color: #fff;
+      background: color-mix(in srgb, var(--hue, var(--blue)) 12%, transparent);
     }
 
     /* ── WRITING ── */
-    .writing-list { display: grid; gap: 1px; border: 1px solid var(--rule); }
+    #writing { background: var(--paper); }
+    #writing .eyebrow { color: var(--teal); }
+
+    .writing-list { display: grid; gap: 1rem; }
 
     .writing-item {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
       gap: 1rem;
-      padding: 1.1rem 1.25rem;
-      background: var(--paper);
+      padding: 1.4rem 1.6rem;
+      background: var(--paper-2);
+      border-radius: 16px;
+      border: 1px solid rgba(11,11,18,0.08);
       text-decoration: none;
       color: var(--ink);
-      transition: background 0.12s;
+      transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
-    .writing-item:hover { background: var(--accent-light); }
-
-    .writing-item + .writing-item { border-top: 1px solid var(--rule); }
+    .writing-item:hover {
+      transform: translateX(6px);
+      border-color: var(--teal);
+    }
 
     .writing-item-title {
-      font-family: var(--serif);
+      font-family: var(--display);
+      font-weight: 700;
       font-size: 1.05rem;
       flex: 1;
     }
@@ -495,64 +609,76 @@
     .writing-item-meta {
       font-family: var(--mono);
       font-size: 11px;
-      color: var(--ink-mute);
-      letter-spacing: 0.05em;
+      color: #8a8a99;
+      letter-spacing: 0.04em;
       white-space: nowrap;
     }
 
-    /* ── CONTACT ── */
-    #contact { text-align: center; }
+    /* ── CONTACT (vivid mesh) ── */
+    #contact {
+      text-align: center;
+      background:
+        radial-gradient(700px 500px at 15% 10%, rgba(255,79,163,0.35), transparent 60%),
+        radial-gradient(700px 600px at 85% 90%, rgba(62,193,255,0.3), transparent 60%),
+        radial-gradient(900px 700px at 50% 50%, rgba(139,92,255,0.25), transparent 65%),
+        var(--void);
+      color: #fff;
+    }
+
+    #contact .eyebrow { color: var(--lime); justify-content: center; }
+    #contact .section-title { }
+
+    .contact-sub {
+      color: rgba(255,255,255,0.7);
+      max-width: 440px;
+      margin: 0 auto 1.5rem;
+      font-size: 1.02rem;
+    }
 
     .contact-email {
-      font-family: var(--serif);
-      font-size: clamp(1.5rem, 4vw, 2.5rem);
-      color: var(--accent);
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(1.6rem, 5vw, 2.8rem);
       text-decoration: none;
-      display: block;
-      margin: 1.5rem 0;
+      display: inline-block;
+      margin: 1rem 0 2rem;
+      background: linear-gradient(100deg, var(--teal), var(--blue), var(--violet));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
-    .contact-email:hover { color: var(--accent-vivid); }
-
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-    }
+    .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
 
     .contact-link {
       font-family: var(--mono);
       font-size: 13px;
-      color: var(--ink-soft);
+      color: #fff;
       text-decoration: none;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
+      padding: 0.65rem 1.3rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.22);
+      transition: border-color 0.2s, transform 0.15s;
     }
 
-    .contact-link:hover { color: var(--accent); }
+    .contact-link:hover { border-color: #fff; transform: translateY(-2px); }
 
-    /* ── FOOTER ── */
     footer {
-      border-top: 1px solid var(--rule);
-      padding: 1.5rem;
+      padding: 2rem;
       text-align: center;
       font-family: var(--mono);
       font-size: 12px;
-      color: var(--ink-mute);
+      color: #8a8a99;
+      background: var(--void);
     }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 600px) {
-      .about-grid,
-      .skills-grid { grid-template-columns: 1fr; }
-      .hero-stat-row { gap: 1.5rem; }
-      nav { padding: 0 1rem; }
-      .nav-links { gap: 1.25rem; }
-      .hero-cta-ghost { margin-left: 0; margin-top: 0.75rem; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * { transition: none !important; }
+    @media (max-width: 760px) {
+      .about-grid, .skills-grid { grid-template-columns: 1fr; }
+      .hero-stat-row { gap: 1.5rem; flex-wrap: wrap; }
+      section { padding: 5.5rem 0; }
+      nav { padding: 1.1rem 1.25rem; }
     }
   </style>
 </head>
@@ -561,20 +687,21 @@
   <!-- NAV -->
   <nav>
     <a class="nav-logo" href="#">ishexad.github.io</a>
-    <ul class="nav-links">
-      <li><a href="#experience">experience</a></li>
-      <li><a href="#projects">projects</a></li>
-      <li><a href="#skills">skills</a></li>
-      <li><a href="#writing">writing</a></li>
-      <li><a href="#contact">contact</a></li>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#experience" data-section="experience">experience</a></li>
+      <li><a href="#projects" data-section="projects">projects</a></li>
+      <li><a href="#skills" data-section="skills">skills</a></li>
+      <li><a href="#writing" data-section="writing">writing</a></li>
+      <li><a href="#contact" data-section="contact">contact</a></li>
     </ul>
   </nav>
 
   <!-- HERO -->
   <section id="hero">
     <div class="container">
-      <p class="hero-eyebrow">Data & Insights Analyst · Oxfam International</p>
-      <h1 class="hero-name">Data that moves<br>from the <em>field</em><br>to the boardroom.</h1>
+      <p class="eyebrow hero-eyebrow">Data &amp; Insights Analyst · Oxfam International</p>
+      <h1 class="headline hero-name">Data that moves<br>from the <span class="grad">field</span><br>to the <span class="grad">boardroom</span>.</h1>
       <p class="hero-desc">
         I lead data and insights work for a global NGO confederation — turning complex,
         multi-country data into board-level insight, and building the digital tools and
@@ -596,20 +723,20 @@
         </div>
       </div>
 
-      <a href="#projects" class="hero-cta">View projects ↓</a>
-      <a href="#contact" class="hero-cta-ghost">Get in touch</a>
+      <div class="btn-row">
+        <a href="#projects" class="btn btn-solid magnetic">View projects ↓</a>
+        <a href="#contact" class="btn btn-ghost magnetic">Get in touch</a>
+      </div>
     </div>
   </section>
-
-  <hr class="rule" />
 
   <!-- ABOUT -->
   <section id="about">
     <div class="container">
       <div class="about-grid">
-        <div class="about-text">
-          <p class="section-label">About</p>
-          <h2 class="section-title">Insight with<br>an audience of decision-makers.</h2>
+        <div class="about-text reveal">
+          <p class="eyebrow">About</p>
+          <h2 class="section-title">Insight with an audience of decision-makers.</h2>
           <p>
             I'm a Data and Insights Analyst with over a decade of international NGO
             experience, including several years leading data and insights work for
@@ -628,49 +755,32 @@
           </p>
         </div>
 
-        <div class="about-focus">
-          <h4>Education & certifications</h4>
-          <div class="focus-item">
-            <span class="focus-dot"></span>
-            <span>MS, Management Sciences — SZABIST, Islamabad (2014)</span>
-          </div>
-          <div class="focus-item">
-            <span class="focus-dot"></span>
-            <span>BBA (Hons), Business Administration — GC University, Faisalabad (2009)</span>
-          </div>
-          <div class="focus-item">
-            <span class="focus-dot"></span>
-            <span>Google Data Analytics Professional Certificate</span>
-          </div>
-          <div class="focus-item">
-            <span class="focus-dot"></span>
-            <span>Social Impact Strategy — University of Pennsylvania</span>
-          </div>
-          <div class="focus-item">
-            <span class="focus-dot"></span>
-            <span>Human-Centred Design Approach (HCD) training, 2017</span>
-          </div>
+        <div class="about-focus reveal">
+          <h4>Education &amp; certifications</h4>
+          <div class="focus-item"><span class="focus-dot"></span><span>MS, Management Sciences — SZABIST, Islamabad (2014)</span></div>
+          <div class="focus-item"><span class="focus-dot"></span><span>BBA (Hons), Business Administration — GC University, Faisalabad (2009)</span></div>
+          <div class="focus-item"><span class="focus-dot"></span><span>Google Data Analytics Professional Certificate</span></div>
+          <div class="focus-item"><span class="focus-dot"></span><span>Social Impact Strategy — University of Pennsylvania</span></div>
+          <div class="focus-item"><span class="focus-dot"></span><span>Human-Centred Design Approach (HCD) training, 2017</span></div>
         </div>
       </div>
 
-      <p class="about-aside">
+      <p class="about-aside reveal">
         <strong>Also</strong>Invited by Google to their MapMaker Conference in California,
         for contributions to mapping data that others couldn't see.
       </p>
     </div>
   </section>
 
-  <hr class="rule" />
-
   <!-- EXPERIENCE -->
   <section id="experience">
     <div class="container">
-      <p class="section-label">Experience</p>
-      <h2 class="section-title">A decade in international development.</h2>
+      <p class="eyebrow">Experience</p>
+      <h2 class="section-title reveal">A decade in international development.</h2>
 
       <div class="timeline">
 
-        <div class="timeline-item">
+        <div class="timeline-item reveal" style="--dot: var(--blue)">
           <div class="timeline-role">Data and Insights Analyst</div>
           <div class="timeline-org">Oxfam International Secretariat · Mar 2021 – Present</div>
           <p class="timeline-desc">
@@ -682,8 +792,8 @@
           </p>
         </div>
 
-        <div class="timeline-item">
-          <div class="timeline-role">Member, Staff Forum Leadership Team & Chairperson</div>
+        <div class="timeline-item reveal" style="--dot: var(--pink)">
+          <div class="timeline-role">Member, Staff Forum Leadership Team &amp; Chairperson</div>
           <div class="timeline-org">Oxfam International Secretariat · May 2021 – Aug 2022</div>
           <p class="timeline-desc">
             Elected to represent staff interests at board level. Partnered with HR
@@ -692,7 +802,7 @@
           </p>
         </div>
 
-        <div class="timeline-item">
+        <div class="timeline-item reveal" style="--dot: var(--teal)">
           <div class="timeline-role">Project Coordinator, Empower Youth for Work</div>
           <div class="timeline-org">Oxfam GB · Oct 2020 – Mar 2021</div>
           <p class="timeline-desc">
@@ -703,7 +813,7 @@
           </p>
         </div>
 
-        <div class="timeline-item">
+        <div class="timeline-item reveal" style="--dot: var(--orange)">
           <div class="timeline-role">Project Officer – Youth</div>
           <div class="timeline-org">Oxfam GB, Pakistan · Jan 2017 – Jun 2020</div>
           <p class="timeline-desc">
@@ -715,7 +825,7 @@
           </p>
         </div>
 
-        <div class="timeline-item">
+        <div class="timeline-item reveal" style="--dot: var(--violet)">
           <div class="timeline-role">Programme Monitoring Officer</div>
           <div class="timeline-org">Oxfam Novib, Pakistan · May 2015 – Dec 2016</div>
           <p class="timeline-desc">
@@ -725,12 +835,12 @@
           </p>
         </div>
 
-        <div class="timeline-item">
+        <div class="timeline-item reveal" style="--dot: var(--lime)">
           <div class="timeline-role">Earlier roles</div>
           <div class="timeline-org">Oxfam Novib / Orbit Limousine, Pakistan · 2012 – 2015</div>
           <p class="timeline-desc">
             Staff Representative and Programme Support Officer at Oxfam Novib, and
-            Procurement & Logistics Officer at Orbit Limousine — spanning staff
+            Procurement &amp; Logistics Officer at Orbit Limousine — spanning staff
             representation, humanitarian procurement, and digitising offline
             operational systems.
           </p>
@@ -740,17 +850,15 @@
     </div>
   </section>
 
-  <hr class="rule" />
-
   <!-- PROJECTS -->
   <section id="projects">
     <div class="container">
-      <p class="section-label">Projects</p>
-      <h2 class="section-title">Selected work.</h2>
+      <p class="eyebrow">Projects</p>
+      <h2 class="section-title reveal">Selected work.</h2>
 
       <div class="projects-grid">
 
-        <a class="project-card" href="./projects/regime-inclusion/index.html">
+        <a class="project-card reveal" style="--accent: var(--blue)" href="./projects/regime-inclusion/index.html">
           <div>
             <p class="project-tag">Live Demo · Personal Project</p>
             <h3 class="project-title">Does Regime Type Shape Women's Labour Force Participation?</h3>
@@ -763,13 +871,13 @@
             <div class="project-tools">
               <span class="tool-pill">Data Visualisation</span>
               <span class="tool-pill">Interactive Dashboard</span>
-              <span class="tool-pill">Gender & Governance</span>
+              <span class="tool-pill">Gender &amp; Governance</span>
             </div>
           </div>
           <div class="project-arrow">↗</div>
         </a>
 
-        <div class="project-card" style="grid-template-columns: 1fr;">
+        <div class="project-card reveal" style="--accent: var(--pink); grid-template-columns: 1fr;">
           <div>
             <p class="project-tag">Empower Youth for Work · Oxfam GB</p>
             <h3 class="project-title">Digital Learning Platform for Rural Youth</h3>
@@ -794,10 +902,10 @@
           </div>
         </div>
 
-        <div class="project-card" style="grid-template-columns: 1fr;">
+        <div class="project-card reveal" style="--accent: var(--teal); grid-template-columns: 1fr;">
           <div>
             <p class="project-tag">Oxfam GB, Pakistan</p>
-            <h3 class="project-title">Project Reporting & Budget Management System</h3>
+            <h3 class="project-title">Project Reporting &amp; Budget Management System</h3>
             <p class="project-desc">
               Took a digital project-reporting web app from concept to rollout, and built an
               internal dashboard that replaced an offline reporting mechanism — giving
@@ -812,7 +920,7 @@
           </div>
         </div>
 
-        <div class="project-card" style="grid-template-columns: 1fr;">
+        <div class="project-card reveal" style="--accent: var(--violet); grid-template-columns: 1fr;">
           <div>
             <p class="project-tag">Oxfam International Secretariat</p>
             <h3 class="project-title">Global Data Digitisation Initiative</h3>
@@ -829,10 +937,10 @@
           </div>
         </div>
 
-        <div class="project-card" style="grid-template-columns: 1fr;">
+        <div class="project-card reveal" style="--accent: var(--orange); grid-template-columns: 1fr;">
           <div>
             <p class="project-tag">Co-founded · Oxfam GB, Pakistan</p>
-            <h3 class="project-title">E-Jobs & Learning Platform</h3>
+            <h3 class="project-title">E-Jobs &amp; Learning Platform</h3>
             <p class="project-desc">
               Co-founded and managed a platform connecting young people in Pakistan with
               worldwide job and freelancing opportunities, alongside a peer learning
@@ -846,7 +954,7 @@
           </div>
         </div>
 
-        <a class="project-card" href="https://squadkitty.com" target="_blank" rel="noopener">
+        <a class="project-card reveal" style="--accent: #38bdf8" href="https://squadkitty.com" target="_blank" rel="noopener">
           <div>
             <p class="project-tag">Personal Project</p>
             <h3 class="project-title">SquadKitty</h3>
@@ -857,7 +965,7 @@
           <div class="project-arrow">↗</div>
         </a>
 
-        <a class="project-card" href="https://dataexact.io" target="_blank" rel="noopener">
+        <a class="project-card reveal" style="--accent: var(--lime)" href="https://dataexact.io" target="_blank" rel="noopener">
           <div>
             <p class="project-tag">Personal Project</p>
             <h3 class="project-title">DataExact</h3>
@@ -872,75 +980,71 @@
     </div>
   </section>
 
-  <hr class="rule" />
-
   <!-- SKILLS -->
   <section id="skills">
     <div class="container">
-      <p class="section-label">Skills</p>
-      <h2 class="section-title">Tools of the trade.</h2>
+      <p class="eyebrow">Skills</p>
+      <h2 class="section-title reveal">Tools of the trade.</h2>
 
       <div class="skills-grid">
-        <div class="skill-block">
-          <h4>Strategy & insight</h4>
+        <div class="skill-block reveal" style="--hue: var(--violet)">
+          <h4>Strategy &amp; insight</h4>
           <div class="skill-list">
-            <span class="skill-tag">Data & Insight Strategy</span>
+            <span class="skill-tag">Data &amp; Insight Strategy</span>
             <span class="skill-tag">Board-level Reporting</span>
             <span class="skill-tag">Data Storytelling</span>
             <span class="skill-tag">Horizon Planning</span>
           </div>
         </div>
 
-        <div class="skill-block">
-          <h4>Digital tools & dashboards</h4>
+        <div class="skill-block reveal" style="--hue: var(--blue)">
+          <h4>Digital tools &amp; dashboards</h4>
           <div class="skill-list">
             <span class="skill-tag">App Development Leadership</span>
             <span class="skill-tag">Dashboard Design</span>
-            <span class="skill-tag">Knowledge & Learning Databases</span>
+            <span class="skill-tag">Knowledge &amp; Learning Databases</span>
             <span class="skill-tag">Digital Transformation</span>
           </div>
         </div>
 
-        <div class="skill-block">
-          <h4>Research & evaluation</h4>
+        <div class="skill-block reveal" style="--hue: var(--teal)">
+          <h4>Research &amp; evaluation</h4>
           <div class="skill-list">
             <span class="skill-tag">Human-Centred Design</span>
-            <span class="skill-tag">Qualitative & Quantitative Research</span>
+            <span class="skill-tag">Qualitative &amp; Quantitative Research</span>
             <span class="skill-tag">Baseline / Midline / Endline Evaluations</span>
             <span class="skill-tag">MEAL (CAMSA)</span>
           </div>
         </div>
 
-        <div class="skill-block">
-          <h4>Leadership & capability building</h4>
+        <div class="skill-block reveal" style="--hue: var(--pink)">
+          <h4>Leadership &amp; capability building</h4>
           <div class="skill-list">
-            <span class="skill-tag">Stakeholder & Team Leadership</span>
+            <span class="skill-tag">Stakeholder &amp; Team Leadership</span>
             <span class="skill-tag">Staff Representation</span>
-            <span class="skill-tag">Training & Webinars</span>
-            <span class="skill-tag">Budget & Governance</span>
+            <span class="skill-tag">Training &amp; Webinars</span>
+            <span class="skill-tag">Budget &amp; Governance</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <hr class="rule" />
-
   <!-- WRITING -->
   <section id="writing">
     <div class="container">
-      <p class="section-label">Research & publications</p>
-      <h2 class="section-title">Written & published.</h2>
+      <p class="eyebrow">Research &amp; publications</p>
+      <h2 class="section-title reveal">Written &amp; published.</h2>
 
       <div class="writing-list">
 
-        <a class="writing-item" href="https://policy-practice.oxfam.org/resources/if-a-woman-does-a-job-she-can-support-her-family-as-well-insights-from-communit-620925/" target="_blank" rel="noopener">
+        <a class="writing-item reveal" href="https://policy-practice.oxfam.org/resources/if-a-woman-does-a-job-she-can-support-her-family-as-well-insights-from-communit-620925/" target="_blank" rel="noopener">
           <span class="writing-item-title">"If a Woman Does a Job, She Can Support Her Family as Well": Insights from Communities</span>
-          <span class="writing-item-meta">Oxfam Policy & Practice · Oct 2019</span>
+          <span class="writing-item-meta">Oxfam Policy &amp; Practice · Oct 2019</span>
         </a>
 
-        <div class="writing-item">
-          <span class="writing-item-title">Context Analysis of Youth Social & Economic Empowerment Sector in Pakistan</span>
+        <div class="writing-item reveal">
+          <span class="writing-item-title">Context Analysis of Youth Social &amp; Economic Empowerment Sector in Pakistan</span>
           <span class="writing-item-meta">National Research · Oxfam GB</span>
         </div>
 
@@ -948,20 +1052,18 @@
     </div>
   </section>
 
-  <hr class="rule" />
-
   <!-- CONTACT -->
   <section id="contact">
     <div class="container">
-      <p class="section-label">Contact</p>
-      <h2 class="section-title">Let's work together.</h2>
-      <p style="color: var(--ink-soft); max-width: 420px; margin: 0 auto 1rem;">
+      <p class="eyebrow">Contact</p>
+      <h2 class="section-title reveal">Let's work together.</h2>
+      <p class="contact-sub reveal">
         Open to conversations about data and insight strategy, digital tools for
         international development, and senior data leadership roles.
       </p>
-      <a class="contact-email" href="mailto:shahzadshakeel98@gmail.com">shahzadshakeel98@gmail.com</a>
+      <a class="contact-email reveal magnetic" href="mailto:shahzadshakeel98@gmail.com">shahzadshakeel98@gmail.com</a>
 
-      <div class="contact-links">
+      <div class="contact-links reveal">
         <a class="contact-link" href="https://x.com/ishexad" target="_blank" rel="noopener">X / Twitter ↗</a>
         <a class="contact-link" href="https://github.com/ishexad" target="_blank" rel="noopener">GitHub ↗</a>
         <a class="contact-link" href="https://linkedin.com/in/ishexad" target="_blank" rel="noopener">LinkedIn ↗</a>
@@ -972,6 +1074,77 @@
   <footer>
     <p>© 2026 Shahzad Shakeel · Built with HTML/CSS · Hosted on GitHub Pages</p>
   </footer>
+
+  <script>
+    // Scroll-reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          e.target.style.transitionDelay = (i % 4) * 0.06 + 's';
+          e.target.classList.add('in-view');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
+    revealEls.forEach(el => io.observe(el));
+
+    // Hero pointer-reactive spotlight
+    const hero = document.getElementById('hero');
+    if (hero && window.matchMedia('(pointer: fine)').matches) {
+      hero.addEventListener('mousemove', (e) => {
+        const r = hero.getBoundingClientRect();
+        const mx = ((e.clientX - r.left) / r.width) * 100;
+        const my = ((e.clientY - r.top) / r.height) * 100;
+        hero.style.setProperty('--mx', mx + '%');
+        hero.style.setProperty('--my', my + '%');
+      });
+    }
+
+    // Magnetic buttons
+    if (window.matchMedia('(pointer: fine)').matches) {
+      document.querySelectorAll('.magnetic').forEach((el) => {
+        el.addEventListener('mousemove', (e) => {
+          const r = el.getBoundingClientRect();
+          const x = e.clientX - r.left - r.width / 2;
+          const y = e.clientY - r.top - r.height / 2;
+          el.style.transform = `translate(${x * 0.18}px, ${y * 0.3}px)`;
+        });
+        el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+      });
+    }
+
+    // Mobile nav toggle
+    const navToggle = document.getElementById('navToggle');
+    const navLinksEl = document.getElementById('navLinks');
+    if (navToggle && navLinksEl) {
+      navToggle.addEventListener('click', () => {
+        const open = navLinksEl.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', String(open));
+        navToggle.textContent = open ? '✕' : '☰';
+      });
+      navLinksEl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        navLinksEl.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.textContent = '☰';
+      }));
+    }
+
+    // Active nav link on scroll
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections = Array.from(navLinks).map(l => document.getElementById(l.dataset.section)).filter(Boolean);
+    const navIo = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const link = document.querySelector(`.nav-links a[data-section="${entry.target.id}"]`);
+        if (!link) return;
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    sections.forEach(s => navIo.observe(s));
+  </script>
 
 </body>
 </html>
