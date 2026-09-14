@@ -4,272 +4,396 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shahzad Shakeel — Data & Insights Analyst</title>
+  <title>Shahzad Shakeel — Data &amp; Insights Analyst</title>
+  <meta name="description" content="Data and Insights Analyst leading board-level insight and digital tools for Oxfam International's global confederation." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink: #201b00;
-      --ink-soft: #5c4f00;
-      --ink-mute: #8f8140;
-      --paper: #fffef5;
-      --paper-2: #fff6c9;
-      --rule: #f0e18f;
-      --accent: #0072ce;
-      --accent-light: #dcefff;
-      --accent-vivid: #a3690b;
-      --mono: 'IBM Plex Mono', monospace;
-      --serif: 'DM Serif Display', Georgia, serif;
+      /* grounds */
+      --bg: #f4f7fd;
+      --surface: #ffffff;
+      --tint-sky: #e8f2ff;
+      --tint-mint: #e4faf3;
+      --tint-peach: #fff0eb;
+      --tint-lemon: #fff6e0;
+
+      /* text */
+      --ink: #12162a;
+      --body: #434a61;
+      --muted: #6f7590;
+      --line: rgba(18,22,42,0.11);
+      --grid: rgba(18,22,42,0.05);
+
+      /* vivid marks (fills) + ink variants (small text on light) */
+      --c1: #ff5a45;  --c1i: #cf3218;
+      --c2: #ffab00;  --c2i: #8f5a00;
+      --c3: #62c624;  --c3i: #3e830f;
+      --c4: #0fc2ae;  --c4i: #027f72;
+      --c5: #2ea6ff;  --c5i: #0b6ec2;
+      --c6: #8b5cf6;  --c6i: #6527d9;
+      --c7: #ff3d8b;  --c7i: #cc1060;
+
+      --display: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
       --sans: 'Inter', system-ui, sans-serif;
-      --col: 680px;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --col: 1160px;
     }
+
+    /* accent pairing: one class sets both the vivid fill and its legible ink */
+    .acc-1 { --c: var(--c1); --ci: var(--c1i); }
+    .acc-2 { --c: var(--c2); --ci: var(--c2i); }
+    .acc-3 { --c: var(--c3); --ci: var(--c3i); }
+    .acc-4 { --c: var(--c4); --ci: var(--c4i); }
+    .acc-5 { --c: var(--c5); --ci: var(--c5i); }
+    .acc-6 { --c: var(--c6); --ci: var(--c6i); }
+    .acc-7 { --c: var(--c7); --ci: var(--c7i); }
 
     html { scroll-behavior: smooth; }
 
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
     body {
       font-family: var(--sans);
-      background: var(--paper);
-      color: var(--ink);
+      background: var(--bg);
+      color: var(--body);
       font-size: 16px;
-      line-height: 1.7;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection { background: var(--c5); color: #fff; }
+
+    .container { max-width: var(--col); margin: 0 auto; padding: 0 1.75rem; }
+
+    /* graph-paper ground, the signature of a plotted page */
+    .ground {
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 34px 34px;
     }
 
     /* ── NAV ── */
     nav {
       position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 2rem;
-      height: 56px;
-      background: var(--paper);
-      border-bottom: 1px solid var(--rule);
+      gap: 2rem;
+      width: min(94%, 800px);
+      padding: 0.8rem 0.85rem 0.8rem 1.4rem;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(18px) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      box-shadow: 0 6px 24px -14px rgba(18,22,42,0.45);
     }
+
+    .nav-logo, .nav-links a { color: var(--ink); text-decoration: none; }
 
     .nav-logo {
       font-family: var(--mono);
       font-size: 13px;
-      font-weight: 500;
-      color: var(--accent);
-      letter-spacing: 0.04em;
-      text-decoration: none;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
     }
 
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
+    .nav-links { display: flex; align-items: center; gap: 1.5rem; list-style: none; }
 
     .nav-links a {
       font-size: 13px;
       font-family: var(--mono);
-      color: var(--ink-soft);
-      text-decoration: none;
-      letter-spacing: 0.03em;
+      opacity: 0.58;
+      transition: opacity 0.2s;
+      position: relative;
     }
 
-    .nav-links a:hover { color: var(--ink); }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; }
 
-    /* ── LAYOUT ── */
-    .container {
-      max-width: var(--col);
-      margin: 0 auto;
-      padding: 0 1.5rem;
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: -6px;
+      height: 2px;
+      background: var(--c5);
     }
 
-    section { padding: 5rem 0; }
-
-    hr.rule {
+    .nav-toggle {
+      display: none;
+      background: rgba(18,22,42,0.07);
       border: none;
-      border-top: 1px solid var(--rule);
-      margin: 0;
+      color: var(--ink);
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      font-family: var(--mono);
+      font-size: 15px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
     }
+
+    @media (max-width: 760px) {
+      nav { padding: 0.7rem 0.7rem 0.7rem 1.1rem; top: 0.8rem; }
+      .nav-toggle { display: flex; }
+      .nav-links {
+        position: absolute;
+        top: calc(100% + 0.6rem);
+        left: 0; right: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        background: rgba(255, 255, 255, 0.97);
+        backdrop-filter: blur(18px);
+        border: 1px solid var(--line);
+        box-shadow: 0 18px 40px -22px rgba(18,22,42,0.5);
+        border-radius: 20px;
+        padding: 0.5rem;
+        opacity: 0;
+        transform: translateY(-8px);
+        pointer-events: none;
+        transition: opacity 0.2s, transform 0.2s;
+      }
+      .nav-links.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+      .nav-links a { width: 100%; padding: 0.75rem 1rem; opacity: 0.85; }
+      .nav-links a.active::after { display: none; }
+      .nav-links a.active { color: var(--c5); }
+    }
+
+    /* ── FIGURE SCAFFOLD ── */
+    section { padding: 7rem 0; position: relative; scroll-margin-top: 92px; }
+
+    .fig-head { margin-bottom: 2.75rem; max-width: 680px; }
+
+    .fig-num {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.9rem;
+      color: var(--fig, var(--c5));
+    }
+
+    .fig-num::before {
+      content: '';
+      width: 26px; height: 1px;
+      background: currentColor;
+    }
+
+    .fig-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(2rem, 4.6vw, 3.1rem);
+      line-height: 1.04;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+    }
+
+    .fig-sub {
+      margin-top: 1rem;
+      color: var(--body);
+      font-size: 1rem;
+      max-width: 620px;
+    }
+
+    .note {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.02em;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.75s cubic-bezier(.2,.7,.2,1), transform 0.75s cubic-bezier(.2,.7,.2,1);
+    }
+    .reveal.in-view { opacity: 1; transform: none; }
 
     /* ── HERO ── */
     #hero {
-      padding: 9rem 0 5rem;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 0 4rem;
+      background:
+        radial-gradient(880px 620px at 80% 38%, rgba(46,166,255,0.20), transparent 62%),
+        radial-gradient(700px 540px at 12% 76%, rgba(255,61,139,0.14), transparent 62%),
+        radial-gradient(620px 520px at 46% 6%, rgba(98,198,36,0.14), transparent 60%),
+        radial-gradient(700px 600px at 96% 92%, rgba(255,171,0,0.14), transparent 62%),
+        var(--bg);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: 3.5rem;
+      align-items: center;
     }
 
     .hero-eyebrow {
       font-family: var(--mono);
       font-size: 12px;
-      color: var(--ink-mute);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .hero-eyebrow::before {
-      content: '';
-      display: inline-block;
-      width: 24px;
-      height: 1px;
-      background: var(--accent-vivid);
-    }
-
-    .hero-name {
-      font-family: var(--serif);
-      font-size: clamp(3rem, 8vw, 5.5rem);
-      line-height: 1.05;
-      letter-spacing: -0.01em;
-      color: var(--ink);
-      margin-bottom: 1.75rem;
-    }
-
-    .hero-name em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .hero-desc {
-      font-size: 1.1rem;
-      color: var(--ink-soft);
-      max-width: 520px;
-      line-height: 1.8;
-      margin-bottom: 2.5rem;
-    }
-
-    .hero-stat-row {
-      display: flex;
-      gap: 2.5rem;
-      margin-bottom: 2.5rem;
-      padding: 1.5rem 0;
-      border-top: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .hero-stat .number {
-      font-family: var(--serif);
-      font-size: 2rem;
-      color: var(--accent);
-      line-height: 1;
-    }
-
-    .hero-stat .label {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--ink-mute);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-top: 0.25rem;
-    }
-
-    .hero-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.65rem 1.4rem;
-      background: var(--accent);
-      color: #fff;
-      font-size: 14px;
-      font-family: var(--mono);
-      letter-spacing: 0.03em;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-    }
-
-    .hero-cta:hover { background: #005a9e; }
-
-    .hero-cta-ghost {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.65rem 1.4rem;
-      background: transparent;
-      color: var(--accent);
-      font-size: 14px;
-      font-family: var(--mono);
-      letter-spacing: 0.03em;
-      text-decoration: none;
-      border: 1px solid var(--accent);
-      margin-left: 1rem;
-    }
-
-    .hero-cta-ghost:hover { background: var(--accent-light); }
-
-    /* ── SECTION HEADERS ── */
-    .section-label {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--accent-vivid);
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      margin-bottom: 1rem;
+      color: var(--c4i);
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 1.4rem;
     }
 
-    .section-title {
-      font-family: var(--serif);
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
-      line-height: 1.15;
-      color: var(--ink);
+    .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: currentColor; }
+
+    .hero-name {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(2.5rem, 5.4vw, 4.2rem);
+      line-height: 1.02;
+      letter-spacing: -0.025em;
       margin-bottom: 1.5rem;
+      color: var(--ink);
     }
 
-    /* ── ABOUT ── */
-    #about { background: var(--paper-2); }
+    .hero-name .u-field { color: var(--c3i); }
+    .hero-name .u-board { color: var(--c5i); }
+
+    .hero-desc {
+      color: var(--body);
+      max-width: 460px;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    .btn-row { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.5rem;
+      border-radius: 999px;
+      font-size: 13.5px;
+      font-family: var(--mono);
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.2s, border-color 0.2s;
+      will-change: transform;
+    }
+
+    .btn-solid { background: var(--ink); color: #fff; font-weight: 500; }
+    .btn-solid:hover { background: var(--c5i); }
+    .btn-ghost { color: var(--ink); border: 1px solid rgba(18,22,42,0.28); background: rgba(255,255,255,0.55); }
+    .btn-ghost:hover { border-color: var(--ink); }
+
+    .flow-wrap { position: relative; }
+    .flow-svg { width: 100%; height: auto; display: block; overflow: visible; }
+
+    .flow-label {
+      font-family: var(--mono);
+      font-size: 12px;
+      fill: var(--ink);
+      paint-order: stroke fill;
+      stroke: #fff;
+      stroke-width: 4px;
+      stroke-linejoin: round;
+    }
+
+    .flow-sub {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      fill: var(--muted);
+      paint-order: stroke fill;
+      stroke: #fff;
+      stroke-width: 4px;
+      stroke-linejoin: round;
+    }
+
+    .flow-cap {
+      margin-top: 1rem;
+      text-align: right;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .flow-label { font-size: 17px; }
+      .flow-sub { font-size: 15px; }
+      .flow-cap { text-align: left; }
+    }
+
+    /* ── ABOUT (tinted plate) ── */
+    #about { background: var(--tint-peach); }
+    #about .fig-num { color: var(--c1i); }
 
     .about-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3.5rem;
       align-items: start;
     }
 
-    .about-text p {
-      color: var(--ink-soft);
-      margin-bottom: 1rem;
-      font-size: 0.975rem;
+    .about-text p { margin-bottom: 1.1rem; max-width: 580px; color: var(--body); }
+
+    .about-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 1.75rem;
+      box-shadow: 0 10px 30px -22px rgba(18,22,42,0.6);
     }
 
-    .about-focus {
-      background: var(--paper);
-      padding: 1.5rem;
-      border-left: 3px solid var(--accent);
-    }
-
-    .about-focus h4 {
+    .about-card h4 {
       font-family: var(--mono);
       font-size: 11px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--ink-mute);
-      margin-bottom: 1rem;
+      margin-bottom: 1.1rem;
+      color: var(--c1i);
     }
 
-    .focus-item {
+    .about-item {
       display: flex;
+      gap: 0.8rem;
       align-items: flex-start;
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
-      font-size: 0.9rem;
-      color: var(--ink-soft);
+      margin-bottom: 0.85rem;
+      font-size: 0.92rem;
     }
 
-    .focus-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent-vivid);
-      flex-shrink: 0;
-      margin-top: 0.55rem;
+    .about-item .yr {
+      font-family: var(--mono);
+      font-size: 11px;
+      padding-top: 0.25rem;
+      min-width: 34px;
+      color: var(--muted);
     }
 
     .about-aside {
       margin-top: 2.5rem;
       padding-top: 1.5rem;
-      border-top: 1px solid var(--rule);
-      font-size: 0.9rem;
-      color: var(--ink-soft);
+      border-top: 1px solid var(--line);
+      font-size: 0.95rem;
+      max-width: 700px;
+      color: var(--body);
     }
 
     .about-aside strong {
@@ -277,340 +401,451 @@
       font-size: 11px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--ink-mute);
-      font-weight: 500;
-      margin-right: 0.5rem;
+      margin-right: 0.6rem;
+      color: var(--c1i);
     }
 
-    /* ── EXPERIENCE ── */
-    .timeline {
+    /* ── COUNTED (encoded stats) ── */
+    #counted { background: var(--surface); }
+
+    .stat-grid {
       display: grid;
-      gap: 0;
-      border-left: 2px solid var(--rule);
-      padding-left: 1.75rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
     }
 
-    .timeline-item {
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 1.9rem;
+      box-shadow: 0 14px 34px -26px rgba(18,22,42,0.75);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
       position: relative;
-      padding-bottom: 2rem;
+      overflow: hidden;
     }
 
-    .timeline-item:last-child { padding-bottom: 0; }
-
-    .timeline-item::before {
+    .stat-card::before {
       content: '';
       position: absolute;
-      left: -2.15rem;
-      top: 0.35rem;
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--accent);
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--c);
     }
 
-    .timeline-role {
-      font-family: var(--serif);
-      font-size: 1.15rem;
+    .stat-num {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      line-height: 1;
+      color: var(--c);
+      letter-spacing: -0.02em;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.95rem;
+      color: var(--body);
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    .stat-mark { min-height: 62px; }
+    .stat-mark svg { max-width: 100%; height: auto; display: block; overflow: visible; }
+
+    .stat-mark .cell { opacity: 0; transition: opacity 0.4s ease; }
+    .in-view .stat-mark .cell { opacity: 1; }
+
+    .stat-note { margin-top: auto; }
+
+    @media (max-width: 760px) { .stat-grid { grid-template-columns: 1fr; } }
+
+    /* ── CAREER GANTT ── */
+    #career { background: var(--tint-sky); }
+
+    .chart-scroll { overflow-x: auto; overflow-y: hidden; padding-bottom: 0.5rem; }
+    .chart-scroll svg { display: block; width: 100%; height: auto; min-width: 720px; }
+
+    .gantt-role {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 14px;
+      fill: var(--ink);
+    }
+
+    .gantt-meta { font-family: var(--mono); font-size: 11px; fill: var(--muted); }
+    .gantt-axis { font-family: var(--mono); font-size: 11px; fill: var(--muted); }
+    .gantt-grid { stroke: rgba(18,22,42,0.10); stroke-width: 1; }
+    .gantt-baseline { stroke: rgba(18,22,42,0.22); stroke-width: 1; }
+    .gantt-bar { cursor: pointer; transition: opacity 0.2s; transform-origin: left center; }
+    .gantt-row:hover .gantt-bar, .gantt-bar:focus-visible { opacity: 1 !important; }
+    .gantt-row { outline: none; }
+    .gantt-edu { font-family: var(--mono); font-size: 10.5px; fill: var(--muted); }
+
+    /* mark chrome (range bar), kept in CSS so it follows the theme */
+    .mark-track { fill: rgba(18,22,42,0.09); }
+    .mark-tick { stroke: rgba(18,22,42,0.28); stroke-width: 1; }
+    .mark-tick-label { fill: var(--muted); font-size: 9.5px; font-family: var(--mono); }
+
+    .career-detail {
+      margin-top: 1.75rem;
+      border-left: 3px solid var(--dc, var(--c5));
+      padding: 0.35rem 0 0.35rem 1.25rem;
+      min-height: 96px;
+    }
+
+    .career-detail h3 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 0.2rem;
       color: var(--ink);
-      line-height: 1.3;
     }
 
-    .timeline-org {
+    .career-detail .meta {
       font-family: var(--mono);
-      font-size: 12px;
-      color: var(--accent-vivid);
-      letter-spacing: 0.03em;
-      margin: 0.35rem 0 0.6rem;
+      font-size: 11.5px;
+      color: var(--dc, var(--c5i));
+      margin-bottom: 0.7rem;
     }
 
-    .timeline-desc {
-      font-size: 0.9rem;
-      color: var(--ink-soft);
-      line-height: 1.65;
-      max-width: 560px;
-    }
+    .career-detail p { color: var(--body); font-size: 0.94rem; max-width: 640px; }
 
-    /* ── PROJECTS ── */
-    .projects-grid {
-      display: grid;
-      gap: 1.5rem;
-    }
+    .js-on .career-source { display: none; }
+    .career-source { display: grid; gap: 1.5rem; }
+    .career-source li { list-style: none; }
+
+    /* ── PROJECTS (light plate) ── */
+    #projects { background: var(--bg); }
+
+    .projects-grid { display: grid; gap: 1.25rem; }
 
     .project-card {
-      background: var(--paper);
-      border: 1px solid var(--rule);
-      padding: 1.75rem;
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 1.9rem 2rem;
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 1rem;
+      grid-template-columns: minmax(0,1fr) auto;
+      gap: 1.5rem;
       align-items: start;
-      transition: border-color 0.15s;
       text-decoration: none;
       color: inherit;
+      box-shadow: 0 14px 34px -28px rgba(18,22,42,0.8);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
     }
 
-    .project-card:hover { border-color: var(--accent); }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      border-radius: 20px 20px 0 0;
+      background: var(--c);
+    }
+
+    a.project-card:hover {
+      transform: translateY(-3px);
+      border-color: transparent;
+      box-shadow: 0 22px 44px -22px color-mix(in srgb, var(--c) 70%, transparent);
+    }
 
     .project-tag {
       font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--accent-vivid);
-      margin-bottom: 0.5rem;
+      color: var(--ci, var(--c));
+      margin-bottom: 0.6rem;
     }
 
     .project-title {
-      font-family: var(--serif);
-      font-size: 1.3rem;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 1.4rem;
+      line-height: 1.22;
+      margin-bottom: 0.55rem;
+      letter-spacing: -0.01em;
       color: var(--ink);
-      margin-bottom: 0.5rem;
-      line-height: 1.3;
     }
 
-    .project-desc {
-      font-size: 0.9rem;
-      color: var(--ink-soft);
-      line-height: 1.65;
-    }
+    .project-desc { font-size: 0.94rem; color: var(--body); line-height: 1.7; max-width: 660px; }
 
-    .project-stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      margin: 0.9rem 0 1.1rem;
-      padding: 0.7rem 0;
-      border-top: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
-    }
+    .project-bars { display: flex; flex-wrap: wrap; gap: 1.6rem; margin: 1.2rem 0 0.4rem; }
 
-    .project-stat .num {
-      font-family: var(--serif);
-      font-size: 1.2rem;
-      color: var(--accent);
+    .pbar { min-width: 96px; }
+    .pbar .pv {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--ci, var(--c));
       line-height: 1;
     }
-
-    .project-stat .lbl {
+    .pbar .pl {
       font-family: var(--mono);
       font-size: 9.5px;
-      color: var(--ink-mute);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-top: 0.25rem;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      margin-top: 0.3rem;
     }
+    .pbar .ptrack {
+      height: 4px;
+      border-radius: 4px;
+      background: rgba(18,22,42,0.09);
+      margin-top: 0.45rem;
+      overflow: hidden;
+    }
+    .pbar .pfill {
+      height: 100%;
+      background: var(--c);
+      border-radius: 4px;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.8s cubic-bezier(.2,.7,.2,1) 0.15s;
+    }
+    .in-view .pbar .pfill { transform: scaleX(var(--f, 1)); }
 
-    .project-tools {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 1rem;
-    }
+    .project-tools { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1rem; }
 
     .tool-pill {
       font-family: var(--mono);
-      font-size: 11px;
-      padding: 3px 10px;
-      background: var(--accent-light);
-      color: var(--accent);
+      font-size: 10.5px;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--c) 15%, #fff);
+      color: var(--ci, var(--c));
+    }
+
+    .project-mark { text-align: right; }
+    .project-mark svg { display: block; overflow: visible; }
+    .project-mark .mark-note {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      color: var(--muted);
+      margin-top: 0.5rem;
       letter-spacing: 0.04em;
     }
 
     .project-arrow {
-      font-size: 1.25rem;
-      color: var(--rule);
-      padding-top: 0.25rem;
-      transition: color 0.15s, transform 0.15s;
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      color: var(--ci, var(--c));
+      transition: transform 0.22s;
     }
+    a.project-card:hover .project-arrow { transform: translate(3px, -3px); }
 
-    .project-card:hover .project-arrow {
-      color: var(--accent);
-      transform: translate(3px, -3px);
+    @media (max-width: 760px) {
+      .project-card { grid-template-columns: 1fr; }
+      .project-mark { text-align: left; }
     }
 
     /* ── SKILLS ── */
-    #skills { background: var(--paper-2); }
+    #skills { background: var(--tint-mint); }
 
-    .skills-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
 
     .skill-block {
-      padding: 1.5rem;
-      background: var(--paper);
-      border: 1px solid var(--rule);
+      padding: 1.75rem;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      box-shadow: 0 14px 34px -28px rgba(18,22,42,0.8);
     }
 
-    .skill-block h4 {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-mute);
-      margin-bottom: 1rem;
-    }
-
-    .skill-list {
+    .skill-head {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 1.2rem;
     }
+
+    .skill-hub {
+      width: 11px; height: 11px;
+      border-radius: 50%;
+      background: var(--c);
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--c) 18%, transparent);
+      flex-shrink: 0;
+    }
+
+    .skill-head h4 {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--ci, var(--c));
+    }
+
+    .skill-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
     .skill-tag {
       font-family: var(--mono);
-      font-size: 12px;
-      padding: 4px 12px;
-      border: 1px solid var(--rule);
-      color: var(--ink-soft);
-      background: var(--paper-2);
+      font-size: 11.5px;
+      padding: 5px 13px;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--c) 45%, #fff);
+      background: color-mix(in srgb, var(--c) 12%, #fff);
+      color: var(--ink);
     }
+
+    @media (max-width: 760px) { .skills-grid { grid-template-columns: 1fr; } }
 
     /* ── WRITING ── */
-    .writing-list { display: grid; gap: 1px; border: 1px solid var(--rule); }
+    #writing { background: var(--surface); }
+
+    .writing-list { display: grid; gap: 0.9rem; }
 
     .writing-item {
-      display: flex;
+      display: grid;
+      grid-template-columns: 62px minmax(0,1fr) auto;
+      gap: 1.25rem;
       align-items: baseline;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 1.1rem 1.25rem;
-      background: var(--paper);
+      padding: 1.35rem 1.5rem;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 16px;
       text-decoration: none;
       color: var(--ink);
-      transition: background 0.12s;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s;
     }
 
-    .writing-item:hover { background: var(--accent-light); }
+    a.writing-item:hover { transform: translateX(6px); border-color: var(--c4); background: var(--tint-mint); }
 
-    .writing-item + .writing-item { border-top: 1px solid var(--rule); }
-
-    .writing-item-title {
-      font-family: var(--serif);
-      font-size: 1.05rem;
-      flex: 1;
-    }
-
-    .writing-item-meta {
+    .writing-year {
       font-family: var(--mono);
       font-size: 11px;
-      color: var(--ink-mute);
-      letter-spacing: 0.05em;
-      white-space: nowrap;
-    }
-
-    /* ── CONTACT ── */
-    #contact { text-align: center; }
-
-    .contact-email {
-      font-family: var(--serif);
-      font-size: clamp(1.5rem, 4vw, 2.5rem);
-      color: var(--accent);
-      text-decoration: none;
-      display: block;
-      margin: 1.5rem 0;
-    }
-
-    .contact-email:hover { color: var(--accent-vivid); }
-
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-    }
-
-    .contact-link {
-      font-family: var(--mono);
-      font-size: 13px;
-      color: var(--ink-soft);
-      text-decoration: none;
+      color: var(--c4i);
       letter-spacing: 0.04em;
     }
 
-    .contact-link:hover { color: var(--accent); }
+    .writing-title { font-family: var(--display); font-weight: 600; font-size: 1.02rem; line-height: 1.4; color: var(--ink); }
 
-    /* ── FOOTER ── */
+    .writing-meta {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 760px) {
+      .writing-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .writing-meta { white-space: normal; }
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      text-align: center;
+      background:
+        radial-gradient(740px 520px at 18% 12%, rgba(255,61,139,0.26), transparent 62%),
+        radial-gradient(760px 560px at 84% 88%, rgba(46,166,255,0.26), transparent 62%),
+        radial-gradient(880px 640px at 52% 48%, rgba(139,92,246,0.20), transparent 66%),
+        radial-gradient(620px 520px at 88% 10%, rgba(255,171,0,0.20), transparent 62%),
+        var(--surface);
+    }
+
+    #contact .fig-head { margin-left: auto; margin-right: auto; text-align: center; }
+    #contact .fig-num { justify-content: center; }
+    #contact .fig-sub { margin-left: auto; margin-right: auto; }
+
+    .contact-email {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(1rem, 4.8vw, 2.6rem);
+      text-decoration: none;
+      color: var(--c4i);
+      display: inline-block;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      margin: 0.5rem 0 2rem;
+      letter-spacing: -0.02em;
+      transition: color 0.2s, transform 0.15s ease;
+    }
+    .contact-email:hover { color: var(--c6i); }
+
+    .contact-links { display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; }
+
+    .contact-link {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--ink);
+      text-decoration: none;
+      padding: 0.65rem 1.25rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(18,22,42,0.16);
+      transition: border-color 0.2s, transform 0.15s, background 0.2s;
+    }
+    .contact-link:hover { border-color: var(--ink); background: #fff; transform: translateY(-2px); }
+
     footer {
-      border-top: 1px solid var(--rule);
-      padding: 1.5rem;
+      padding: 2.25rem;
       text-align: center;
       font-family: var(--mono);
-      font-size: 12px;
-      color: var(--ink-mute);
+      font-size: 11.5px;
+      color: var(--muted);
+      background: var(--bg);
+      border-top: 1px solid var(--line);
+      line-height: 1.9;
     }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 600px) {
-      .about-grid,
-      .skills-grid { grid-template-columns: 1fr; }
-      .hero-stat-row { gap: 1.5rem; }
-      nav { padding: 0 1rem; }
-      .nav-links { gap: 1.25rem; }
-      .hero-cta-ghost { margin-left: 0; margin-top: 0.75rem; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * { transition: none !important; }
+    @media (max-width: 760px) {
+      section { padding: 5rem 0; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <a class="nav-logo" href="#">ishexad.github.io</a>
-    <ul class="nav-links">
-      <li><a href="#experience">experience</a></li>
-      <li><a href="#projects">projects</a></li>
-      <li><a href="#skills">skills</a></li>
-      <li><a href="#writing">writing</a></li>
-      <li><a href="#contact">contact</a></li>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about" data-section="about">about</a></li>
+      <li><a href="#counted" data-section="counted">numbers</a></li>
+      <li><a href="#career" data-section="career">career</a></li>
+      <li><a href="#projects" data-section="projects">work</a></li>
+      <li><a href="#contact" data-section="contact">contact</a></li>
     </ul>
   </nav>
 
-  <!-- HERO -->
-  <section id="hero">
+  <!-- ══ HERO / FIG 1 ══ -->
+  <section id="hero" class="ground">
     <div class="container">
-      <p class="hero-eyebrow">Data & Insights Analyst · Oxfam International</p>
-      <h1 class="hero-name">Data that moves<br>from the <em>field</em><br>to the boardroom.</h1>
-      <p class="hero-desc">
-        I lead data and insights work for a global NGO confederation — turning complex,
-        multi-country data into board-level insight, and building the digital tools and
-        training that embed a stronger data culture across teams.
-      </p>
+      <div class="hero-grid">
+        <div>
+          <p class="hero-eyebrow">Data &amp; Insights Analyst · Oxfam International</p>
+          <h1 class="hero-name">Data that moves from the <span class="u-field">field</span> to the <span class="u-board">boardroom</span>.</h1>
+          <p class="hero-desc">
+            I lead data and insights work for a global NGO confederation — turning
+            complex, multi-country data into board-level insight, and building the
+            digital tools and training that embed a stronger data culture across teams.
+          </p>
+          <div class="btn-row">
+            <a href="#projects" class="btn btn-solid magnetic">See the work ↓</a>
+            <a href="#contact" class="btn btn-ghost magnetic">Get in touch</a>
+          </div>
+        </div>
 
-      <div class="hero-stat-row">
-        <div class="hero-stat">
-          <div class="number">10+</div>
-          <div class="label">Years in int'l development</div>
-        </div>
-        <div class="hero-stat">
-          <div class="number">60+</div>
-          <div class="label">Countries reached</div>
-        </div>
-        <div class="hero-stat">
-          <div class="number">3</div>
-          <div class="label">Digital apps led</div>
+        <div class="flow-wrap">
+          <svg id="flow" class="flow-svg" viewBox="0 0 660 500" role="img"
+               aria-label="Flow diagram: data from country teams, partners and field research passes through apps, dashboards and analysis, and arrives as board decisions."></svg>
+          <p class="note flow-cap">Fig. 1 — where the data comes from, and where it ends up</p>
         </div>
       </div>
-
-      <a href="#projects" class="hero-cta">View projects ↓</a>
-      <a href="#contact" class="hero-cta-ghost">Get in touch</a>
     </div>
   </section>
 
-  <hr class="rule" />
-
-  <!-- ABOUT -->
+  <!-- ══ ABOUT ══ -->
   <section id="about">
     <div class="container">
       <div class="about-grid">
-        <div class="about-text">
-          <p class="section-label">About</p>
-          <h2 class="section-title">Insight with<br>an audience of decision-makers.</h2>
-          <p>
+        <div class="about-text reveal">
+          <p class="fig-num">About</p>
+          <h2 class="fig-title">Insight with an audience of decision-makers.</h2>
+          <p style="margin-top:1.5rem">
             I'm a Data and Insights Analyst with over a decade of international NGO
             experience, including several years leading data and insights work for
             Oxfam International's global confederation. My work turns complex,
@@ -628,131 +863,163 @@
           </p>
         </div>
 
-        <div class="about-focus">
-          <h4>Education & certifications</h4>
-          <div class="focus-item">
-            <span class="focus-dot"></span>
-            <span>MS, Management Sciences — SZABIST, Islamabad (2014)</span>
-          </div>
-          <div class="focus-item">
-            <span class="focus-dot"></span>
-            <span>BBA (Hons), Business Administration — GC University, Faisalabad (2009)</span>
-          </div>
-          <div class="focus-item">
-            <span class="focus-dot"></span>
-            <span>Google Data Analytics Professional Certificate</span>
-          </div>
-          <div class="focus-item">
-            <span class="focus-dot"></span>
-            <span>Social Impact Strategy — University of Pennsylvania</span>
-          </div>
-          <div class="focus-item">
-            <span class="focus-dot"></span>
-            <span>Human-Centred Design Approach (HCD) training, 2017</span>
-          </div>
+        <div class="about-card reveal">
+          <h4>Education &amp; certifications</h4>
+          <div class="about-item"><span class="yr">2014</span><span>MS, Management Sciences — SZABIST, Islamabad</span></div>
+          <div class="about-item"><span class="yr">2009</span><span>BBA (Hons), Business Administration — GC University, Faisalabad</span></div>
+          <div class="about-item"><span class="yr">2017</span><span>Human-Centred Design Approach (HCD) training</span></div>
+          <div class="about-item"><span class="yr">—</span><span>Google Data Analytics Professional Certificate</span></div>
+          <div class="about-item"><span class="yr">—</span><span>Social Impact Strategy — University of Pennsylvania</span></div>
         </div>
       </div>
 
-      <p class="about-aside">
+      <p class="about-aside reveal">
         <strong>Also</strong>Invited by Google to their MapMaker Conference in California,
         for contributions to mapping data that others couldn't see.
       </p>
     </div>
   </section>
 
-  <hr class="rule" />
-
-  <!-- EXPERIENCE -->
-  <section id="experience">
+  <!-- ══ FIG 2 — COUNTED ══ -->
+  <section id="counted" class="ground">
     <div class="container">
-      <p class="section-label">Experience</p>
-      <h2 class="section-title">A decade in international development.</h2>
+      <div class="fig-head reveal" style="--fig: var(--c2i)">
+        <p class="fig-num">Fig. 2 — The work, counted</p>
+        <h2 class="fig-title">Every mark below is one real unit of work.</h2>
+        <p class="fig-sub">
+          No decorative numbers: each dot, square and cell stands for something
+          delivered — a person reached, a country reporting in, a partner monitored.
+        </p>
+      </div>
 
-      <div class="timeline">
+      <div class="stat-grid">
 
-        <div class="timeline-item">
-          <div class="timeline-role">Data and Insights Analyst</div>
-          <div class="timeline-org">Oxfam International Secretariat · Mar 2021 – Present</div>
-          <p class="timeline-desc">
-            Led the development of three apps that digitised data collection across
-            60+ countries, saving significant staff hours and improving cross-team
-            collaboration. Produce Oxfam's annual global insight reports, presented
-            to the executive board, and led development of Oxfam's knowledge and
-            learning database.
-          </p>
-        </div>
+        <figure class="stat-card reveal acc-2">
+          <figcaption>
+            <span class="stat-num">34,000</span>
+            <span class="stat-label">young people reached through Empower Youth for Work</span>
+          </figcaption>
+          <div class="stat-mark" data-mark="dots" data-count="68" data-cols="17"></div>
+          <p class="stat-note note">1 dot = 500 people · 68 dots · Oxfam GB</p>
+        </figure>
 
-        <div class="timeline-item">
-          <div class="timeline-role">Member, Staff Forum Leadership Team & Chairperson</div>
-          <div class="timeline-org">Oxfam International Secretariat · May 2021 – Aug 2022</div>
-          <p class="timeline-desc">
-            Elected to represent staff interests at board level. Partnered with HR
-            and executive leadership on pay reviews and staff-friendly policy, and
-            provided strategic input on horizon planning and organisational strategy.
-          </p>
-        </div>
+        <figure class="stat-card reveal acc-5">
+          <figcaption>
+            <span class="stat-num">60+</span>
+            <span class="stat-label">countries whose data flows into the systems I built</span>
+          </figcaption>
+          <div class="stat-mark" data-mark="squares" data-count="60" data-cols="15"></div>
+          <p class="stat-note note">1 square = 1 country · 3 apps · Oxfam International</p>
+        </figure>
 
-        <div class="timeline-item">
-          <div class="timeline-role">Project Coordinator, Empower Youth for Work</div>
-          <div class="timeline-org">Oxfam GB · Oct 2020 – Mar 2021</div>
-          <p class="timeline-desc">
-            Led development and rollout of a digital learning platform for
-            climate-affected rural youth, increasing the inclusion of rural young
-            women in digital jobs and freelancing. Owned annual reporting and budget
-            allocation for the programme, aligning spend with activities.
-          </p>
-        </div>
+        <figure class="stat-card reveal acc-4">
+          <figcaption>
+            <span class="stat-num">104</span>
+            <span class="stat-label">partner–district checks across a life-skills programme</span>
+          </figcaption>
+          <div class="stat-mark" data-mark="matrix" data-rows="8" data-cols="13"></div>
+          <p class="stat-note note">8 partners × 13 districts · Oxfam Novib, Pakistan</p>
+        </figure>
 
-        <div class="timeline-item">
-          <div class="timeline-role">Project Officer – Youth</div>
-          <div class="timeline-org">Oxfam GB, Pakistan · Jan 2017 – Jun 2020</div>
-          <p class="timeline-desc">
-            Led a digital project reporting web app from concept to rollout and
-            established a digital dashboard for internal reporting, replacing an
-            offline mechanism used for management decision-making. Used
-            Human-Centred Design to co-create digital and non-digital learning
-            solutions with young people.
-          </p>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-role">Programme Monitoring Officer</div>
-          <div class="timeline-org">Oxfam Novib, Pakistan · May 2015 – Dec 2016</div>
-          <p class="timeline-desc">
-            Monitored 8 implementing partners across 13 disadvantaged districts on
-            life-skills programming for young women, and strengthened partners'
-            MEAL systems against Oxfam's CAMSA standards.
-          </p>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-role">Earlier roles</div>
-          <div class="timeline-org">Oxfam Novib / Orbit Limousine, Pakistan · 2012 – 2015</div>
-          <p class="timeline-desc">
-            Staff Representative and Programme Support Officer at Oxfam Novib, and
-            Procurement & Logistics Officer at Orbit Limousine — spanning staff
-            representation, humanitarian procurement, and digitising offline
-            operational systems.
-          </p>
-        </div>
+        <figure class="stat-card reveal acc-3">
+          <figcaption>
+            <span class="stat-num">$5–20M</span>
+            <span class="stat-label">programme budget owned, allocated and tracked</span>
+          </figcaption>
+          <div class="stat-mark" data-mark="range" data-min="5" data-max="20" data-scale="25"></div>
+          <p class="stat-note note">Bar shows the stated range on a $0–25M scale</p>
+        </figure>
 
       </div>
     </div>
   </section>
 
-  <hr class="rule" />
+  <!-- ══ FIG 3 — CAREER ══ -->
+  <section id="career">
+    <div class="container">
+      <div class="fig-head reveal" style="--fig: var(--c7i)">
+        <p class="fig-num">Fig. 3 — Seventeen years, plotted</p>
+        <h2 class="fig-title">A career is a time series. So here it is as one.</h2>
+        <p class="fig-sub">
+          Bars are roles, drawn to their real length. Diamonds on the axis are
+          qualifications. Hover or tap any bar to read what happened inside it.
+        </p>
+      </div>
 
-  <!-- PROJECTS -->
+      <div class="reveal">
+        <div class="chart-scroll">
+          <svg id="gantt" viewBox="0 0 880 450" role="img"
+               aria-label="Timeline chart of roles held between 2012 and 2026, with education milestones from 2009."></svg>
+        </div>
+
+        <div class="career-detail" id="careerDetail" aria-live="polite"></div>
+
+        <ol class="career-source" id="careerSource">
+          <li data-start="2021-03" data-end="2026-09" data-c="c5"
+              data-role="Data and Insights Analyst"
+              data-org="Oxfam International Secretariat">
+            Led the development of three apps that digitised data collection across 60+
+            countries, saving significant staff hours and improving cross-team
+            collaboration. Produce Oxfam's annual global insight reports, presented to
+            the executive board, and led development of Oxfam's knowledge and learning
+            database.
+          </li>
+          <li data-start="2021-05" data-end="2022-08" data-c="c7"
+              data-role="Staff Forum Leadership Team &amp; Chairperson"
+              data-org="Oxfam International Secretariat · elected, held alongside the analyst role">
+            Elected to represent staff interests at board level. Partnered with HR and
+            executive leadership on pay reviews and staff-friendly policy, and provided
+            strategic input on horizon planning and organisational strategy.
+          </li>
+          <li data-start="2020-10" data-end="2021-03" data-c="c4"
+              data-role="Project Coordinator, Empower Youth for Work"
+              data-org="Oxfam GB">
+            Led development and rollout of a digital learning platform for
+            climate-affected rural youth, increasing the inclusion of rural young women
+            in digital jobs and freelancing. Owned annual reporting and budget
+            allocation for the programme, aligning spend with activities.
+          </li>
+          <li data-start="2017-01" data-end="2020-06" data-c="c3"
+              data-role="Project Officer – Youth"
+              data-org="Oxfam GB, Pakistan">
+            Led a digital project reporting web app from concept to rollout and
+            established a digital dashboard for internal reporting, replacing an offline
+            mechanism used for management decision-making. Used Human-Centred Design to
+            co-create digital and non-digital learning solutions with young people.
+          </li>
+          <li data-start="2015-05" data-end="2016-12" data-c="c2"
+              data-role="Programme Monitoring Officer"
+              data-org="Oxfam Novib, Pakistan">
+            Monitored 8 implementing partners across 13 disadvantaged districts on
+            life-skills programming for young women, and strengthened partners' MEAL
+            systems against Oxfam's CAMSA standards.
+          </li>
+          <li data-start="2012-01" data-end="2015-05" data-c="c1"
+              data-role="Earlier roles"
+              data-org="Oxfam Novib / Orbit Limousine, Pakistan">
+            Staff Representative and Programme Support Officer at Oxfam Novib, and
+            Procurement &amp; Logistics Officer at Orbit Limousine — spanning staff
+            representation, humanitarian procurement, and digitising offline operational
+            systems.
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FIG 4 — PROJECTS ══ -->
   <section id="projects">
     <div class="container">
-      <p class="section-label">Projects</p>
-      <h2 class="section-title">Selected work.</h2>
+      <div class="fig-head reveal" style="--fig: var(--c6i)">
+        <p class="fig-num">Fig. 4 — Selected work</p>
+        <h2 class="fig-title">Things I built, and what they moved.</h2>
+      </div>
 
       <div class="projects-grid">
 
-        <a class="project-card" href="./projects/regime-inclusion/index.html">
+        <a class="project-card reveal acc-5" href="./projects/regime-inclusion/index.html">
           <div>
-            <p class="project-tag">Live Demo · Personal Project</p>
+            <p class="project-tag">Live demo · personal project</p>
             <h3 class="project-title">Does Regime Type Shape Women's Labour Force Participation?</h3>
             <p class="project-desc">
               An interactive explorer comparing female labour force participation against
@@ -761,15 +1028,15 @@
               Labour-force figures are fetched live from the World Bank API on page load.
             </p>
             <div class="project-tools">
-              <span class="tool-pill">Data Visualisation</span>
-              <span class="tool-pill">Interactive Dashboard</span>
-              <span class="tool-pill">Gender & Governance</span>
+              <span class="tool-pill">Data visualisation</span>
+              <span class="tool-pill">Interactive dashboard</span>
+              <span class="tool-pill">Gender &amp; governance</span>
             </div>
           </div>
-          <div class="project-arrow">↗</div>
+          <div class="project-mark" data-mark="dots" data-count="19" data-cols="5" data-note="19 countries"></div>
         </a>
 
-        <div class="project-card" style="grid-template-columns: 1fr;">
+        <div class="project-card reveal acc-2">
           <div>
             <p class="project-tag">Empower Youth for Work · Oxfam GB</p>
             <h3 class="project-title">Digital Learning Platform for Rural Youth</h3>
@@ -780,39 +1047,21 @@
               navigate their journey to economic empowerment. Also established two
               sustainable innovation centres in rural Pakistan using Human-Centred Design.
             </p>
-            <div class="project-stats">
-              <div class="project-stat"><div class="num">$5–20M</div><div class="lbl">Programme budget</div></div>
-              <div class="project-stat"><div class="num">5</div><div class="lbl">Partners managed</div></div>
-              <div class="project-stat"><div class="num">30+</div><div class="lbl">Staff led</div></div>
-              <div class="project-stat"><div class="num">34K</div><div class="lbl">Young people reached</div></div>
+            <div class="project-bars">
+              <div class="pbar"><div class="pv">34K</div><div class="ptrack"><i class="pfill" style="--f:1"></i></div><div class="pl">Young people reached</div></div>
+              <div class="pbar"><div class="pv">30+</div><div class="ptrack"><i class="pfill" style="--f:.55"></i></div><div class="pl">Staff led</div></div>
+              <div class="pbar"><div class="pv">5</div><div class="ptrack"><i class="pfill" style="--f:.2"></i></div><div class="pl">Partners managed</div></div>
+              <div class="pbar"><div class="pv">2</div><div class="ptrack"><i class="pfill" style="--f:.1"></i></div><div class="pl">Innovation centres</div></div>
             </div>
             <div class="project-tools">
-              <span class="tool-pill">Digital Inclusion</span>
+              <span class="tool-pill">Digital inclusion</span>
               <span class="tool-pill">Gamification</span>
-              <span class="tool-pill">Human-Centred Design</span>
+              <span class="tool-pill">Human-centred design</span>
             </div>
           </div>
         </div>
 
-        <div class="project-card" style="grid-template-columns: 1fr;">
-          <div>
-            <p class="project-tag">Oxfam GB, Pakistan</p>
-            <h3 class="project-title">Project Reporting & Budget Management System</h3>
-            <p class="project-desc">
-              Took a digital project-reporting web app from concept to rollout, and built an
-              internal dashboard that replaced an offline reporting mechanism — giving
-              management real-time visibility for budget allocation, spend tracking, and
-              informed decision-making.
-            </p>
-            <div class="project-tools">
-              <span class="tool-pill">Web App</span>
-              <span class="tool-pill">Dashboards</span>
-              <span class="tool-pill">Budget Management</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-card" style="grid-template-columns: 1fr;">
+        <div class="project-card reveal acc-6">
           <div>
             <p class="project-tag">Oxfam International Secretariat</p>
             <h3 class="project-title">Global Data Digitisation Initiative</h3>
@@ -822,17 +1071,36 @@
               between country, regional, and global teams.
             </p>
             <div class="project-tools">
-              <span class="tool-pill">App Development</span>
-              <span class="tool-pill">Data Systems</span>
-              <span class="tool-pill">Cross-team Collaboration</span>
+              <span class="tool-pill">App development</span>
+              <span class="tool-pill">Data systems</span>
+              <span class="tool-pill">Cross-team collaboration</span>
+            </div>
+          </div>
+          <div class="project-mark" data-mark="squares" data-count="60" data-cols="10" data-note="60+ countries"></div>
+        </div>
+
+        <div class="project-card reveal acc-4">
+          <div>
+            <p class="project-tag">Oxfam GB, Pakistan</p>
+            <h3 class="project-title">Project Reporting &amp; Budget Management System</h3>
+            <p class="project-desc">
+              Took a digital project-reporting web app from concept to rollout, and built an
+              internal dashboard that replaced an offline reporting mechanism — giving
+              management real-time visibility for budget allocation, spend tracking, and
+              informed decision-making.
+            </p>
+            <div class="project-tools">
+              <span class="tool-pill">Web app</span>
+              <span class="tool-pill">Dashboards</span>
+              <span class="tool-pill">Budget management</span>
             </div>
           </div>
         </div>
 
-        <div class="project-card" style="grid-template-columns: 1fr;">
+        <div class="project-card reveal acc-3">
           <div>
             <p class="project-tag">Co-founded · Oxfam GB, Pakistan</p>
-            <h3 class="project-title">E-Jobs & Learning Platform</h3>
+            <h3 class="project-title">E-Jobs &amp; Learning Platform</h3>
             <p class="project-desc">
               Co-founded and managed a platform connecting young people in Pakistan with
               worldwide job and freelancing opportunities, alongside a peer learning
@@ -840,30 +1108,26 @@
             </p>
             <div class="project-tools">
               <span class="tool-pill">Co-founder</span>
-              <span class="tool-pill">Digital Jobs</span>
-              <span class="tool-pill">Youth Employment</span>
+              <span class="tool-pill">Digital jobs</span>
+              <span class="tool-pill">Youth employment</span>
             </div>
           </div>
         </div>
 
-        <a class="project-card" href="https://squadkitty.com" target="_blank" rel="noopener">
+        <a class="project-card reveal acc-7" href="https://squadkitty.com" target="_blank" rel="noopener">
           <div>
-            <p class="project-tag">Personal Project</p>
+            <p class="project-tag">Personal project</p>
             <h3 class="project-title">SquadKitty</h3>
-            <p class="project-desc">
-              An independent project — visit squadkitty.com to learn more.
-            </p>
+            <p class="project-desc">An independent project — visit squadkitty.com to learn more.</p>
           </div>
           <div class="project-arrow">↗</div>
         </a>
 
-        <a class="project-card" href="https://dataexact.io" target="_blank" rel="noopener">
+        <a class="project-card reveal acc-1" href="https://dataexact.io" target="_blank" rel="noopener">
           <div>
-            <p class="project-tag">Personal Project</p>
+            <p class="project-tag">Personal project</p>
             <h3 class="project-title">DataExact</h3>
-            <p class="project-desc">
-              An independent project — visit dataexact.io to learn more.
-            </p>
+            <p class="project-desc">An independent project — visit dataexact.io to learn more.</p>
           </div>
           <div class="project-arrow">↗</div>
         </a>
@@ -872,96 +1136,101 @@
     </div>
   </section>
 
-  <hr class="rule" />
-
-  <!-- SKILLS -->
-  <section id="skills">
+  <!-- ══ FIG 5 — SKILLS ══ -->
+  <section id="skills" class="ground">
     <div class="container">
-      <p class="section-label">Skills</p>
-      <h2 class="section-title">Tools of the trade.</h2>
+      <div class="fig-head reveal" style="--fig: var(--c3i)">
+        <p class="fig-num">Fig. 5 — Capabilities, grouped</p>
+        <h2 class="fig-title">Four domains, sixteen capabilities.</h2>
+        <p class="fig-sub">
+          Grouped by domain rather than ranked — I don't have a defensible number for
+          "how good" any of these are, so I haven't drawn one.
+        </p>
+      </div>
 
       <div class="skills-grid">
-        <div class="skill-block">
-          <h4>Strategy & insight</h4>
+        <div class="skill-block reveal acc-6">
+          <div class="skill-head"><span class="skill-hub"></span><h4>Strategy &amp; insight</h4></div>
           <div class="skill-list">
-            <span class="skill-tag">Data & Insight Strategy</span>
-            <span class="skill-tag">Board-level Reporting</span>
-            <span class="skill-tag">Data Storytelling</span>
-            <span class="skill-tag">Horizon Planning</span>
+            <span class="skill-tag">Data &amp; insight strategy</span>
+            <span class="skill-tag">Board-level reporting</span>
+            <span class="skill-tag">Data storytelling</span>
+            <span class="skill-tag">Horizon planning</span>
           </div>
         </div>
 
-        <div class="skill-block">
-          <h4>Digital tools & dashboards</h4>
+        <div class="skill-block reveal acc-5">
+          <div class="skill-head"><span class="skill-hub"></span><h4>Digital tools &amp; dashboards</h4></div>
           <div class="skill-list">
-            <span class="skill-tag">App Development Leadership</span>
-            <span class="skill-tag">Dashboard Design</span>
-            <span class="skill-tag">Knowledge & Learning Databases</span>
-            <span class="skill-tag">Digital Transformation</span>
+            <span class="skill-tag">App development leadership</span>
+            <span class="skill-tag">Dashboard design</span>
+            <span class="skill-tag">Knowledge &amp; learning databases</span>
+            <span class="skill-tag">Digital transformation</span>
           </div>
         </div>
 
-        <div class="skill-block">
-          <h4>Research & evaluation</h4>
+        <div class="skill-block reveal acc-4">
+          <div class="skill-head"><span class="skill-hub"></span><h4>Research &amp; evaluation</h4></div>
           <div class="skill-list">
-            <span class="skill-tag">Human-Centred Design</span>
-            <span class="skill-tag">Qualitative & Quantitative Research</span>
-            <span class="skill-tag">Baseline / Midline / Endline Evaluations</span>
+            <span class="skill-tag">Human-centred design</span>
+            <span class="skill-tag">Qualitative &amp; quantitative research</span>
+            <span class="skill-tag">Baseline / midline / endline</span>
             <span class="skill-tag">MEAL (CAMSA)</span>
           </div>
         </div>
 
-        <div class="skill-block">
-          <h4>Leadership & capability building</h4>
+        <div class="skill-block reveal acc-2">
+          <div class="skill-head"><span class="skill-hub"></span><h4>Leadership &amp; capability building</h4></div>
           <div class="skill-list">
-            <span class="skill-tag">Stakeholder & Team Leadership</span>
-            <span class="skill-tag">Staff Representation</span>
-            <span class="skill-tag">Training & Webinars</span>
-            <span class="skill-tag">Budget & Governance</span>
+            <span class="skill-tag">Stakeholder &amp; team leadership</span>
+            <span class="skill-tag">Staff representation</span>
+            <span class="skill-tag">Training &amp; webinars</span>
+            <span class="skill-tag">Budget &amp; governance</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <hr class="rule" />
-
-  <!-- WRITING -->
+  <!-- ══ FIG 6 — WRITING ══ -->
   <section id="writing">
     <div class="container">
-      <p class="section-label">Research & publications</p>
-      <h2 class="section-title">Written & published.</h2>
+      <div class="fig-head reveal" style="--fig: var(--c4i)">
+        <p class="fig-num">Fig. 6 — Published</p>
+        <h2 class="fig-title">Research that left the building.</h2>
+      </div>
 
       <div class="writing-list">
-
-        <a class="writing-item" href="https://policy-practice.oxfam.org/resources/if-a-woman-does-a-job-she-can-support-her-family-as-well-insights-from-communit-620925/" target="_blank" rel="noopener">
-          <span class="writing-item-title">"If a Woman Does a Job, She Can Support Her Family as Well": Insights from Communities</span>
-          <span class="writing-item-meta">Oxfam Policy & Practice · Oct 2019</span>
+        <a class="writing-item reveal" href="https://policy-practice.oxfam.org/resources/if-a-woman-does-a-job-she-can-support-her-family-as-well-insights-from-communit-620925/" target="_blank" rel="noopener">
+          <span class="writing-year">2019</span>
+          <span class="writing-title">"If a Woman Does a Job, She Can Support Her Family as Well": Insights from Communities</span>
+          <span class="writing-meta">Oxfam Policy &amp; Practice ↗</span>
         </a>
 
-        <div class="writing-item">
-          <span class="writing-item-title">Context Analysis of Youth Social & Economic Empowerment Sector in Pakistan</span>
-          <span class="writing-item-meta">National Research · Oxfam GB</span>
+        <div class="writing-item reveal">
+          <span class="writing-year">—</span>
+          <span class="writing-title">Context Analysis of Youth Social &amp; Economic Empowerment Sector in Pakistan</span>
+          <span class="writing-meta">National research · Oxfam GB</span>
         </div>
-
       </div>
     </div>
   </section>
 
-  <hr class="rule" />
-
-  <!-- CONTACT -->
+  <!-- ══ CONTACT ══ -->
   <section id="contact">
     <div class="container">
-      <p class="section-label">Contact</p>
-      <h2 class="section-title">Let's work together.</h2>
-      <p style="color: var(--ink-soft); max-width: 420px; margin: 0 auto 1rem;">
-        Open to conversations about data and insight strategy, digital tools for
-        international development, and senior data leadership roles.
-      </p>
-      <a class="contact-email" href="mailto:shahzadshakeel98@gmail.com">shahzadshakeel98@gmail.com</a>
+      <div class="fig-head reveal" style="--fig: var(--c3i)">
+        <p class="fig-num">Contact</p>
+        <h2 class="fig-title">Let's work together.</h2>
+        <p class="fig-sub">
+          Open to conversations about data and insight strategy, digital tools for
+          international development, and senior data leadership roles.
+        </p>
+      </div>
 
-      <div class="contact-links">
+      <a class="contact-email reveal magnetic" href="mailto:shahzadshakeel98@gmail.com">shahzadshakeel98@gmail.com</a>
+
+      <div class="contact-links reveal">
         <a class="contact-link" href="https://x.com/ishexad" target="_blank" rel="noopener">X / Twitter ↗</a>
         <a class="contact-link" href="https://github.com/ishexad" target="_blank" rel="noopener">GitHub ↗</a>
         <a class="contact-link" href="https://linkedin.com/in/ishexad" target="_blank" rel="noopener">LinkedIn ↗</a>
@@ -970,8 +1239,532 @@
   </section>
 
   <footer>
-    <p>© 2026 Shahzad Shakeel · Built with HTML/CSS · Hosted on GitHub Pages</p>
+    <p>© 2026 Shahzad Shakeel · Hand-drawn in HTML, CSS and SVG — no charting library</p>
+    <p>Every figure on this page encodes a real number from real work.</p>
   </footer>
+
+  <script>
+  (function () {
+    'use strict';
+
+    document.documentElement.classList.add('js-on');
+
+    var NS = 'http://www.w3.org/2000/svg';
+    var PAL = { c1:'#ff5a45', c2:'#ffab00', c3:'#62c624', c4:'#0fc2ae', c5:'#2ea6ff', c6:'#8b5cf6', c7:'#ff3d8b' };
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var finePointer = window.matchMedia('(pointer: fine)').matches;
+
+    function el(name, attrs) {
+      var n = document.createElementNS(NS, name);
+      for (var k in attrs) n.setAttribute(k, attrs[k]);
+      return n;
+    }
+
+    /* ──────────────────────────────────────────────
+       FIG 1 — Sankey-style flow: field → boardroom
+       ────────────────────────────────────────────── */
+    function buildFlow() {
+      var svg = document.getElementById('flow');
+      if (!svg) return;
+
+      var NODES = {
+        countries: { col: 0, label: 'Country teams',  sub: '60+ countries', c: PAL.c5 },
+        partners:  { col: 0, label: 'Partners',       sub: '8 monitored',   c: PAL.c4 },
+        field:     { col: 0, label: 'Field research', sub: '13 districts',  c: PAL.c3 },
+        apps:      { col: 1, label: 'Apps & dashboards', sub: '3 built',    c: PAL.c6 },
+        analysis:  { col: 1, label: 'Analysis & insight', sub: '',          c: PAL.c2 },
+        board:     { col: 2, label: 'Board decisions', sub: '',             c: PAL.c1 }
+      };
+
+      var LINKS = [
+        ['countries', 'apps', 60], ['countries', 'analysis', 24],
+        ['partners', 'apps', 22],  ['partners', 'analysis', 18],
+        ['field', 'analysis', 26],
+        ['apps', 'board', 82],     ['analysis', 'board', 68]
+      ];
+
+      var COL_X = [150, 400, 600];
+      var NODE_W = 11;
+      var TOP = 110, BOTTOM = 460, GAP = 44;
+
+      // node value = max(inflow, outflow)
+      var order = { 0: [], 1: [], 2: [] };
+      Object.keys(NODES).forEach(function (k) {
+        var n = NODES[k];
+        n.key = k;
+        n.inSum = 0; n.outSum = 0;
+        order[n.col].push(n);
+      });
+      LINKS.forEach(function (l) {
+        NODES[l[0]].outSum += l[2];
+        NODES[l[1]].inSum += l[2];
+      });
+      Object.keys(NODES).forEach(function (k) {
+        NODES[k].value = Math.max(NODES[k].inSum, NODES[k].outSum);
+      });
+
+      // scale so the tallest column fills the plot
+      var scale = Infinity;
+      [0, 1, 2].forEach(function (c) {
+        var total = order[c].reduce(function (s, n) { return s + n.value; }, 0);
+        var gaps = GAP * (order[c].length - 1);
+        scale = Math.min(scale, (BOTTOM - TOP - gaps) / total);
+      });
+
+      [0, 1, 2].forEach(function (c) {
+        var col = order[c];
+        var total = col.reduce(function (s, n) { return s + n.value * scale; }, 0) + GAP * (col.length - 1);
+        var y = TOP + (BOTTOM - TOP - total) / 2;
+        col.forEach(function (n) {
+          n.h = n.value * scale;
+          n.x = COL_X[c];
+          n.y0 = y;
+          n.y1 = y + n.h;
+          n.outAt = y;
+          n.inAt = y;
+          y += n.h + GAP;
+        });
+      });
+
+      var defs = el('defs', {});
+      svg.appendChild(defs);
+
+      function ribbonPath(x0, y0a, y0b, x1, y1a, y1b) {
+        var cx = (x0 + x1) / 2;
+        return 'M' + x0 + ',' + y0a +
+               ' C' + cx + ',' + y0a + ' ' + cx + ',' + y1a + ' ' + x1 + ',' + y1a +
+               ' L' + x1 + ',' + y1b +
+               ' C' + cx + ',' + y1b + ' ' + cx + ',' + y0b + ' ' + x0 + ',' + y0b + ' Z';
+      }
+
+      function centerPath(x0, y0, x1, y1) {
+        var cx = (x0 + x1) / 2;
+        return 'M' + x0 + ',' + y0 + ' C' + cx + ',' + y0 + ' ' + cx + ',' + y1 + ' ' + x1 + ',' + y1;
+      }
+
+      var ribbonLayer = el('g', {});
+      var centerLayer = el('g', { fill: 'none', stroke: 'none' });
+      svg.appendChild(ribbonLayer);
+      svg.appendChild(centerLayer);
+
+      var flows = [];
+      LINKS.forEach(function (l, i) {
+        var s = NODES[l[0]], t = NODES[l[1]], v = l[2] * scale;
+        var x0 = s.x + NODE_W, x1 = t.x;
+        var y0a = s.outAt, y0b = s.outAt + v;
+        var y1a = t.inAt,  y1b = t.inAt + v;
+        s.outAt += v; t.inAt += v;
+
+        var gid = 'g' + i;
+        var grad = el('linearGradient', { id: gid, x1: '0', x2: '1', y1: '0', y2: '0' });
+        var st1 = el('stop', { offset: '0', 'stop-color': s.c, 'stop-opacity': '0.78' });
+        var st2 = el('stop', { offset: '1', 'stop-color': t.c, 'stop-opacity': '0.5' });
+        grad.appendChild(st1); grad.appendChild(st2);
+        defs.appendChild(grad);
+
+        ribbonLayer.appendChild(el('path', {
+          d: ribbonPath(x0, y0a, y0b, x1, y1a, y1b),
+          fill: 'url(#' + gid + ')',
+          stroke: s.c,
+          'stroke-opacity': '0.3',
+          'stroke-width': '0.75'
+        }));
+
+        var cp = el('path', { d: centerPath(x0, (y0a + y0b) / 2, x1, (y1a + y1b) / 2) });
+        centerLayer.appendChild(cp);
+        flows.push({ path: cp, color: s.c, count: Math.max(2, Math.round(l[2] / 14)) });
+      });
+
+      // nodes + labels
+      var nodeLayer = el('g', {});
+      svg.appendChild(nodeLayer);
+
+      Object.keys(NODES).forEach(function (k) {
+        var n = NODES[k];
+        nodeLayer.appendChild(el('rect', {
+          x: n.x, y: n.y0, width: NODE_W, height: Math.max(2, n.h), rx: 5, fill: n.c
+        }));
+
+        var t, s;
+        if (n.col === 0) {
+          t = el('text', { x: n.x - 14, y: (n.y0 + n.y1) / 2 - 3, 'text-anchor': 'end', class: 'flow-label' });
+          s = el('text', { x: n.x - 14, y: (n.y0 + n.y1) / 2 + 13, 'text-anchor': 'end', class: 'flow-sub' });
+        } else if (n.col === 1) {
+          t = el('text', { x: n.x + NODE_W / 2, y: n.y0 - 20, 'text-anchor': 'middle', class: 'flow-label' });
+          s = el('text', { x: n.x + NODE_W / 2, y: n.y0 - 6, 'text-anchor': 'middle', class: 'flow-sub' });
+        } else {
+          t = el('text', { x: n.x + NODE_W, y: n.y0 - 20, 'text-anchor': 'end', class: 'flow-label' });
+          s = el('text', { x: n.x + NODE_W, y: n.y0 - 6, 'text-anchor': 'end', class: 'flow-sub' });
+        }
+        t.textContent = n.label;
+        s.textContent = n.sub;
+        nodeLayer.appendChild(t);
+        if (n.sub) nodeLayer.appendChild(s);
+      });
+
+      // flowing particles — data actually moving
+      if (reduced) return;
+
+      var pLayer = el('g', {});
+      svg.appendChild(pLayer);
+      var particles = [];
+
+      flows.forEach(function (f) {
+        var len = f.path.getTotalLength();
+        if (!len) return;
+        for (var i = 0; i < f.count; i++) {
+          var dot = el('circle', { r: 2.1, fill: f.color, opacity: '0.9' });
+          pLayer.appendChild(dot);
+          particles.push({
+            dot: dot,
+            path: f.path,
+            len: len,
+            t: Math.random(),
+            speed: 0.0011 + Math.random() * 0.0011
+          });
+        }
+      });
+
+      var running = true;
+      function tick() {
+        if (!running) return;
+        for (var i = 0; i < particles.length; i++) {
+          var p = particles[i];
+          p.t += p.speed;
+          if (p.t > 1) p.t -= 1;
+          var pt = p.path.getPointAtLength(p.t * p.len);
+          p.dot.setAttribute('cx', pt.x);
+          p.dot.setAttribute('cy', pt.y);
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+
+      // stop animating when the hero is off-screen
+      var heroSection = document.getElementById('hero');
+      if (heroSection && 'IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting && !running) { running = true; requestAnimationFrame(tick); }
+            else if (!e.isIntersecting) { running = false; }
+          });
+        }, { threshold: 0 }).observe(heroSection);
+      }
+    }
+
+    /* ──────────────────────────────────────────────
+       FIG 2 / FIG 4 — encoded stat marks
+       ────────────────────────────────────────────── */
+    function buildMarks() {
+      document.querySelectorAll('[data-mark]').forEach(function (host) {
+        var kind = host.dataset.mark;
+        var svg;
+
+        if (kind === 'dots' || kind === 'squares') {
+          var count = parseInt(host.dataset.count, 10);
+          var cols = parseInt(host.dataset.cols, 10);
+          var rows = Math.ceil(count / cols);
+          var step = 15, r = 4.6;
+          var w = cols * step, h = rows * step;
+          svg = el('svg', { viewBox: '0 0 ' + w + ' ' + h, width: w, height: h });
+
+          for (var i = 0; i < count; i++) {
+            var cx = (i % cols) * step + step / 2;
+            var cy = Math.floor(i / cols) * step + step / 2;
+            var shape;
+            if (kind === 'dots') {
+              shape = el('circle', { cx: cx, cy: cy, r: r, fill: 'var(--c)' });
+            } else {
+              shape = el('rect', { x: cx - r, y: cy - r, width: r * 2, height: r * 2, rx: 1.5, fill: 'var(--c)' });
+            }
+            shape.setAttribute('class', 'cell');
+            shape.style.transitionDelay = (i * 9) + 'ms';
+            svg.appendChild(shape);
+          }
+
+        } else if (kind === 'matrix') {
+          var mr = parseInt(host.dataset.rows, 10);
+          var mc = parseInt(host.dataset.cols, 10);
+          var cell = 15, pad = 3;
+          var mw = mc * cell, mh = mr * cell;
+          svg = el('svg', { viewBox: '0 0 ' + mw + ' ' + mh, width: mw, height: mh });
+
+          for (var rI = 0; rI < mr; rI++) {
+            for (var cI = 0; cI < mc; cI++) {
+              var sq = el('rect', {
+                x: cI * cell, y: rI * cell,
+                width: cell - pad, height: cell - pad,
+                rx: 2, fill: 'var(--c)',
+                opacity: 0.35 + ((rI + cI) % 3) * 0.22
+              });
+              sq.setAttribute('class', 'cell');
+              sq.style.transitionDelay = ((rI * mc + cI) * 6) + 'ms';
+              svg.appendChild(sq);
+            }
+          }
+
+        } else if (kind === 'range') {
+          var mn = parseFloat(host.dataset.min);
+          var mx = parseFloat(host.dataset.max);
+          var sc = parseFloat(host.dataset.scale);
+          var rw = 260, rh = 46;
+          svg = el('svg', { viewBox: '0 0 ' + rw + ' ' + rh, width: rw, height: rh });
+
+          svg.appendChild(el('rect', { x: 0, y: 12, width: rw, height: 10, rx: 5, class: 'mark-track' }));
+          var bx = (mn / sc) * rw;
+          var bw = ((mx - mn) / sc) * rw;
+          var band = el('rect', { x: bx, y: 12, width: bw, height: 10, rx: 5, fill: 'var(--c)' });
+          band.setAttribute('class', 'cell');
+          svg.appendChild(band);
+
+          [0, 5, 10, 15, 20, 25].forEach(function (v) {
+            var tx = (v / sc) * rw;
+            svg.appendChild(el('line', { x1: tx, x2: tx, y1: 26, y2: 31, class: 'mark-tick' }));
+            if (v % 10) return; // tick every $5M, label every $10M
+            var lb = el('text', {
+              x: tx, y: 42,
+              'text-anchor': v === 0 ? 'start' : 'middle',
+              class: 'mark-tick-label'
+            });
+            lb.textContent = '$' + v + 'M';
+            svg.appendChild(lb);
+          });
+        }
+
+        if (!svg) return;
+        svg.setAttribute('preserveAspectRatio', 'xMinYMid meet');
+        host.appendChild(svg);
+
+        if (host.dataset.note) {
+          var note = document.createElement('div');
+          note.className = 'mark-note';
+          note.textContent = host.dataset.note;
+          host.appendChild(note);
+        }
+      });
+    }
+
+    /* ──────────────────────────────────────────────
+       FIG 3 — career as a Gantt chart
+       ────────────────────────────────────────────── */
+    function buildGantt() {
+      var svg = document.getElementById('gantt');
+      var source = document.getElementById('careerSource');
+      var detail = document.getElementById('careerDetail');
+      if (!svg || !source) return;
+
+      var roles = Array.prototype.map.call(source.querySelectorAll('li'), function (li) {
+        return {
+          start: li.dataset.start,
+          end: li.dataset.end,
+          color: PAL[li.dataset.c] || PAL.c5,
+          role: li.dataset.role,
+          org: li.dataset.org,
+          desc: li.textContent.trim()
+        };
+      });
+
+      var EDU = [
+        { at: '2009-06', label: 'BBA (Hons)' },
+        { at: '2014-06', label: 'MS Management Sciences' },
+        { at: '2017-06', label: 'HCD training' }
+      ];
+
+      var toTime = function (s) { return new Date(+s.slice(0, 4), +s.slice(5, 7) - 1, 1).getTime(); };
+      var T0 = toTime('2009-01'), T1 = toTime('2026-12');
+      var X0 = 20, X1 = 862;
+      var x = function (t) { return X0 + (t - T0) / (T1 - T0) * (X1 - X0); };
+
+      var ROW_H = 54, TOP = 22;
+      var axisY = TOP + roles.length * ROW_H + 14;
+
+      // gridlines + axis
+      var grid = el('g', {});
+      svg.appendChild(grid);
+      for (var yr = 2010; yr <= 2026; yr += 2) {
+        var gx = x(toTime(yr + '-01'));
+        grid.appendChild(el('line', { x1: gx, x2: gx, y1: TOP - 6, y2: axisY, class: 'gantt-grid' }));
+        var lab = el('text', { x: gx, y: axisY + 16, 'text-anchor': 'middle', class: 'gantt-axis' });
+        lab.textContent = yr;
+        grid.appendChild(lab);
+      }
+      grid.appendChild(el('line', { x1: X0, x2: X1, y1: axisY, y2: axisY, class: 'gantt-baseline' }));
+
+      // education milestones below the axis
+      EDU.forEach(function (e, i) {
+        var ex = x(toTime(e.at));
+        var ey = axisY + 26 + (i % 2) * 16; // stagger so adjacent labels can't collide
+        var dia = el('path', {
+          d: 'M' + ex + ',' + ey + ' l5,5 l-5,5 l-5,-5 z',
+          fill: PAL.c3, opacity: '0.9'
+        });
+        svg.appendChild(dia);
+        var t = el('text', { x: ex + 10, y: ey + 9, class: 'gantt-edu' });
+        t.textContent = e.label;
+        svg.appendChild(t);
+      });
+
+      var bars = [];
+
+      roles.forEach(function (r, i) {
+        var rowY = TOP + i * ROW_H;
+        var g = el('g', { class: 'gantt-row', tabindex: '0', role: 'button' });
+        g.setAttribute('aria-label', r.role + ', ' + r.org);
+
+        // full-width invisible hit area: short bars are otherwise unhoverable
+        g.appendChild(el('rect', {
+          x: X0, y: rowY, width: X1 - X0, height: ROW_H - 6,
+          fill: 'transparent', 'pointer-events': 'all'
+        }));
+
+        var roleT = el('text', { x: X0, y: rowY + 14, class: 'gantt-role' });
+        roleT.textContent = r.role;
+        g.appendChild(roleT);
+
+        var metaT = el('text', { x: X1, y: rowY + 14, 'text-anchor': 'end', class: 'gantt-meta' });
+        metaT.textContent = fmt(r.start) + ' – ' + (r.end === '2026-09' ? 'present' : fmt(r.end));
+        g.appendChild(metaT);
+
+        var bx = x(toTime(r.start));
+        var bw = Math.max(6, x(toTime(r.end)) - bx);
+        var bar = el('rect', {
+          x: bx, y: rowY + 24, width: bw, height: 18, rx: 9,
+          fill: r.color, opacity: '0.78', class: 'gantt-bar'
+        });
+        if (!reduced) {
+          bar.style.transform = 'scaleX(0)';
+          bar.style.transformOrigin = bx + 'px 0px';
+          bar.style.transition = 'transform 0.85s cubic-bezier(.2,.7,.2,1) ' + (i * 70) + 'ms, opacity 0.2s';
+        }
+        g.appendChild(bar);
+
+        var title = el('title', {});
+        title.textContent = r.role + ' · ' + r.org;
+        g.appendChild(title);
+
+        svg.appendChild(g);
+        bars.push(bar);
+
+        function activate() { setDetail(r); bars.forEach(function (b) { b.setAttribute('opacity', '0.28'); }); bar.setAttribute('opacity', '1'); }
+        g.addEventListener('mouseenter', activate);
+        g.addEventListener('focus', activate);
+        g.addEventListener('click', activate);
+      });
+
+      svg.addEventListener('mouseleave', function () {
+        bars.forEach(function (b) { b.setAttribute('opacity', '0.78'); });
+        setDetail(roles[0]);
+      });
+
+      function fmt(s) {
+        var m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return m[+s.slice(5, 7) - 1] + ' ' + s.slice(0, 4);
+      }
+
+      function setDetail(r) {
+        if (!detail) return;
+        detail.style.setProperty('--dc', r.color);
+        detail.innerHTML = '';
+        var h = document.createElement('h3');
+        h.textContent = r.role;
+        var m = document.createElement('div');
+        m.className = 'meta';
+        m.textContent = r.org;
+        var p = document.createElement('p');
+        p.textContent = r.desc;
+        detail.appendChild(h); detail.appendChild(m); detail.appendChild(p);
+      }
+
+      setDetail(roles[0]);
+
+      // grow the bars in when the chart scrolls into view
+      if (!reduced && 'IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries, obs) {
+          entries.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            bars.forEach(function (b) { b.style.transform = 'scaleX(1)'; });
+            obs.disconnect();
+          });
+        }, { threshold: 0.2 }).observe(svg);
+      }
+    }
+
+    /* ──────────────────────────────────────────────
+       page behaviour
+       ────────────────────────────────────────────── */
+    function initReveals() {
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function (e) { e.classList.add('in-view'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('in-view');
+          io.unobserve(e.target);
+        });
+      }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
+      els.forEach(function (e) { io.observe(e); });
+    }
+
+    function initNav() {
+      var toggle = document.getElementById('navToggle');
+      var links = document.getElementById('navLinks');
+      if (toggle && links) {
+        toggle.addEventListener('click', function () {
+          var open = links.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', String(open));
+          toggle.textContent = open ? '✕' : '☰';
+        });
+        links.querySelectorAll('a').forEach(function (a) {
+          a.addEventListener('click', function () {
+            links.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+            toggle.textContent = '☰';
+          });
+        });
+      }
+
+      var navLinks = document.querySelectorAll('.nav-links a');
+      if (!('IntersectionObserver' in window)) return;
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var link = document.querySelector('.nav-links a[data-section="' + entry.target.id + '"]');
+          if (!link) return;
+          navLinks.forEach(function (l) { l.classList.remove('active'); });
+          link.classList.add('active');
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+
+      navLinks.forEach(function (l) {
+        var s = document.getElementById(l.dataset.section);
+        if (s) obs.observe(s);
+      });
+    }
+
+    function initMagnetic() {
+      if (!finePointer || reduced) return;
+      document.querySelectorAll('.magnetic').forEach(function (m) {
+        m.addEventListener('mousemove', function (e) {
+          var r = m.getBoundingClientRect();
+          var dx = e.clientX - r.left - r.width / 2;
+          var dy = e.clientY - r.top - r.height / 2;
+          m.style.transform = 'translate(' + dx * 0.16 + 'px,' + dy * 0.28 + 'px)';
+        });
+        m.addEventListener('mouseleave', function () { m.style.transform = ''; });
+      });
+    }
+
+    buildFlow();
+    buildMarks();
+    buildGantt();
+    initReveals();
+    initNav();
+    initMagnetic();
+  })();
+  </script>
 
 </body>
 </html>
