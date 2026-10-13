@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Workshop Notebook</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one narrow column built for a phone held in a room.
+   Capture is home (big mic button first); Agenda and Day sit behind a bottom tab bar.
+   Highlighter yellow marks where the room is on the agenda; red marks that the mic is live. */
+:root {
+  --bg: #f2f4f8; --surface: #ffffff; --ink: #14213d; --muted: #55627e; --line: #d6dce8;
+  --accent: #2447e8; --accent-ink: #ffffff; --hl: #ffe066; --hl-ink: #3a2f00;
+  --rec: #c62828; --rec-ink: #ffffff;
+  --k-note: #55627e; --k-decision: #17703f; --k-action: #2447e8; --k-question: #9a5a00; --k-quote: #7a36a8; --k-photo: #0e6f7a;
+  --danger: #b3261e;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1526; --surface: #161f35; --ink: #e8ecf5; --muted: #9ba8c4; --line: #2a3654;
+    --accent: #8aa2ff; --accent-ink: #0e1526; --hl: #f2cf4a; --hl-ink: #231c00;
+    --rec: #ff6b6b; --rec-ink: #1a0505;
+    --k-note: #9ba8c4; --k-decision: #5fd394; --k-action: #8aa2ff; --k-question: #f0b04a; --k-quote: #cf9bf2; --k-photo: #5cd0dd;
+    --danger: #ff8a80; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1526; --surface: #161f35; --ink: #e8ecf5; --muted: #9ba8c4; --line: #2a3654;
+  --accent: #8aa2ff; --accent-ink: #0e1526; --hl: #f2cf4a; --hl-ink: #231c00;
+  --rec: #ff6b6b; --rec-ink: #1a0505;
+  --k-note: #9ba8c4; --k-decision: #5fd394; --k-action: #8aa2ff; --k-question: #f0b04a; --k-quote: #cf9bf2; --k-photo: #5cd0dd;
+  --danger: #ff8a80; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { padding-top: env(safe-area-inset-top, 0px); }
+body { margin: 0; padding-inline: 16px; padding-block: 0 96px; background: var(--bg); color: var(--ink); font: 400 15px/1.5 var(--body); }
+.wrap { max-width: 720px; margin-inline: auto; }
+button, input, textarea, select { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 14px 10px; border-bottom: 1px solid var(--line); }
+#title { width: 100%; border: 0; background: transparent; padding: 0; font: 700 24px/1.15 var(--display); letter-spacing: -0.01em; color: var(--ink); text-wrap: balance; }
+#title::placeholder { color: var(--muted); opacity: 0.8; }
+.meta-line { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 4px; font: 400 12px/1.4 var(--mono); color: var(--muted); }
+
+section[data-view] { padding-block: 18px 8px; display: flex; flex-direction: column; gap: 18px; }
+h2 { margin: 0; font: 600 13px/1.2 var(--body); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.grow { flex: 1 1 auto; min-width: 0; }
+
+.btn { min-height: 44px; padding: 0 16px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-weight: 500; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.btn:hover { border-color: var(--muted); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.btn.small { min-height: 34px; padding: 0 10px; font-size: 13px; }
+.btn.danger { color: var(--danger); border-color: var(--danger); }
+.btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+.link { background: none; border: 0; padding: 4px 0; color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+
+.here { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.here-tag { align-self: flex-start; background: var(--hl); color: var(--hl-ink); font: 500 11px/1 var(--mono); letter-spacing: 0.1em; padding: 5px 7px; border-radius: 3px; }
+.here-time { font: 500 13px/1.2 var(--mono); color: var(--muted); }
+.here-title { margin: 0; font: 600 20px/1.2 var(--display); text-wrap: balance; }
+.here-desc { margin: 0; color: var(--muted); font-size: 14px; }
+.here select { width: 100%; min-height: 40px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); padding: 0 8px; }
+
+.composer { display: flex; flex-direction: column; gap: 10px; }
+.micbar { display: flex; align-items: center; gap: 14px; }
+.mic { flex: none; width: 68px; height: 68px; border-radius: 50%; border: 0; background: var(--accent); color: var(--accent-ink); cursor: pointer; display: grid; place-items: center; }
+.mic svg { width: 30px; height: 30px; fill: currentColor; }
+.mic[aria-pressed="true"] { background: var(--rec); color: var(--rec-ink); }
+@media (prefers-reduced-motion: no-preference) {
+  .mic[aria-pressed="true"] { animation: pulse 1.6s ease-out infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--rec) 55%, transparent); } 100% { box-shadow: 0 0 0 18px transparent; } }
+}
+.mic-side { min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.mic-status { font-weight: 600; }
+.mic-status[data-on="true"] { color: var(--rec); }
+.mic-side select { max-width: 100%; min-height: 36px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); padding: 0 8px; }
+.interim { margin: 0; min-height: 1.5em; font-style: italic; color: var(--muted); overflow-wrap: anywhere; }
+.kinds { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { min-height: 34px; padding: 0 12px; border-radius: 17px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-size: 13px; font-weight: 500; color: var(--muted); }
+.chip[aria-pressed="true"] { color: var(--ink); border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+textarea.field, input.field { width: 100%; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); padding: 12px; line-height: 1.5; resize: none; }
+textarea.field { min-height: 112px; max-height: 50vh; }
+.hint { margin: 0; font-size: 13px; color: var(--muted); }
+.check { display: flex; align-items: center; gap: 8px; font-size: 14px; min-height: 36px; }
+.check input { width: 18px; height: 18px; accent-color: var(--accent); }
+.file-btn { position: relative; overflow: hidden; }
+.file-btn input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.note-warn { margin: 0; font-size: 13px; color: var(--danger); }
+
+.feed-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; }
+.feed { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.note { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 4px 12px; padding-block: 12px; border-top: 1px solid var(--line); }
+.note-time { font: 400 12px/1.8 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.note-body { min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.pill { align-self: flex-start; font: 500 11px/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 6px; border-radius: 3px; border: 1px solid currentColor; }
+.pill[data-k="note"] { color: var(--k-note); } .pill[data-k="decision"] { color: var(--k-decision); }
+.pill[data-k="action"] { color: var(--k-action); } .pill[data-k="question"] { color: var(--k-question); }
+.pill[data-k="quote"] { color: var(--k-quote); } .pill[data-k="photo"] { color: var(--k-photo); }
+.note-text { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.note-sess { font-size: 12px; color: var(--muted); }
+.thumb { max-width: min(240px, 100%); border-radius: 4px; border: 1px solid var(--line); display: block; }
+.note-actions { display: flex; gap: 12px; }
+.note-actions .link { font-size: 12px; color: var(--muted); }
+.note-actions .link.warn { color: var(--danger); }
+.empty { border: 1px dashed var(--line); border-radius: 6px; padding: 18px; color: var(--muted); display: flex; flex-direction: column; gap: 6px; }
+.empty strong { color: var(--ink); font-family: var(--display); font-size: 17px; }
+
+.sessions { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.sess { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+.sess[data-here="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.sess-top { display: flex; flex-wrap: wrap; gap: 8px; }
+.sess input { border: 1px solid var(--line); border-radius: 6px; background: var(--bg); padding: 8px 10px; min-height: 40px; min-width: 0; }
+.sess input.t { width: 124px; font-family: var(--mono); font-size: 13px; }
+.sess input.n { flex: 1 1 180px; font-weight: 500; }
+.sess-foot { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+.sess-count { font: 400 12px/1.2 var(--mono); color: var(--muted); }
+
+.stats { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 400 13px/1.4 var(--mono); color: var(--muted); }
+.stats b { color: var(--ink); font-weight: 500; }
+.preview { width: 100%; min-height: 220px; max-height: 60vh; font: 400 13px/1.5 var(--mono); }
+.steps { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; max-width: 65ch; color: var(--muted); }
+
+.tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; background: var(--surface); border-top: 1px solid var(--line); padding: 6px 16px calc(6px + env(safe-area-inset-bottom, 0px)); }
+.tabs-in { max-width: 720px; margin-inline: auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.tab { min-height: 48px; border: 0; background: transparent; border-radius: 6px; cursor: pointer; font-weight: 500; color: var(--muted); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+.tab small { font: 400 11px/1 var(--mono); }
+.tab[aria-selected="true"] { color: var(--ink); background: var(--bg); box-shadow: inset 0 -3px 0 var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <input id="title" type="text" placeholder="Name this workshop" aria-label="Workshop name" autocomplete="off">
+    <div class="meta-line"><span id="dateLine"></span><span id="saveLine"></span></div>
+  </header>
+
+  <section data-view="capture" id="view-capture">
+    <div id="here"></div>
+
+    <div class="composer">
+      <h2>Capture</h2>
+      <div class="micbar">
+        <button class="mic" id="mic" type="button" aria-pressed="false" aria-label="Start listening">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a4 4 0 0 0 4-4V6a4 4 0 0 0-8 0v5a4 4 0 0 0 4 4zm6-4a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.94V22h2v-3.06A8 8 0 0 0 20 11h-2z"/></svg>
+        </button>
+        <div class="mic-side">
+          <span class="mic-status" id="micStatus" data-on="false">Mic is off</span>
+          <label class="hint" for="lang">Language spoken in the room</label>
+          <select id="lang" aria-label="Language spoken in the room">
+            <option value="en-GB">English (UK)</option>
+            <option value="en-US">English (US)</option>
+            <option value="en-IN">English (India)</option>
+            <option value="ur-PK">Urdu (Pakistan)</option>
+            <option value="hi-IN">Hindi</option>
+            <option value="ar-SA">Arabic</option>
+            <option value="fr-FR">French</option>
+            <option value="es-ES">Spanish</option>
+            <option value="pt-BR">Portuguese (Brazil)</option>
+            <option value="sw-KE">Swahili</option>
+          </select>
+        </div>
+      </div>
+      <p class="interim" id="interim" aria-live="polite"></p>
+      <p class="note-warn" id="micErr" hidden></p>
+      <p class="hint" id="fileWarn" hidden>You opened this page as a file from your computer. Chrome may stop the microphone after a few seconds there. For a steady mic, open it through http://localhost or host it on an https site.</p>
+      <textarea id="draft" class="field" rows="4" aria-label="Note" placeholder="What people say appears here as you speak. You can also type, and fix any words before filing."></textarea>
+      <div class="kinds" id="kinds" role="group" aria-label="Type of note"></div>
+      <label class="check" for="autoFile"><input type="checkbox" id="autoFile" checked> File the note automatically after a pause of 6 seconds</label>
+      <div class="row">
+        <label class="btn file-btn" for="photoIn">Photo of a chart<input id="photoIn" type="file" accept="image/*"></label>
+        <span class="grow"></span>
+        <button class="btn primary" id="addNote" type="button">Add note</button>
+      </div>
+      <p class="hint">A photo is filed with whatever is in the note box as its caption. Ctrl or Cmd + Enter also adds a note.</p>
+      <p class="note-warn" id="capErr" hidden></p>
+    </div>
+
+    <div>
+      <div class="feed-head">
+        <h2 id="feedTitle">This session</h2>
+        <button class="link" id="feedToggle" type="button">Show the whole day</button>
+      </div>
+      <ul class="feed" id="feed"></ul>
+    </div>
+  </section>
+
+  <section data-view="agenda" id="view-agenda" hidden>
+    <div class="composer">
+      <h2>Agenda</h2>
+      <textarea id="agendaText" class="field" rows="6" aria-label="Agenda text" placeholder="Paste the agenda, one session per line&#10;09:30 Welcome and objectives&#10;10:00 Where we are now: evidence review&#10;11:15 Break"></textarea>
+      <div class="row">
+        <button class="btn primary" id="agendaBuild" type="button">Use this agenda</button>
+        <button class="link" id="agendaAdd" type="button">Add one session</button>
+      </div>
+      <p class="note-warn" id="agendaErr" hidden></p>
+    </div>
+    <div>
+      <h2 id="sessHead">Sessions</h2>
+      <ul class="sessions" id="sessions"></ul>
+    </div>
+  </section>
+
+  <section data-view="day" id="view-day" hidden>
+    <div>
+      <h2>Your day so far</h2>
+      <div class="stats" id="stats"></div>
+    </div>
+    <ol class="steps">
+      <li>Tap one of the copy buttons below.</li>
+      <li>Open a chat with Claude and paste.</li>
+      <li>For chart photos, attach the pictures from your phone in the same message.</li>
+    </ol>
+    <div class="row">
+      <button class="btn primary" id="finalBtn" type="button">Copy day for Claude: summary and insights</button>
+      <button class="btn" id="recapBtn" type="button">Copy a mid-day recap request</button>
+      <button class="btn" id="dlBtn" type="button">Download notes as text</button>
+    </div>
+    <p class="note-warn" id="dayErr" hidden></p>
+    <p class="hint" id="copyOk" hidden>Copied. Paste it into a chat with Claude.</p>
+    <div>
+      <h2>What will be copied</h2>
+      <textarea class="field preview" id="preview" readonly aria-label="Text that will be copied"></textarea>
+    </div>
+  </section>
+</div>
+
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs-in" role="tablist">
+    <button class="tab" role="tab" data-tab="capture" aria-selected="true" type="button">Capture<small id="cCap">0 notes</small></button>
+    <button class="tab" role="tab" data-tab="agenda" aria-selected="false" type="button">Agenda<small id="cAg">0 sessions</small></button>
+    <button class="tab" role="tab" data-tab="day" aria-selected="false" type="button">Day<small>for Claude</small></button>
+  </div>
+</nav>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (s) { return document.querySelector(s); };
+  function h(tag, attrs) {
+    var el = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) {
+      var v = attrs[k];
+      if (v === null || v === undefined || v === false) return;
+      if (k === 'class') el.className = v;
+      else if (k === 'text') el.textContent = v;
+      else if (k.indexOf('on') === 0) el.addEventListener(k.slice(2), v);
+      else el.setAttribute(k, v === true ? '' : v);
+    });
+    for (var i = 2; i < arguments.length; i++) {
+      var kids = [].concat(arguments[i]);
+      for (var j = 0; j < kids.length; j++) {
+        var c = kids[j];
+        if (c === null || c === undefined || c === false) continue;
+        el.append(c.nodeType ? c : document.createTextNode(String(c)));
+      }
+    }
+    return el;
+  }
+  function uid() { return Math.random().toString(36).slice(2, 7) + Date.now().toString(36); }
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); return true; } catch (e) { return false; } }
+  function fmtTime(ts) { return new Date(ts).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }); }
+  function plural(n, a, b) { return n + ' ' + (n === 1 ? a : b); }
+  function showErr(el, msg) { el.textContent = msg || ''; el.hidden = !msg; }
+
+  var KINDS = [['note', 'Note'], ['decision', 'Decision'], ['action', 'Action'], ['question', 'Question'], ['quote', 'Quote']];
+  var KIND_LABEL = { note: 'Note', decision: 'Decision', action: 'Action', question: 'Question', quote: 'Quote', photo: 'Chart photo' };
+  var LS_STATE = 'workshop-notebook-live-v1', LS_DRAFT = 'workshop-notebook-live-draft', LS_LANG = 'workshop-notebook-live-lang', LS_AUTO = 'workshop-notebook-live-auto';
+
+  function defaultMeta() {
+    return { title: '', date: new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }), sessions: [], currentId: null };
+  }
+  var S = { meta: defaultMeta(), notes: [] };
+  var kind = 'note', showAll = false;
+  var editingId = null, editDraft = '', armedId = null, armTimer = 0, confirmReplace = false;
+
+  // ---------- storage ----------
+  var saveTimer = 0;
+  function save() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function () {
+      var ok = lsSet(LS_STATE, JSON.stringify(S));
+      $('#saveLine').textContent = ok ? 'Saved on this device' : 'Storage is full: download your notes';
+    }, 200);
+  }
+  function load() {
+    var raw = lsGet(LS_STATE);
+    if (!raw) return;
+    try {
+      var o = JSON.parse(raw);
+      if (o.meta) S.meta = Object.assign(defaultMeta(), o.meta);
+      if (Array.isArray(o.notes)) S.notes = o.notes;
+    } catch (e) {}
+  }
+
+  // ---------- helpers ----------
+  function sessions() { return S.meta.sessions || []; }
+  function current() {
+    var ss = sessions();
+    for (var i = 0; i < ss.length; i++) if (ss[i].id === S.meta.currentId) return ss[i];
+    return null;
+  }
+  function sessLabel(s) { return s ? ((s.time ? s.time + '  ' : '') + s.title) : 'Not tied to a session'; }
+  function sessionName(id) {
+    var ss = sessions();
+    for (var i = 0; i < ss.length; i++) if (ss[i].id === id) return ss[i].title;
+    return 'No session';
+  }
+
+  // ---------- header and tabs ----------
+  function renderHeader() {
+    var t = $('#title');
+    if (document.activeElement !== t) t.value = S.meta.title || '';
+    $('#dateLine').textContent = S.meta.date || '';
+    $('#cCap').textContent = plural(S.notes.length, 'note', 'notes');
+    $('#cAg').textContent = plural(sessions().length, 'session', 'sessions');
+  }
+  function setView(v) {
+    ['capture', 'agenda', 'day'].forEach(function (n) { $('#view-' + n).hidden = n !== v; });
+    document.querySelectorAll('.tab').forEach(function (b) { b.setAttribute('aria-selected', String(b.dataset.tab === v)); });
+    if (v === 'day') renderDay();
+    window.scrollTo(0, 0);
+  }
+
+  // ---------- where we are ----------
+  function goNext() {
+    var ss = sessions(); var i = ss.indexOf(current());
+    var nx = i < 0 ? ss[0] : ss[i + 1];
+    if (nx) { S.meta.currentId = nx.id; save(); render(); }
+  }
+  function renderHere() {
+    var box = $('#here');
+    var ss = sessions();
+    if (!ss.length) {
+      box.replaceChildren(h('div', { class: 'here' },
+        h('span', { class: 'here-tag', text: 'WE ARE HERE' }),
+        h('p', { class: 'here-title', text: 'No agenda yet' }),
+        h('p', { class: 'here-desc', text: 'Add the agenda so every note is filed under the session it belongs to. You can also capture without one.' }),
+        h('div', { class: 'row' }, h('button', { class: 'btn', type: 'button', onclick: function () { setView('agenda'); } }, 'Add the agenda'))));
+      return;
+    }
+    var cur = current(); var idx = ss.indexOf(cur);
+    var sel = h('select', { id: 'hereSel', 'aria-label': 'Current session', onchange: function (e) { S.meta.currentId = e.target.value || null; save(); render(); } },
+      h('option', { value: '' }, 'Not tied to a session'));
+    ss.forEach(function (s) { sel.append(h('option', { value: s.id, selected: s.id === S.meta.currentId }, sessLabel(s))); });
+    var next = idx >= 0 ? ss[idx + 1] : ss[0];
+    box.replaceChildren(h('div', { class: 'here' },
+      h('span', { class: 'here-tag', text: 'WE ARE HERE' }),
+      cur ? h('div', null, cur.time ? h('div', { class: 'here-time', text: cur.time }) : null, h('p', { class: 'here-title', text: cur.title }), cur.desc ? h('p', { class: 'here-desc', text: cur.desc }) : null)
+          : h('p', { class: 'here-title', text: 'Pick the session the room is in' }),
+      sel,
+      h('div', { class: 'row' }, h('button', { class: 'btn small', type: 'button', disabled: !next, onclick: goNext },
+        next ? 'Next: ' + (next.title.length > 28 ? next.title.slice(0, 27) + '…' : next.title) : 'Last session'))));
+  }
+
+  // ---------- composer ----------
+  function renderKinds() {
+    var k = $('#kinds');
+    k.replaceChildren.apply(k, KINDS.map(function (x) {
+      return h('button', { class: 'chip', type: 'button', 'aria-pressed': String(kind === x[0]), onclick: function () { kind = x[0]; renderKinds(); } }, x[1]);
+    }));
+  }
+  function autosize() { var d = $('#draft'); d.style.height = 'auto'; d.style.height = Math.min(d.scrollHeight + 2, window.innerHeight * 0.5) + 'px'; }
+  function setDraft(v) { $('#draft').value = v; lsSet(LS_DRAFT, v); autosize(); }
+  function addNote() {
+    var text = $('#draft').value.trim();
+    if (!text) { $('#draft').focus(); return; }
+    var cur = current();
+    S.notes.push({ id: 'n' + uid(), ts: Date.now(), sessionId: cur ? cur.id : '', kind: kind, text: text });
+    setDraft(''); $('#interim').textContent = ''; kind = 'note'; renderKinds(); save(); render();
+  }
+
+  // ---------- feed ----------
+  function noteRow(n) {
+    var editing = editingId === n.id;
+    var body = h('div', { class: 'note-body' });
+    body.append(h('span', { class: 'pill', 'data-k': n.kind, text: KIND_LABEL[n.kind] || 'Note' }));
+    if (n.thumb) body.append(h('img', { class: 'thumb', src: n.thumb, alt: 'Photo of a chart or flipchart' }));
+    if (editing) {
+      var ta = h('textarea', { class: 'field', id: 'edit-' + n.id, rows: '4', 'aria-label': 'Edit note', oninput: function (e) { editDraft = e.target.value; } });
+      ta.value = editDraft;
+      body.append(ta, h('div', { class: 'note-actions' },
+        h('button', { class: 'link', type: 'button', onclick: function () { n.text = editDraft.trim(); editingId = null; save(); render(); } }, 'Save'),
+        h('button', { class: 'link', type: 'button', onclick: function () { editingId = null; render(); } }, 'Cancel')));
+    } else {
+      if (n.text) body.append(h('p', { class: 'note-text', text: n.text }));
+      if (showAll) body.append(h('span', { class: 'note-sess', text: sessionName(n.sessionId) }));
+      body.append(h('div', { class: 'note-actions' },
+        h('button', { class: 'link', type: 'button', onclick: function () { editingId = n.id; editDraft = n.text || ''; render(); setTimeout(function () { var t = document.getElementById('edit-' + n.id); if (t) t.focus(); }, 0); } }, 'Edit'),
+        h('button', { class: 'link' + (armedId === n.id ? ' warn' : ''), type: 'button', onclick: function () {
+          if (armedId === n.id) { armedId = null; S.notes = S.notes.filter(function (x) { return x.id !== n.id; }); save(); render(); return; }
+          armedId = n.id; clearTimeout(armTimer); armTimer = setTimeout(function () { armedId = null; renderNotes(); }, 3000); renderNotes();
+        } }, armedId === n.id ? 'Tap again to delete' : 'Delete')));
+    }
+    return h('li', { class: 'note' }, h('span', { class: 'note-time', text: fmtTime(n.ts) }), body);
+  }
+  function renderNotes() {
+    var cur = current();
+    $('#feedTitle').textContent = showAll ? 'Whole day' : (cur ? cur.title : 'Notes without a session');
+    $('#feedToggle').textContent = showAll ? 'Show this session only' : 'Show the whole day';
+    var list = S.notes.slice().sort(function (a, b) { return b.ts - a.ts; });
+    if (!showAll) list = list.filter(function (n) { return (n.sessionId || '') === (cur ? cur.id : ''); });
+    var feed = $('#feed');
+    if (!list.length) {
+      feed.replaceChildren(h('li', { class: 'empty' },
+        h('strong', { text: showAll ? 'Nothing captured yet today' : 'Nothing captured in this session yet' }),
+        h('span', { text: 'Tap the microphone and let people talk, or type. Tag decisions, actions and open questions as you go.' })));
+      return;
+    }
+    feed.replaceChildren.apply(feed, list.map(noteRow));
+  }
+
+  // ---------- photos ----------
+  function addPhoto(file) {
+    showErr($('#capErr'), '');
+    var u = URL.createObjectURL(file); var img = new Image();
+    img.onload = function () {
+      var r = Math.min(1, 640 / Math.max(img.naturalWidth, img.naturalHeight));
+      var c = document.createElement('canvas');
+      c.width = Math.max(1, Math.round(img.naturalWidth * r)); c.height = Math.max(1, Math.round(img.naturalHeight * r));
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      var thumb = c.toDataURL('image/jpeg', 0.6);
+      URL.revokeObjectURL(u);
+      var cur = current();
+      S.notes.push({ id: 'n' + uid(), ts: Date.now(), sessionId: cur ? cur.id : '', kind: 'photo', text: $('#draft').value.trim(), thumb: thumb });
+      setDraft(''); save(); render();
+    };
+    img.onerror = function () { URL.revokeObjectURL(u); showErr($('#capErr'), 'That photo could not be opened. Try another one.'); };
+    img.src = u;
+  }
+
+  // ---------- agenda ----------
+  var TIME_RE = /^\s*(\d{1,2}[:.]\d{2})\s*(?:[-–—]|to)?\s*(\d{1,2}[:.]\d{2})?\s*[-–—:|]?\s*(.+)$/i;
+  function parseAgenda(text) {
+    var out = [];
+    text.split(/\r?\n/).forEach(function (raw) {
+      var line = raw.replace(/\s+$/, ''); if (!line.trim()) return;
+      var m = line.match(TIME_RE);
+      if (m) out.push({ id: 's' + uid(), time: m[1].replace('.', ':') + (m[2] ? '–' + m[2].replace('.', ':') : ''), title: m[3].trim(), desc: '' });
+      else out.push({ id: 's' + uid(), time: '', title: line.replace(/^\s*(?:[-*•]|\d+[.)])\s+/, '').trim(), desc: '' });
+    });
+    return out;
+  }
+  function setAgenda(list) {
+    if (!list.length) return;
+    S.meta.sessions = sessions().length ? sessions().concat(list) : list;
+    if (!current()) S.meta.currentId = S.meta.sessions[0].id;
+    save(); render();
+  }
+  function renderAgenda() {
+    var list = $('#sessions');
+    if (list.contains(document.activeElement) && document.activeElement !== document.body) return;
+    var ss = sessions();
+    $('#sessHead').textContent = ss.length ? 'Sessions (' + ss.length + ')' : 'Sessions';
+    if (!ss.length) {
+      list.replaceChildren(h('li', { class: 'empty' }, h('strong', { text: 'No sessions yet' }),
+        h('span', { text: 'Paste the agenda above, or add sessions one at a time.' }),
+        h('button', { class: 'link', type: 'button', onclick: function () {
+          $('#agendaText').value = '09:30 Welcome and objectives\n10:00 Where we are now: evidence review\n11:15 Break\n11:30 Group work: priorities\n13:00 Lunch\n14:00 Plenary: what we heard\n15:30 Next steps and close';
+        } }, 'Fill in an example agenda to try it')));
+      return;
+    }
+    list.replaceChildren.apply(list, ss.map(function (s, i) {
+      var count = S.notes.filter(function (n) { return n.sessionId === s.id; }).length;
+      var here = s.id === S.meta.currentId;
+      return h('li', { class: 'sess', 'data-here': String(here) },
+        h('div', { class: 'sess-top' },
+          h('input', { class: 't', id: 'st-' + s.id, value: s.time, placeholder: 'Time', 'aria-label': 'Time for session ' + (i + 1), onchange: function (e) { s.time = e.target.value.trim(); save(); setTimeout(function () { document.activeElement.blur(); render(); }, 0); } }),
+          h('input', { class: 'n', id: 'sn-' + s.id, value: s.title, placeholder: 'Session title', 'aria-label': 'Title of session ' + (i + 1), onchange: function (e) { s.title = e.target.value.trim() || 'Untitled session'; save(); setTimeout(function () { document.activeElement.blur(); render(); }, 0); } })),
+        h('div', { class: 'sess-foot' },
+          h('span', { class: 'sess-count', text: plural(count, 'note', 'notes') }),
+          h('div', { class: 'row' },
+            h('button', { class: 'btn small' + (here ? '' : ' primary'), type: 'button', disabled: here, onclick: function () { S.meta.currentId = s.id; save(); render(); } }, here ? 'We are here' : 'We are here now'),
+            h('button', { class: 'btn small', type: 'button', 'aria-label': 'Remove ' + s.title, onclick: function () {
+              S.meta.sessions = sessions().filter(function (x) { return x.id !== s.id; });
+              if (S.meta.currentId === s.id) S.meta.currentId = null; save(); render();
+            } }, 'Remove'))));
+    }));
+  }
+
+  // ---------- day: text for Claude ----------
+  function digest() {
+    var parts = [];
+    function block(label, id) {
+      var list = S.notes.filter(function (n) { return (n.sessionId || '') === id; }).sort(function (a, b) { return a.ts - b.ts; });
+      var lines = list.map(function (n) {
+        var tag = KIND_LABEL[n.kind] || 'Note';
+        var text = n.text || (n.kind === 'photo' ? '(no caption; the photo is attached separately)' : '(no text)');
+        return '[' + fmtTime(n.ts) + '] [' + tag + '] ' + text;
+      });
+      parts.push('### ' + label + '\n' + (lines.length ? lines.join('\n') : '(no notes captured)'));
+    }
+    sessions().forEach(function (s) { block((s.time ? s.time + ' ' : '') + s.title + (s.desc ? ' (' + s.desc + ')' : ''), s.id); });
+    if (S.notes.some(function (n) { return !n.sessionId; })) block('Not tied to a session', '');
+    return parts.join('\n\n');
+  }
+  function header() {
+    var cur = current();
+    return 'Workshop: ' + (S.meta.title || 'untitled') + '\nDate: ' + S.meta.date + '\n' +
+      (cur ? 'The room is currently in: ' + cur.title + '\n' : '') +
+      'Agenda order: ' + (sessions().map(function (s) { return s.title; }).join(' > ') || 'none given') + '\n';
+  }
+  var COMMON = 'You are helping the facilitator of a workshop held in a physical room. Below are the notes captured live, mostly by voice dictation, so expect transcription slips, fragments and missing speaker names. Where I attach chart photos, read them together with the notes. Use only what the notes and photos support: never invent names, numbers, decisions or quotes, and say when a session has thin coverage. Write plainly and specifically.\n\n';
+  var FINAL = 'Write the end-of-day write-up with these sections, in this order:\n## The day in brief (3 to 5 sentences)\n## By session (one sub-heading per agenda session, 2 to 5 bullets each; say "No notes captured" for an empty one)\n## Decisions\n## Actions (one bullet each, with owner and date only if the notes give them)\n## Open questions\n## What the charts showed (only if there are chart photos)\n## Insights (4 to 6 bullets: patterns, tensions, gaps between sessions, things raised repeatedly. Start each with "From the notes:" or "My read:" so I can tell evidence from interpretation)\n## Suggestions (5 to 8 concrete next steps: follow-ups, people or evidence to bring in, things to test, and what to change in the next workshop)';
+  var RECAP = 'Write a short mid-day recap with these sections:\n## So far (5 to 8 bullets)\n## Still open (unresolved questions and actions)\n## Coming up (what the agenda has next, and one thing worth steering the room toward)';
+  function build(mode) { return COMMON + header() + '\nNOTES\n\n' + digest() + '\n\n' + (mode === 'final' ? FINAL : RECAP); }
+  function renderDay() {
+    var c = { photo: 0, decision: 0, action: 0, question: 0 }, cov = {};
+    S.notes.forEach(function (n) { if (c[n.kind] !== undefined) c[n.kind]++; if (n.sessionId) cov[n.sessionId] = 1; });
+    $('#stats').replaceChildren(
+      h('span', null, h('b', null, S.notes.length), ' notes'),
+      h('span', null, h('b', null, Object.keys(cov).length + '/' + sessions().length), ' sessions with notes'),
+      h('span', null, h('b', null, c.decision), ' decisions'),
+      h('span', null, h('b', null, c.action), ' actions'),
+      h('span', null, h('b', null, c.question), ' open questions'),
+      h('span', null, h('b', null, c.photo), ' chart photos'));
+    $('#preview').value = S.notes.length ? build('final') : 'Capture some notes first. This box shows exactly what will be copied.';
+    ['finalBtn', 'recapBtn', 'dlBtn'].forEach(function (id) { $('#' + id).disabled = !S.notes.length; });
+  }
+  function copyText(text) {
+    $('#copyOk').hidden = true; showErr($('#dayErr'), '');
+    function done() { $('#copyOk').hidden = false; }
+    function fallback() {
+      var p = $('#preview'); p.value = text; p.focus(); p.select();
+      try { if (document.execCommand('copy')) { done(); return; } } catch (e) {}
+      showErr($('#dayErr'), 'Your browser blocked copying. The text is selected in the box below, so copy it by hand.');
+    }
+    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+  }
+  function download() {
+    var text = header() + '\n' + digest() + '\n';
+    var d = new Date(); var stamp = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    var a = h('a', { href: URL.createObjectURL(new Blob([text], { type: 'text/plain' })), download: 'workshop-notes-' + stamp + '.txt' });
+    document.body.append(a); a.click(); a.remove();
+  }
+
+  // ---------- dictation ----------
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var rec = null, wantListen = false, silenceTimer = 0, startedAt = 0, quickEnds = 0, lastErr = '';
+  function micUi(on) {
+    var m = $('#mic'); m.setAttribute('aria-pressed', String(on)); m.setAttribute('aria-label', on ? 'Stop listening' : 'Start listening');
+    var s = $('#micStatus'); s.dataset.on = String(on); s.textContent = on ? 'Listening' : 'Mic is off';
+  }
+  function armSilence() {
+    clearTimeout(silenceTimer);
+    if (!$('#autoFile').checked || !wantListen) return;
+    silenceTimer = setTimeout(function () { if ($('#draft').value.trim()) addNote(); }, 6000);
+  }
+  function startRec() {
+    rec = new SR(); rec.continuous = true; rec.interimResults = true; rec.lang = $('#lang').value;
+    startedAt = Date.now(); lastErr = '';
+    rec.onresult = function (e) {
+      var fin = '', part = '';
+      for (var i = e.resultIndex; i < e.results.length; i++) {
+        var r = e.results[i];
+        if (r.isFinal) fin += r[0].transcript; else part += r[0].transcript;
+      }
+      if (fin.trim()) { var d = $('#draft'); setDraft((d.value ? d.value.replace(/\s+$/, '') + ' ' : '') + fin.trim()); }
+      $('#interim').textContent = part;
+      armSilence();
+    };
+    rec.onerror = function (e) {
+      var er = e.error;
+      if (er === 'no-speech' || er === 'aborted') return;
+      lastErr = er;
+      if (er === 'not-allowed' || er === 'service-not-allowed') { wantListen = false; showErr($('#micErr'), 'The browser did not allow the microphone. Allow it for this page in the address bar or site settings, then tap the mic again. On a phone, open the file from a secure (https) address.'); }
+      else if (er === 'audio-capture') { wantListen = false; showErr($('#micErr'), 'No microphone was found. Check that one is connected and not used by another app.'); }
+      else if (er === 'network') { wantListen = false; showErr($('#micErr'), 'Speech recognition needs an internet connection. Reconnect and tap the mic again.'); }
+      else if (er === 'language-not-supported') { wantListen = false; showErr($('#micErr'), 'This browser does not support that language for dictation. Pick another language.'); }
+    };
+    rec.onend = function () {
+      $('#interim').textContent = '';
+      if (wantListen) {
+        if (Date.now() - startedAt < 1500) quickEnds++; else quickEnds = 0;
+        if (quickEnds >= 3) {
+          wantListen = false; clearTimeout(silenceTimer); micUi(false);
+          showErr($('#micErr'), 'The browser keeps closing the microphone right after opening it' + (lastErr ? ' (' + lastErr + ')' : '') + '. ' +
+            (location.protocol === 'file:' ? 'This usually happens when the page is opened as a file. Open it through http://localhost or host it on an https site.' : 'Check the microphone permission for this site, and that no other app is using the microphone.'));
+          return;
+        }
+      }
+      if (wantListen) setTimeout(function () { if (wantListen) { try { startRec(); } catch (x) { wantListen = false; micUi(false); } } }, 250);
+      else micUi(false);
+    };
+    rec.start();
+  }
+  function toggleMic() {
+    showErr($('#micErr'), '');
+    if (!SR) { showErr($('#micErr'), 'This browser has no built-in speech recognition. Open the file in Chrome, Edge or Safari, or use the microphone key on your phone keyboard.'); return; }
+    if (wantListen) {
+      wantListen = false; clearTimeout(silenceTimer);
+      try { rec.stop(); } catch (e) {}
+      micUi(false); return;
+    }
+    quickEnds = 0; wantListen = true; micUi(true);
+    try { startRec(); } catch (e) { wantListen = false; micUi(false); showErr($('#micErr'), 'The microphone could not start. Try again.'); }
+  }
+
+  // ---------- render and events ----------
+  function render() { renderHeader(); renderHere(); renderNotes(); renderAgenda(); if (!$('#view-day').hidden) renderDay(); }
+
+  $('#title').addEventListener('input', function (e) { S.meta.title = e.target.value; save(); });
+  $('#draft').addEventListener('input', function (e) { lsSet(LS_DRAFT, e.target.value); autosize(); armSilence(); });
+  $('#draft').addEventListener('keydown', function (e) { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); addNote(); } });
+  $('#addNote').addEventListener('click', addNote);
+  $('#mic').addEventListener('click', toggleMic);
+  $('#lang').addEventListener('change', function (e) {
+    lsSet(LS_LANG, e.target.value);
+    if (wantListen) { try { rec.stop(); } catch (x) {} }
+  });
+  $('#autoFile').addEventListener('change', function (e) { lsSet(LS_AUTO, e.target.checked ? '1' : '0'); if (!e.target.checked) clearTimeout(silenceTimer); });
+  $('#feedToggle').addEventListener('click', function () { showAll = !showAll; renderNotes(); });
+  $('#photoIn').addEventListener('change', function (e) { var f = e.target.files && e.target.files[0]; e.target.value = ''; if (f) addPhoto(f); });
+  $('#agendaBuild').addEventListener('click', function () {
+    var made = parseAgenda($('#agendaText').value);
+    if (!made.length) { showErr($('#agendaErr'), 'Paste the agenda first, one session per line.'); return; }
+    if (sessions().length && !confirmReplace) {
+      confirmReplace = true; $('#agendaBuild').textContent = 'Replace the current agenda';
+      showErr($('#agendaErr'), 'This replaces the ' + plural(sessions().length, 'session', 'sessions') + ' below. Notes already filed stay in the log. Tap again to confirm.'); return;
+    }
+    confirmReplace = false; $('#agendaBuild').textContent = 'Use this agenda'; showErr($('#agendaErr'), '');
+    S.meta.sessions = []; S.meta.currentId = null; setAgenda(made); $('#agendaText').value = '';
+  });
+  $('#agendaText').addEventListener('input', function () { if (confirmReplace) { confirmReplace = false; $('#agendaBuild').textContent = 'Use this agenda'; showErr($('#agendaErr'), ''); } });
+  $('#agendaAdd').addEventListener('click', function () {
+    setAgenda([{ id: 's' + uid(), time: '', title: 'New session', desc: '' }]);
+    setTimeout(function () { var l = sessions(); var el = document.getElementById('sn-' + l[l.length - 1].id); if (el) { el.focus(); el.select(); } }, 0);
+  });
+  $('#finalBtn').addEventListener('click', function () { copyText(build('final')); });
+  $('#recapBtn').addEventListener('click', function () { copyText(build('recap')); });
+  $('#dlBtn').addEventListener('click', download);
+  document.querySelectorAll('.tab').forEach(function (b) { b.addEventListener('click', function () { setView(b.dataset.tab); }); });
+
+  // keep the screen awake while capturing (optional)
+  function keepAwake() { try { if (navigator.wakeLock && document.visibilityState === 'visible') navigator.wakeLock.request('screen').catch(function () {}); } catch (e) {} }
+  document.addEventListener('visibilitychange', keepAwake);
+
+  // ---------- start ----------
+  load();
+  var sl = lsGet(LS_LANG); if (sl) $('#lang').value = sl;
+  if (lsGet(LS_AUTO) === '0') $('#autoFile').checked = false;
+  var dr = lsGet(LS_DRAFT); if (dr) { $('#draft').value = dr; autosize(); }
+  $('#saveLine').textContent = 'Saved on this device';
+  if (!SR) { $('#micStatus').textContent = 'Dictation not supported here'; }
+  if (location.protocol === 'file:') $('#fileWarn').hidden = false;
+  renderKinds(); render(); keepAwake();
+})();
+</script>
+</body>
+</html>
