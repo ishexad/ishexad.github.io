@@ -134,14 +134,28 @@ textarea.field { min-height: 112px; max-height: 50vh; }
 .tab { min-height: 48px; border: 0; background: transparent; border-radius: 6px; cursor: pointer; font-weight: 500; color: var(--muted); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
 .tab small { font: 400 11px/1 var(--mono); }
 .tab[aria-selected="true"] { color: var(--ink); background: var(--bg); box-shadow: inset 0 -3px 0 var(--accent); }
+.daybox { margin-top: 14px; background: var(--surface); border: 1px solid var(--ink); border-radius: 6px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.daybox p { margin: 0; max-width: 65ch; }
+.meta-line .link { font: 500 12px/1.4 var(--mono); padding: 0; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
     <input id="title" type="text" placeholder="Name this workshop" aria-label="Workshop name" autocomplete="off">
-    <div class="meta-line"><span id="dateLine"></span><span id="saveLine"></span></div>
+    <div class="meta-line"><span id="dateLine"></span><span id="saveLine"></span><button class="link" id="newDayBtn" type="button">New day</button></div>
   </header>
+
+  <div class="daybox" id="newDayPanel" hidden>
+    <p id="newDayText"></p>
+    <label class="check" for="keepAgenda"><input type="checkbox" id="keepAgenda"> Keep the workshop name and agenda sessions for the new day</label>
+    <div class="row">
+      <button class="btn primary" id="newDayGo" type="button">Start a new day</button>
+      <button class="btn" id="newDayDl" type="button">Download these notes first</button>
+      <button class="link" id="newDayCancel" type="button">Cancel</button>
+    </div>
+    <p class="note-warn" id="newDayErr" hidden></p>
+  </div>
 
   <section data-view="capture" id="view-capture">
     <div id="here"></div>
@@ -230,6 +244,12 @@ textarea.field { min-height: 112px; max-height: 50vh; }
       <h2>What will be copied</h2>
       <textarea class="field preview" id="preview" readonly aria-label="Text that will be copied"></textarea>
     </div>
+    <div id="pastWrap" hidden>
+      <h2>Past days</h2>
+      <p class="hint">Earlier days are kept on this device. Download them before you clear your browser data.</p>
+      <p class="note-warn" id="pastErr" hidden></p>
+      <ul class="sessions" id="past"></ul>
+    </div>
   </section>
 </div>
 
@@ -274,32 +294,124 @@ textarea.field { min-height: 112px; max-height: 50vh; }
 
   var KINDS = [['note', 'Note'], ['decision', 'Decision'], ['action', 'Action'], ['question', 'Question'], ['quote', 'Quote']];
   var KIND_LABEL = { note: 'Note', decision: 'Decision', action: 'Action', question: 'Question', quote: 'Quote', photo: 'Chart photo' };
-  var LS_STATE = 'workshop-notebook-live-v1', LS_DRAFT = 'workshop-notebook-live-draft', LS_LANG = 'workshop-notebook-live-lang', LS_AUTO = 'workshop-notebook-live-auto';
+  var LS_STATE = 'workshop-notebook-live-v1', LS_DRAFT = 'workshop-notebook-live-draft', LS_LANG = 'workshop-notebook-live-lang', LS_AUTO = 'workshop-notebook-live-auto', LS_HIST = 'workshop-notebook-live-history', LS_DISMISS = 'workshop-notebook-live-dismiss';
 
   function defaultMeta() {
-    return { title: '', date: new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }), sessions: [], currentId: null };
+    return { title: '', date: longDate(), dateISO: todayISO(), sessions: [], currentId: null };
   }
   var S = { meta: defaultMeta(), notes: [] };
   var kind = 'note', showAll = false;
   var editingId = null, editDraft = '', armedId = null, armTimer = 0, confirmReplace = false;
 
   // ---------- storage ----------
-  var saveTimer = 0;
-  function save() {
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(function () {
-      var ok = lsSet(LS_STATE, JSON.stringify(S));
-      $('#saveLine').textContent = ok ? 'Saved on this device' : 'Storage is full: download your notes';
-    }, 200);
+  var saveTimer = 0, saveDirty = false;
+  function writeNow() {
+    clearTimeout(saveTimer); saveDirty = false;
+    var ok = lsSet(LS_STATE, JSON.stringify(S));
+    $('#saveLine').textContent = ok ? 'Saved on this device' : 'Storage is full: download your notes';
   }
+  function save() { saveDirty = true; clearTimeout(saveTimer); saveTimer = setTimeout(writeNow, 200); }
   function load() {
     var raw = lsGet(LS_STATE);
     if (!raw) return;
     try {
       var o = JSON.parse(raw);
-      if (o.meta) S.meta = Object.assign(defaultMeta(), o.meta);
+      if (o.meta) {
+        S.meta = Object.assign(defaultMeta(), o.meta);
+        if (!o.meta.dateISO) {
+          var pd = Date.parse(String(o.meta.date || '').replace(/^[A-Za-z]+,\s*/, ''));
+          S.meta.dateISO = isNaN(pd) ? '' : isoOf(new Date(pd));
+        }
+      }
       if (Array.isArray(o.notes)) S.notes = o.notes;
     } catch (e) {}
+  }
+
+  // ---------- days ----------
+  function isoOf(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function todayISO() { return isoOf(new Date()); }
+  function longDate() { return new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); }
+  var dayBoxManual = false, armedHist = null, armHistTimer = 0;
+  function getHistory() { try { var a = JSON.parse(lsGet(LS_HIST) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+  function setHistory(a) { return lsSet(LS_HIST, JSON.stringify(a)); }
+  function hasContent() { return S.notes.length > 0 || S.meta.sessions.length > 0 || !!S.meta.title; }
+  function freshenIfEmpty() {
+    if (!S.notes.length && !S.meta.sessions.length && S.meta.dateISO !== todayISO()) { S.meta.dateISO = todayISO(); S.meta.date = longDate(); save(); }
+  }
+  function archiveText(st) {
+    var m = st.meta || {}, ss = m.sessions || [], notes = st.notes || [], ids = {};
+    ss.forEach(function (x) { ids[x.id] = 1; });
+    function block(label, pred) {
+      var list = notes.filter(pred).sort(function (a, b) { return a.ts - b.ts; });
+      var lines = list.map(function (n) { return '[' + fmtTime(n.ts) + '] [' + (KIND_LABEL[n.kind] || 'Note') + '] ' + (n.text || (n.kind === 'photo' ? '(photo, no caption)' : '(no text)')); });
+      return '### ' + label + '\n' + (lines.length ? lines.join('\n') : '(no notes captured)');
+    }
+    var parts = ss.map(function (x) { return block((x.time ? x.time + ' ' : '') + x.title, function (n) { return n.sessionId === x.id; }); });
+    if (notes.some(function (n) { return !ids[n.sessionId]; })) parts.push(block('Not tied to a session', function (n) { return !ids[n.sessionId]; }));
+    return 'Workshop: ' + (m.title || 'untitled') + '\nDate: ' + (m.date || '') + '\n\n' + parts.join('\n\n') + '\n';
+  }
+  function saveText(name, text) {
+    var a = h('a', { href: URL.createObjectURL(new Blob([text], { type: 'text/plain' })), download: name });
+    document.body.append(a); a.click(); a.remove();
+  }
+  function dayStale() {
+    return (S.notes.length > 0 || S.meta.sessions.length > 0) && S.meta.dateISO !== todayISO() && lsGet(LS_DISMISS) !== todayISO();
+  }
+  function renderDayBox() {
+    var mode = dayBoxManual ? 'manual' : (dayStale() ? 'auto' : '');
+    $('#newDayPanel').hidden = !mode;
+    if (!mode) return;
+    $('#newDayText').textContent = mode === 'auto'
+      ? 'These notes are from ' + (S.meta.date || 'an earlier day') + '. Today is ' + longDate() + '. Start a new day to move them to Past days and begin with a clean page.'
+      : 'Start a new day? The current notes move to Past days on the Day tab, where you can download or reopen them.';
+    $('#newDayCancel').textContent = mode === 'auto' ? 'Keep adding to the old day' : 'Cancel';
+  }
+  function newDay() {
+    var hist = getHistory(), old = S;
+    if (hasContent()) {
+      hist.unshift({ id: 'h' + uid(), savedAt: Date.now(), meta: old.meta, notes: old.notes });
+      if (!setHistory(hist)) { showErr($('#newDayErr'), 'There is not enough storage left to keep the old day. Download its notes first, delete a past day, then try again.'); return; }
+    }
+    var keep = $('#keepAgenda').checked;
+    S = { meta: defaultMeta(), notes: [] };
+    if (keep) {
+      S.meta.title = old.meta.title || '';
+      S.meta.sessions = JSON.parse(JSON.stringify(old.meta.sessions || []));
+      S.meta.currentId = S.meta.sessions.length ? S.meta.sessions[0].id : null;
+    }
+    editingId = null; armedId = null; showAll = false; kind = 'note'; dayBoxManual = false;
+    setDraft(''); $('#interim').textContent = ''; $('#keepAgenda').checked = false; showErr($('#newDayErr'), '');
+    renderKinds(); save(); render(); setView('capture');
+  }
+  function openDay(id) {
+    var hist = getHistory();
+    var i = hist.findIndex(function (x) { return x.id === id; });
+    if (i < 0) return;
+    var pick = hist.splice(i, 1)[0];
+    if (hasContent()) hist.unshift({ id: 'h' + uid(), savedAt: Date.now(), meta: S.meta, notes: S.notes });
+    if (!setHistory(hist)) { showErr($('#pastErr'), 'There is not enough storage left to swap days. Download a day and delete it, then try again.'); return; }
+    showErr($('#pastErr'), '');
+    S = { meta: Object.assign(defaultMeta(), pick.meta), notes: pick.notes || [] };
+    if (!Array.isArray(S.meta.sessions)) S.meta.sessions = [];
+    lsSet(LS_DISMISS, todayISO());
+    editingId = null; armedId = null; showAll = false;
+    save(); render(); setView('capture');
+  }
+  function renderPast() {
+    var list = $('#past'), hist = getHistory();
+    $('#pastWrap').hidden = !hist.length;
+    list.replaceChildren.apply(list, hist.map(function (it) {
+      var m = it.meta || {}, armed = armedHist === it.id;
+      return h('li', { class: 'sess' },
+        h('div', null, h('strong', { text: m.title || 'Untitled workshop' }), h('div', { class: 'sess-count', text: (m.date || 'Unknown date') + '  ·  ' + plural((it.notes || []).length, 'note', 'notes') })),
+        h('div', { class: 'row' },
+          h('button', { class: 'btn small', type: 'button', onclick: function () { saveText('workshop-notes-' + (m.dateISO || 'earlier') + '.txt', archiveText(it)); } }, 'Download text'),
+          h('button', { class: 'btn small', type: 'button', onclick: function () { openDay(it.id); } }, 'Open'),
+          h('button', { class: 'btn small' + (armed ? ' danger' : ''), type: 'button', onclick: function () {
+            if (armed) { armedHist = null; setHistory(getHistory().filter(function (x) { return x.id !== it.id; })); renderPast(); return; }
+            armedHist = it.id; clearTimeout(armHistTimer); armHistTimer = setTimeout(function () { armedHist = null; renderPast(); }, 3000); renderPast();
+          } }, armed ? 'Tap again to delete' : 'Delete')));
+    }));
   }
 
   // ---------- helpers ----------
@@ -525,6 +637,7 @@ textarea.field { min-height: 112px; max-height: 50vh; }
       h('span', null, h('b', null, c.photo), ' chart photos'));
     $('#preview').value = S.notes.length ? build('final') : 'Capture some notes first. This box shows exactly what will be copied.';
     ['finalBtn', 'recapBtn', 'dlBtn'].forEach(function (id) { $('#' + id).disabled = !S.notes.length; });
+    renderPast();
   }
   function copyText(text) {
     $('#copyOk').hidden = true; showErr($('#dayErr'), '');
@@ -606,7 +719,7 @@ textarea.field { min-height: 112px; max-height: 50vh; }
   }
 
   // ---------- render and events ----------
-  function render() { renderHeader(); renderHere(); renderNotes(); renderAgenda(); if (!$('#view-day').hidden) renderDay(); }
+  function render() { renderHeader(); renderDayBox(); renderHere(); renderNotes(); renderAgenda(); if (!$('#view-day').hidden) renderDay(); }
 
   $('#title').addEventListener('input', function (e) { S.meta.title = e.target.value; save(); });
   $('#draft').addEventListener('input', function (e) { lsSet(LS_DRAFT, e.target.value); autosize(); armSilence(); });
@@ -640,12 +753,23 @@ textarea.field { min-height: 112px; max-height: 50vh; }
   $('#dlBtn').addEventListener('click', download);
   document.querySelectorAll('.tab').forEach(function (b) { b.addEventListener('click', function () { setView(b.dataset.tab); }); });
 
+  $('#newDayBtn').addEventListener('click', function () { dayBoxManual = true; renderDayBox(); window.scrollTo(0, 0); });
+  $('#newDayGo').addEventListener('click', newDay);
+  $('#newDayDl').addEventListener('click', function () { saveText('workshop-notes-' + (S.meta.dateISO || todayISO()) + '.txt', archiveText(S)); });
+  $('#newDayCancel').addEventListener('click', function () {
+    if (!dayBoxManual) lsSet(LS_DISMISS, todayISO());
+    dayBoxManual = false; showErr($('#newDayErr'), ''); renderDayBox();
+  });
+  document.addEventListener('visibilitychange', renderDayBox);
+  window.addEventListener('pagehide', function () { if (saveDirty) writeNow(); });
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden' && saveDirty) writeNow(); });
+
   // keep the screen awake while capturing (optional)
   function keepAwake() { try { if (navigator.wakeLock && document.visibilityState === 'visible') navigator.wakeLock.request('screen').catch(function () {}); } catch (e) {} }
   document.addEventListener('visibilitychange', keepAwake);
 
   // ---------- start ----------
-  load();
+  load(); freshenIfEmpty();
   var sl = lsGet(LS_LANG); if (sl) $('#lang').value = sl;
   if (lsGet(LS_AUTO) === '0') $('#autoFile').checked = false;
   var dr = lsGet(LS_DRAFT); if (dr) { $('#draft').value = dr; autosize(); }
