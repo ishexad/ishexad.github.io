@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shahzad Shakeel — Data &amp; Insights Analyst</title>
-  <meta name="description" content="Data and Insights Analyst leading board-level insight and digital tools for Oxfam International's global confederation." />
+  <title>Shahzad Shakeel — Things built with data</title>
+  <meta name="description" content="Tools, dashboards and experiments built with data by Shahzad Shakeel." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -306,216 +306,37 @@
     .btn-ghost { color: var(--ink); border: 1px solid rgba(18,22,42,0.28); background: rgba(255,255,255,0.55); }
     .btn-ghost:hover { border-color: var(--ink); }
 
-    .flow-wrap { position: relative; }
-    .flow-svg { width: 100%; height: auto; display: block; overflow: visible; }
+    .hero-index { position: relative; }
 
-    .flow-label {
-      font-family: var(--mono);
-      font-size: 12px;
-      fill: var(--ink);
-      paint-order: stroke fill;
-      stroke: #fff;
-      stroke-width: 4px;
-      stroke-linejoin: round;
+    .hero-index ol { list-style: none; display: grid; gap: 0.75rem; margin-top: 1.1rem; }
+
+    .hero-index a {
+      display: grid;
+      grid-template-columns: 14px minmax(0, 1fr);
+      column-gap: 1rem;
+      align-items: center;
+      padding: 1.05rem 1.3rem;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      text-decoration: none;
+      color: var(--ink);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
-    .flow-sub {
-      font-family: var(--mono);
-      font-size: 10.5px;
-      fill: var(--muted);
-      paint-order: stroke fill;
-      stroke: #fff;
-      stroke-width: 4px;
-      stroke-linejoin: round;
+    .hero-index a:hover {
+      transform: translateX(4px);
+      border-color: transparent;
+      box-shadow: 0 16px 34px -22px color-mix(in srgb, var(--c) 75%, transparent);
     }
 
-    .flow-cap {
-      margin-top: 1rem;
-      text-align: right;
-    }
+    .hero-index .hi-dot { width: 14px; height: 14px; border-radius: 4px; background: var(--c); grid-row: 1 / span 2; }
+    .hero-index .hi-name { font-family: var(--display); font-weight: 600; font-size: 1.05rem; line-height: 1.25; }
+    .hero-index .hi-kind { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ci, var(--c)); }
 
     @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .flow-label { font-size: 17px; }
-      .flow-sub { font-size: 15px; }
-      .flow-cap { text-align: left; }
     }
-
-    /* ── ABOUT (tinted plate) ── */
-    #about { background: var(--tint-peach); }
-    #about .fig-num { color: var(--c1i); }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 3.5rem;
-      align-items: start;
-    }
-
-    .about-text p { margin-bottom: 1.1rem; max-width: 580px; color: var(--body); }
-
-    .about-card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 1.75rem;
-      box-shadow: 0 10px 30px -22px rgba(18,22,42,0.6);
-    }
-
-    .about-card h4 {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 1.1rem;
-      color: var(--c1i);
-    }
-
-    .about-item {
-      display: flex;
-      gap: 0.8rem;
-      align-items: flex-start;
-      margin-bottom: 0.85rem;
-      font-size: 0.92rem;
-    }
-
-    .about-item .yr {
-      font-family: var(--mono);
-      font-size: 11px;
-      padding-top: 0.25rem;
-      min-width: 34px;
-      color: var(--muted);
-    }
-
-    .about-aside {
-      margin-top: 2.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--line);
-      font-size: 0.95rem;
-      max-width: 700px;
-      color: var(--body);
-    }
-
-    .about-aside strong {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-right: 0.6rem;
-      color: var(--c1i);
-    }
-
-    /* ── COUNTED (encoded stats) ── */
-    #counted { background: var(--surface); }
-
-    .stat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
-    }
-
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 1.9rem;
-      box-shadow: 0 14px 34px -26px rgba(18,22,42,0.75);
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--c);
-    }
-
-    .stat-num {
-      font-family: var(--display);
-      font-weight: 700;
-      font-size: clamp(2.2rem, 5vw, 3.2rem);
-      line-height: 1;
-      color: var(--c);
-      letter-spacing: -0.02em;
-      display: block;
-    }
-
-    .stat-label {
-      font-size: 0.95rem;
-      color: var(--body);
-      margin-top: 0.5rem;
-      display: block;
-    }
-
-    .stat-mark { min-height: 62px; }
-    .stat-mark svg { max-width: 100%; height: auto; display: block; overflow: visible; }
-
-    .stat-mark .cell { opacity: 0; transition: opacity 0.4s ease; }
-    .in-view .stat-mark .cell { opacity: 1; }
-
-    .stat-note { margin-top: auto; }
-
-    @media (max-width: 760px) { .stat-grid { grid-template-columns: 1fr; } }
-
-    /* ── CAREER GANTT ── */
-    #career { background: var(--tint-sky); }
-
-    .chart-scroll { overflow-x: auto; overflow-y: hidden; padding-bottom: 0.5rem; }
-    .chart-scroll svg { display: block; width: 100%; height: auto; min-width: 720px; }
-
-    .gantt-role {
-      font-family: var(--display);
-      font-weight: 600;
-      font-size: 14px;
-      fill: var(--ink);
-    }
-
-    .gantt-meta { font-family: var(--mono); font-size: 11px; fill: var(--muted); }
-    .gantt-axis { font-family: var(--mono); font-size: 11px; fill: var(--muted); }
-    .gantt-grid { stroke: rgba(18,22,42,0.10); stroke-width: 1; }
-    .gantt-baseline { stroke: rgba(18,22,42,0.22); stroke-width: 1; }
-    .gantt-bar { cursor: pointer; transition: opacity 0.2s; transform-origin: left center; }
-    .gantt-row:hover .gantt-bar, .gantt-bar:focus-visible { opacity: 1 !important; }
-    .gantt-row { outline: none; }
-    .gantt-edu { font-family: var(--mono); font-size: 10.5px; fill: var(--muted); }
-
-    /* mark chrome (range bar), kept in CSS so it follows the theme */
-    .mark-track { fill: rgba(18,22,42,0.09); }
-    .mark-tick { stroke: rgba(18,22,42,0.28); stroke-width: 1; }
-    .mark-tick-label { fill: var(--muted); font-size: 9.5px; font-family: var(--mono); }
-
-    .career-detail {
-      margin-top: 1.75rem;
-      border-left: 3px solid var(--dc, var(--c5));
-      padding: 0.35rem 0 0.35rem 1.25rem;
-      min-height: 96px;
-    }
-
-    .career-detail h3 {
-      font-family: var(--display);
-      font-weight: 700;
-      font-size: 1.2rem;
-      margin-bottom: 0.2rem;
-      color: var(--ink);
-    }
-
-    .career-detail .meta {
-      font-family: var(--mono);
-      font-size: 11.5px;
-      color: var(--dc, var(--c5i));
-      margin-bottom: 0.7rem;
-    }
-
-    .career-detail p { color: var(--body); font-size: 0.94rem; max-width: 640px; }
-
-    .js-on .career-source { display: none; }
-    .career-source { display: grid; gap: 1.5rem; }
-    .career-source li { list-style: none; }
 
     /* ── PROJECTS (light plate) ── */
     #projects { background: var(--bg); }
@@ -643,98 +464,6 @@
       .project-mark { text-align: left; }
     }
 
-    /* ── SKILLS ── */
-    #skills { background: var(--tint-mint); }
-
-    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-
-    .skill-block {
-      padding: 1.75rem;
-      border-radius: 20px;
-      border: 1px solid var(--line);
-      background: var(--surface);
-      box-shadow: 0 14px 34px -28px rgba(18,22,42,0.8);
-    }
-
-    .skill-head {
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .skill-hub {
-      width: 11px; height: 11px;
-      border-radius: 50%;
-      background: var(--c);
-      box-shadow: 0 0 0 5px color-mix(in srgb, var(--c) 18%, transparent);
-      flex-shrink: 0;
-    }
-
-    .skill-head h4 {
-      font-family: var(--mono);
-      font-size: 11.5px;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-      color: var(--ci, var(--c));
-    }
-
-    .skill-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-
-    .skill-tag {
-      font-family: var(--mono);
-      font-size: 11.5px;
-      padding: 5px 13px;
-      border-radius: 999px;
-      border: 1px solid color-mix(in srgb, var(--c) 45%, #fff);
-      background: color-mix(in srgb, var(--c) 12%, #fff);
-      color: var(--ink);
-    }
-
-    @media (max-width: 760px) { .skills-grid { grid-template-columns: 1fr; } }
-
-    /* ── WRITING ── */
-    #writing { background: var(--surface); }
-
-    .writing-list { display: grid; gap: 0.9rem; }
-
-    .writing-item {
-      display: grid;
-      grid-template-columns: 62px minmax(0,1fr) auto;
-      gap: 1.25rem;
-      align-items: baseline;
-      padding: 1.35rem 1.5rem;
-      background: var(--bg);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      text-decoration: none;
-      color: var(--ink);
-      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s;
-    }
-
-    a.writing-item:hover { transform: translateX(6px); border-color: var(--c4); background: var(--tint-mint); }
-
-    .writing-year {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--c4i);
-      letter-spacing: 0.04em;
-    }
-
-    .writing-title { font-family: var(--display); font-weight: 600; font-size: 1.02rem; line-height: 1.4; color: var(--ink); }
-
-    .writing-meta {
-      font-family: var(--mono);
-      font-size: 10.5px;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
-    @media (max-width: 760px) {
-      .writing-item { grid-template-columns: 1fr; gap: 0.5rem; }
-      .writing-meta { white-space: normal; }
-    }
-
     /* ── CONTACT ── */
     #contact {
       text-align: center;
@@ -793,19 +522,15 @@
 
     @media (max-width: 760px) {
       section { padding: 5rem 0; }
-      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
     }
   </style>
 </head>
 <body>
 
   <nav>
-    <a class="nav-logo" href="#">ishexad.github.io</a>
+    <a class="nav-logo" href="#">shahzad.work</a>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#about" data-section="about">about</a></li>
-      <li><a href="#counted" data-section="counted">numbers</a></li>
-      <li><a href="#career" data-section="career">career</a></li>
       <li><a href="#projects" data-section="projects">work</a></li>
       <li><a href="#contact" data-section="contact">contact</a></li>
     </ul>
@@ -816,12 +541,11 @@
     <div class="container">
       <div class="hero-grid">
         <div>
-          <p class="hero-eyebrow">Data &amp; Insights Analyst · Oxfam International</p>
+          <p class="hero-eyebrow">Shahzad Shakeel · selected work</p>
           <h1 class="hero-name">Data that moves from the <span class="u-field">field</span> to the <span class="u-board">boardroom</span>.</h1>
           <p class="hero-desc">
-            I lead data and insights work for a global NGO confederation — turning
-            complex, multi-country data into board-level insight, and building the
-            digital tools and training that embed a stronger data culture across teams.
+            Small tools, dashboards and experiments I build with data.
+            Everything here is something you can open and use.
           </p>
           <div class="btn-row">
             <a href="#projects" class="btn btn-solid magnetic">See the work ↓</a>
@@ -829,203 +553,39 @@
           </div>
         </div>
 
-        <div class="flow-wrap">
-          <svg id="flow" class="flow-svg" viewBox="0 0 660 500" role="img"
-               aria-label="Flow diagram: data from country teams, partners and field research passes through apps, dashboards and analysis, and arrives as board decisions."></svg>
-          <p class="note flow-cap">Fig. 1 — where the data comes from, and where it ends up</p>
+        <div class="hero-index">
+          <p class="note">Fig. 1 — what is here: four things you can open</p>
+          <ol>
+            <li><a class="acc-5" href="#regime"><i class="hi-dot"></i><span class="hi-name">Regime type &amp; women's labour force</span><span class="hi-kind">Interactive explorer</span></a></li>
+            <li><a class="acc-4" href="#notebook"><i class="hi-dot"></i><span class="hi-name">Workshop Notebook</span><span class="hi-kind">Web app</span></a></li>
+            <li><a class="acc-7" href="#squadkitty"><i class="hi-dot"></i><span class="hi-name">SquadKitty</span><span class="hi-kind">Independent project</span></a></li>
+            <li><a class="acc-1" href="#dataexact"><i class="hi-dot"></i><span class="hi-name">DataExact</span><span class="hi-kind">Data services</span></a></li>
+          </ol>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ══ ABOUT ══ -->
-  <section id="about">
-    <div class="container">
-      <div class="about-grid">
-        <div class="about-text reveal">
-          <p class="fig-num">About</p>
-          <h2 class="fig-title">Insight with an audience of decision-makers.</h2>
-          <p style="margin-top:1.5rem">
-            I'm a Data and Insights Analyst with over a decade of international NGO
-            experience, including several years leading data and insights work for
-            Oxfam International's global confederation. My work turns complex,
-            multi-country data into clear, board-level insight — and builds the
-            digital tools, dashboards, and training that embed a stronger data
-            culture across teams.
-          </p>
-          <p>
-            Based in Preston, UK, I've led cross-functional and international work,
-            partnered with senior leadership on strategy, and represented staff
-            interests at board level as an elected Staff Forum Chairperson. My track
-            record: replacing fragmented, offline processes with shared digital
-            systems, and turning data into insight that shapes organisational
-            decision-making.
-          </p>
-        </div>
-
-        <div class="about-card reveal">
-          <h4>Education &amp; certifications</h4>
-          <div class="about-item"><span class="yr">2014</span><span>MS, Management Sciences — SZABIST, Islamabad</span></div>
-          <div class="about-item"><span class="yr">2009</span><span>BBA (Hons), Business Administration — GC University, Faisalabad</span></div>
-          <div class="about-item"><span class="yr">2017</span><span>Human-Centred Design Approach (HCD) training</span></div>
-          <div class="about-item"><span class="yr">—</span><span>Google Data Analytics Professional Certificate</span></div>
-          <div class="about-item"><span class="yr">—</span><span>Social Impact Strategy — University of Pennsylvania</span></div>
-        </div>
-      </div>
-
-      <p class="about-aside reveal">
-        <strong>Also</strong>Invited by Google to their MapMaker Conference in California,
-        for contributions to mapping data that others couldn't see.
-      </p>
-    </div>
-  </section>
-
-  <!-- ══ FIG 2 — COUNTED ══ -->
-  <section id="counted" class="ground">
-    <div class="container">
-      <div class="fig-head reveal" style="--fig: var(--c2i)">
-        <p class="fig-num">Fig. 2 — The work, counted</p>
-        <h2 class="fig-title">Every mark below is one real unit of work.</h2>
-        <p class="fig-sub">
-          No decorative numbers: each dot, square and cell stands for something
-          delivered — a person reached, a country reporting in, a partner monitored.
-        </p>
-      </div>
-
-      <div class="stat-grid">
-
-        <figure class="stat-card reveal acc-2">
-          <figcaption>
-            <span class="stat-num">34,000</span>
-            <span class="stat-label">young people reached through Empower Youth for Work</span>
-          </figcaption>
-          <div class="stat-mark" data-mark="dots" data-count="68" data-cols="17"></div>
-          <p class="stat-note note">1 dot = 500 people · 68 dots · Oxfam GB</p>
-        </figure>
-
-        <figure class="stat-card reveal acc-5">
-          <figcaption>
-            <span class="stat-num">60+</span>
-            <span class="stat-label">countries whose data flows into the systems I built</span>
-          </figcaption>
-          <div class="stat-mark" data-mark="squares" data-count="60" data-cols="15"></div>
-          <p class="stat-note note">1 square = 1 country · 3 apps · Oxfam International</p>
-        </figure>
-
-        <figure class="stat-card reveal acc-4">
-          <figcaption>
-            <span class="stat-num">104</span>
-            <span class="stat-label">partner–district checks across a life-skills programme</span>
-          </figcaption>
-          <div class="stat-mark" data-mark="matrix" data-rows="8" data-cols="13"></div>
-          <p class="stat-note note">8 partners × 13 districts · Oxfam Novib, Pakistan</p>
-        </figure>
-
-        <figure class="stat-card reveal acc-3">
-          <figcaption>
-            <span class="stat-num">$5–20M</span>
-            <span class="stat-label">programme budget owned, allocated and tracked</span>
-          </figcaption>
-          <div class="stat-mark" data-mark="range" data-min="5" data-max="20" data-scale="25"></div>
-          <p class="stat-note note">Bar shows the stated range on a $0–25M scale</p>
-        </figure>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ FIG 3 — CAREER ══ -->
-  <section id="career">
-    <div class="container">
-      <div class="fig-head reveal" style="--fig: var(--c7i)">
-        <p class="fig-num">Fig. 3 — Seventeen years, plotted</p>
-        <h2 class="fig-title">A career is a time series. So here it is as one.</h2>
-        <p class="fig-sub">
-          Bars are roles, drawn to their real length. Diamonds on the axis are
-          qualifications. Hover or tap any bar to read what happened inside it.
-        </p>
-      </div>
-
-      <div class="reveal">
-        <div class="chart-scroll">
-          <svg id="gantt" viewBox="0 0 880 450" role="img"
-               aria-label="Timeline chart of roles held between 2012 and 2026, with education milestones from 2009."></svg>
-        </div>
-
-        <div class="career-detail" id="careerDetail" aria-live="polite"></div>
-
-        <ol class="career-source" id="careerSource">
-          <li data-start="2021-03" data-end="2026-09" data-c="c5"
-              data-role="Data and Insights Analyst"
-              data-org="Oxfam International Secretariat">
-            Led the development of three apps that digitised data collection across 60+
-            countries, saving significant staff hours and improving cross-team
-            collaboration. Produce Oxfam's annual global insight reports, presented to
-            the executive board, and led development of Oxfam's knowledge and learning
-            database.
-          </li>
-          <li data-start="2021-05" data-end="2022-08" data-c="c7"
-              data-role="Staff Forum Leadership Team &amp; Chairperson"
-              data-org="Oxfam International Secretariat · elected, held alongside the analyst role">
-            Elected to represent staff interests at board level. Partnered with HR and
-            executive leadership on pay reviews and staff-friendly policy, and provided
-            strategic input on horizon planning and organisational strategy.
-          </li>
-          <li data-start="2020-10" data-end="2021-03" data-c="c4"
-              data-role="Project Coordinator, Empower Youth for Work"
-              data-org="Oxfam GB">
-            Led development and rollout of a digital learning platform for
-            climate-affected rural youth, increasing the inclusion of rural young women
-            in digital jobs and freelancing. Owned annual reporting and budget
-            allocation for the programme, aligning spend with activities.
-          </li>
-          <li data-start="2017-01" data-end="2020-06" data-c="c3"
-              data-role="Project Officer – Youth"
-              data-org="Oxfam GB, Pakistan">
-            Led a digital project reporting web app from concept to rollout and
-            established a digital dashboard for internal reporting, replacing an offline
-            mechanism used for management decision-making. Used Human-Centred Design to
-            co-create digital and non-digital learning solutions with young people.
-          </li>
-          <li data-start="2015-05" data-end="2016-12" data-c="c2"
-              data-role="Programme Monitoring Officer"
-              data-org="Oxfam Novib, Pakistan">
-            Monitored 8 implementing partners across 13 disadvantaged districts on
-            life-skills programming for young women, and strengthened partners' MEAL
-            systems against Oxfam's CAMSA standards.
-          </li>
-          <li data-start="2012-01" data-end="2015-05" data-c="c1"
-              data-role="Earlier roles"
-              data-org="Oxfam Novib / Orbit Limousine, Pakistan">
-            Staff Representative and Programme Support Officer at Oxfam Novib, and
-            Procurement &amp; Logistics Officer at Orbit Limousine — spanning staff
-            representation, humanitarian procurement, and digitising offline operational
-            systems.
-          </li>
-        </ol>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ FIG 4 — PROJECTS ══ -->
+  <!-- ══ WORK ══ -->
   <section id="projects">
     <div class="container">
       <div class="fig-head reveal" style="--fig: var(--c6i)">
-        <p class="fig-num">Fig. 4 — Selected work</p>
-        <h2 class="fig-title">Things I built, and what they moved.</h2>
+        <p class="fig-num">Fig. 2 — The work</p>
+        <h2 class="fig-title">Things I've built.</h2>
+        <p class="fig-sub">Each one is live. Open it and try it.</p>
       </div>
 
       <div class="projects-grid">
 
-        <a class="project-card reveal acc-5" href="./projects/regime-inclusion/index.html">
+        <a id="regime" class="project-card reveal acc-5" href="./projects/regime-inclusion/index.html">
           <div>
-            <p class="project-tag">Live demo · personal project</p>
+            <p class="project-tag">Live demo · interactive explorer</p>
             <h3 class="project-title">Does Regime Type Shape Women's Labour Force Participation?</h3>
             <p class="project-desc">
-              An interactive explorer comparing female labour force participation against
-              V-Dem regime-type classifications across 19 countries — the same kind of
-              multi-country insight work behind Oxfam's Gender Justice Team evaluations.
-              Labour-force figures are fetched live from the World Bank API on page load.
+              Compares female labour force participation against V-Dem regime-type
+              classifications across 19 countries. Filter by region, sort the table,
+              hover a country for detail. Labour-force figures are fetched live from
+              the World Bank API on page load.
             </p>
             <div class="project-tools">
               <span class="tool-pill">Data visualisation</span>
@@ -1036,182 +596,46 @@
           <div class="project-mark" data-mark="dots" data-count="19" data-cols="5" data-note="19 countries"></div>
         </a>
 
-        <div class="project-card reveal acc-2">
+        <a id="notebook" class="project-card reveal acc-4" href="./workshop-notebook/index.html">
           <div>
-            <p class="project-tag">Empower Youth for Work · Oxfam GB</p>
-            <h3 class="project-title">Digital Learning Platform for Rural Youth</h3>
+            <p class="project-tag">Web app · works in the browser</p>
+            <h3 class="project-title">Workshop Notebook</h3>
             <p class="project-desc">
-              Led development and rollout of a digital learning platform for climate-affected
-              youth, increasing the inclusion of rural young women in digital jobs and
-              freelancing. Paired it with a gamified "game of change" to help participants
-              navigate their journey to economic empowerment. Also established two
-              sustainable innovation centres in rural Pakistan using Human-Centred Design.
-            </p>
-            <div class="project-bars">
-              <div class="pbar"><div class="pv">34K</div><div class="ptrack"><i class="pfill" style="--f:1"></i></div><div class="pl">Young people reached</div></div>
-              <div class="pbar"><div class="pv">30+</div><div class="ptrack"><i class="pfill" style="--f:.55"></i></div><div class="pl">Staff led</div></div>
-              <div class="pbar"><div class="pv">5</div><div class="ptrack"><i class="pfill" style="--f:.2"></i></div><div class="pl">Partners managed</div></div>
-              <div class="pbar"><div class="pv">2</div><div class="ptrack"><i class="pfill" style="--f:.1"></i></div><div class="pl">Innovation centres</div></div>
-            </div>
-            <div class="project-tools">
-              <span class="tool-pill">Digital inclusion</span>
-              <span class="tool-pill">Gamification</span>
-              <span class="tool-pill">Human-centred design</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-card reveal acc-6">
-          <div>
-            <p class="project-tag">Oxfam International Secretariat</p>
-            <h3 class="project-title">Global Data Digitisation Initiative</h3>
-            <p class="project-desc">
-              Led the development of three apps to digitise data collection from 60+
-              countries, cutting reporting hours dramatically and improving collaboration
-              between country, regional, and global teams.
+              A notebook for capturing a workshop as it happens. Speak or type notes in
+              the language of the room, file photos of charts, follow the agenda, then
+              copy the whole day into a chat for a summary and insights. Past days stay
+              on your device.
             </p>
             <div class="project-tools">
-              <span class="tool-pill">App development</span>
-              <span class="tool-pill">Data systems</span>
-              <span class="tool-pill">Cross-team collaboration</span>
-            </div>
-          </div>
-          <div class="project-mark" data-mark="squares" data-count="60" data-cols="10" data-note="60+ countries"></div>
-        </div>
-
-        <div class="project-card reveal acc-4">
-          <div>
-            <p class="project-tag">Oxfam GB, Pakistan</p>
-            <h3 class="project-title">Project Reporting &amp; Budget Management System</h3>
-            <p class="project-desc">
-              Took a digital project-reporting web app from concept to rollout, and built an
-              internal dashboard that replaced an offline reporting mechanism — giving
-              management real-time visibility for budget allocation, spend tracking, and
-              informed decision-making.
-            </p>
-            <div class="project-tools">
+              <span class="tool-pill">Voice notes</span>
+              <span class="tool-pill">Multilingual</span>
               <span class="tool-pill">Web app</span>
-              <span class="tool-pill">Dashboards</span>
-              <span class="tool-pill">Budget management</span>
             </div>
           </div>
-        </div>
+          <div class="project-mark" data-mark="dots" data-count="10" data-cols="5" data-note="10 languages"></div>
+        </a>
 
-        <div class="project-card reveal acc-3">
+        <a id="squadkitty" class="project-card reveal acc-7" href="https://squadkitty.com" target="_blank" rel="noopener">
           <div>
-            <p class="project-tag">Co-founded · Oxfam GB, Pakistan</p>
-            <h3 class="project-title">E-Jobs &amp; Learning Platform</h3>
-            <p class="project-desc">
-              Co-founded and managed a platform connecting young people in Pakistan with
-              worldwide job and freelancing opportunities, alongside a peer learning
-              community to help them build the skills to compete for them.
-            </p>
-            <div class="project-tools">
-              <span class="tool-pill">Co-founder</span>
-              <span class="tool-pill">Digital jobs</span>
-              <span class="tool-pill">Youth employment</span>
-            </div>
-          </div>
-        </div>
-
-        <a class="project-card reveal acc-7" href="https://squadkitty.com" target="_blank" rel="noopener">
-          <div>
-            <p class="project-tag">Personal project</p>
+            <p class="project-tag">Independent project</p>
             <h3 class="project-title">SquadKitty</h3>
             <p class="project-desc">An independent project — visit squadkitty.com to learn more.</p>
           </div>
           <div class="project-arrow">↗</div>
         </a>
 
-        <a class="project-card reveal acc-1" href="https://dataexact.io" target="_blank" rel="noopener">
+        <a id="dataexact" class="project-card reveal acc-1" href="https://dataexact.io" target="_blank" rel="noopener">
           <div>
-            <p class="project-tag">Personal project</p>
+            <p class="project-tag">Data services</p>
             <h3 class="project-title">DataExact</h3>
-            <p class="project-desc">An independent project — visit dataexact.io to learn more.</p>
+            <p class="project-desc">
+              My data services practice for NGOs, research organisations, think tanks and
+              media: dashboards, data stories and web-based tools.
+            </p>
           </div>
           <div class="project-arrow">↗</div>
         </a>
 
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ FIG 5 — SKILLS ══ -->
-  <section id="skills" class="ground">
-    <div class="container">
-      <div class="fig-head reveal" style="--fig: var(--c3i)">
-        <p class="fig-num">Fig. 5 — Capabilities, grouped</p>
-        <h2 class="fig-title">Four domains, sixteen capabilities.</h2>
-        <p class="fig-sub">
-          Grouped by domain rather than ranked — I don't have a defensible number for
-          "how good" any of these are, so I haven't drawn one.
-        </p>
-      </div>
-
-      <div class="skills-grid">
-        <div class="skill-block reveal acc-6">
-          <div class="skill-head"><span class="skill-hub"></span><h4>Strategy &amp; insight</h4></div>
-          <div class="skill-list">
-            <span class="skill-tag">Data &amp; insight strategy</span>
-            <span class="skill-tag">Board-level reporting</span>
-            <span class="skill-tag">Data storytelling</span>
-            <span class="skill-tag">Horizon planning</span>
-          </div>
-        </div>
-
-        <div class="skill-block reveal acc-5">
-          <div class="skill-head"><span class="skill-hub"></span><h4>Digital tools &amp; dashboards</h4></div>
-          <div class="skill-list">
-            <span class="skill-tag">App development leadership</span>
-            <span class="skill-tag">Dashboard design</span>
-            <span class="skill-tag">Knowledge &amp; learning databases</span>
-            <span class="skill-tag">Digital transformation</span>
-          </div>
-        </div>
-
-        <div class="skill-block reveal acc-4">
-          <div class="skill-head"><span class="skill-hub"></span><h4>Research &amp; evaluation</h4></div>
-          <div class="skill-list">
-            <span class="skill-tag">Human-centred design</span>
-            <span class="skill-tag">Qualitative &amp; quantitative research</span>
-            <span class="skill-tag">Baseline / midline / endline</span>
-            <span class="skill-tag">MEAL (CAMSA)</span>
-          </div>
-        </div>
-
-        <div class="skill-block reveal acc-2">
-          <div class="skill-head"><span class="skill-hub"></span><h4>Leadership &amp; capability building</h4></div>
-          <div class="skill-list">
-            <span class="skill-tag">Stakeholder &amp; team leadership</span>
-            <span class="skill-tag">Staff representation</span>
-            <span class="skill-tag">Training &amp; webinars</span>
-            <span class="skill-tag">Budget &amp; governance</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ FIG 6 — WRITING ══ -->
-  <section id="writing">
-    <div class="container">
-      <div class="fig-head reveal" style="--fig: var(--c4i)">
-        <p class="fig-num">Fig. 6 — Published</p>
-        <h2 class="fig-title">Research that left the building.</h2>
-      </div>
-
-      <div class="writing-list">
-        <a class="writing-item reveal" href="https://policy-practice.oxfam.org/resources/if-a-woman-does-a-job-she-can-support-her-family-as-well-insights-from-communit-620925/" target="_blank" rel="noopener">
-          <span class="writing-year">2019</span>
-          <span class="writing-title">"If a Woman Does a Job, She Can Support Her Family as Well": Insights from Communities</span>
-          <span class="writing-meta">Oxfam Policy &amp; Practice ↗</span>
-        </a>
-
-        <div class="writing-item reveal">
-          <span class="writing-year">—</span>
-          <span class="writing-title">Context Analysis of Youth Social &amp; Economic Empowerment Sector in Pakistan</span>
-          <span class="writing-meta">National research · Oxfam GB</span>
-        </div>
       </div>
     </div>
   </section>
@@ -1221,10 +645,10 @@
     <div class="container">
       <div class="fig-head reveal" style="--fig: var(--c3i)">
         <p class="fig-num">Contact</p>
-        <h2 class="fig-title">Let's work together.</h2>
+        <h2 class="fig-title">Let's talk.</h2>
         <p class="fig-sub">
-          Open to conversations about data and insight strategy, digital tools for
-          international development, and senior data leadership roles.
+          Want to use one of these, build something like them, or talk about data?
+          Write to me.
         </p>
       </div>
 
@@ -1233,14 +657,14 @@
       <div class="contact-links reveal">
         <a class="contact-link" href="https://x.com/ishexad" target="_blank" rel="noopener">X / Twitter ↗</a>
         <a class="contact-link" href="https://github.com/ishexad" target="_blank" rel="noopener">GitHub ↗</a>
-        <a class="contact-link" href="https://linkedin.com/in/ishexad" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="contact-link" href="https://linkedin.com/in/ishexad" target="_blank" rel="noopener">LinkedIn · CV ↗</a>
       </div>
     </div>
   </section>
 
   <footer>
     <p>© 2026 Shahzad Shakeel · Hand-drawn in HTML, CSS and SVG — no charting library</p>
-    <p>Every figure on this page encodes a real number from real work.</p>
+    <p>Everything on this page is my own work.</p>
   </footer>
 
   <script>
@@ -1261,199 +685,7 @@
     }
 
     /* ──────────────────────────────────────────────
-       FIG 1 — Sankey-style flow: field → boardroom
-       ────────────────────────────────────────────── */
-    function buildFlow() {
-      var svg = document.getElementById('flow');
-      if (!svg) return;
-
-      var NODES = {
-        countries: { col: 0, label: 'Country teams',  sub: '60+ countries', c: PAL.c5 },
-        partners:  { col: 0, label: 'Partners',       sub: '8 monitored',   c: PAL.c4 },
-        field:     { col: 0, label: 'Field research', sub: '13 districts',  c: PAL.c3 },
-        apps:      { col: 1, label: 'Apps & dashboards', sub: '3 built',    c: PAL.c6 },
-        analysis:  { col: 1, label: 'Analysis & insight', sub: '',          c: PAL.c2 },
-        board:     { col: 2, label: 'Board decisions', sub: '',             c: PAL.c1 }
-      };
-
-      var LINKS = [
-        ['countries', 'apps', 60], ['countries', 'analysis', 24],
-        ['partners', 'apps', 22],  ['partners', 'analysis', 18],
-        ['field', 'analysis', 26],
-        ['apps', 'board', 82],     ['analysis', 'board', 68]
-      ];
-
-      var COL_X = [150, 400, 600];
-      var NODE_W = 11;
-      var TOP = 110, BOTTOM = 460, GAP = 44;
-
-      // node value = max(inflow, outflow)
-      var order = { 0: [], 1: [], 2: [] };
-      Object.keys(NODES).forEach(function (k) {
-        var n = NODES[k];
-        n.key = k;
-        n.inSum = 0; n.outSum = 0;
-        order[n.col].push(n);
-      });
-      LINKS.forEach(function (l) {
-        NODES[l[0]].outSum += l[2];
-        NODES[l[1]].inSum += l[2];
-      });
-      Object.keys(NODES).forEach(function (k) {
-        NODES[k].value = Math.max(NODES[k].inSum, NODES[k].outSum);
-      });
-
-      // scale so the tallest column fills the plot
-      var scale = Infinity;
-      [0, 1, 2].forEach(function (c) {
-        var total = order[c].reduce(function (s, n) { return s + n.value; }, 0);
-        var gaps = GAP * (order[c].length - 1);
-        scale = Math.min(scale, (BOTTOM - TOP - gaps) / total);
-      });
-
-      [0, 1, 2].forEach(function (c) {
-        var col = order[c];
-        var total = col.reduce(function (s, n) { return s + n.value * scale; }, 0) + GAP * (col.length - 1);
-        var y = TOP + (BOTTOM - TOP - total) / 2;
-        col.forEach(function (n) {
-          n.h = n.value * scale;
-          n.x = COL_X[c];
-          n.y0 = y;
-          n.y1 = y + n.h;
-          n.outAt = y;
-          n.inAt = y;
-          y += n.h + GAP;
-        });
-      });
-
-      var defs = el('defs', {});
-      svg.appendChild(defs);
-
-      function ribbonPath(x0, y0a, y0b, x1, y1a, y1b) {
-        var cx = (x0 + x1) / 2;
-        return 'M' + x0 + ',' + y0a +
-               ' C' + cx + ',' + y0a + ' ' + cx + ',' + y1a + ' ' + x1 + ',' + y1a +
-               ' L' + x1 + ',' + y1b +
-               ' C' + cx + ',' + y1b + ' ' + cx + ',' + y0b + ' ' + x0 + ',' + y0b + ' Z';
-      }
-
-      function centerPath(x0, y0, x1, y1) {
-        var cx = (x0 + x1) / 2;
-        return 'M' + x0 + ',' + y0 + ' C' + cx + ',' + y0 + ' ' + cx + ',' + y1 + ' ' + x1 + ',' + y1;
-      }
-
-      var ribbonLayer = el('g', {});
-      var centerLayer = el('g', { fill: 'none', stroke: 'none' });
-      svg.appendChild(ribbonLayer);
-      svg.appendChild(centerLayer);
-
-      var flows = [];
-      LINKS.forEach(function (l, i) {
-        var s = NODES[l[0]], t = NODES[l[1]], v = l[2] * scale;
-        var x0 = s.x + NODE_W, x1 = t.x;
-        var y0a = s.outAt, y0b = s.outAt + v;
-        var y1a = t.inAt,  y1b = t.inAt + v;
-        s.outAt += v; t.inAt += v;
-
-        var gid = 'g' + i;
-        var grad = el('linearGradient', { id: gid, x1: '0', x2: '1', y1: '0', y2: '0' });
-        var st1 = el('stop', { offset: '0', 'stop-color': s.c, 'stop-opacity': '0.78' });
-        var st2 = el('stop', { offset: '1', 'stop-color': t.c, 'stop-opacity': '0.5' });
-        grad.appendChild(st1); grad.appendChild(st2);
-        defs.appendChild(grad);
-
-        ribbonLayer.appendChild(el('path', {
-          d: ribbonPath(x0, y0a, y0b, x1, y1a, y1b),
-          fill: 'url(#' + gid + ')',
-          stroke: s.c,
-          'stroke-opacity': '0.3',
-          'stroke-width': '0.75'
-        }));
-
-        var cp = el('path', { d: centerPath(x0, (y0a + y0b) / 2, x1, (y1a + y1b) / 2) });
-        centerLayer.appendChild(cp);
-        flows.push({ path: cp, color: s.c, count: Math.max(2, Math.round(l[2] / 14)) });
-      });
-
-      // nodes + labels
-      var nodeLayer = el('g', {});
-      svg.appendChild(nodeLayer);
-
-      Object.keys(NODES).forEach(function (k) {
-        var n = NODES[k];
-        nodeLayer.appendChild(el('rect', {
-          x: n.x, y: n.y0, width: NODE_W, height: Math.max(2, n.h), rx: 5, fill: n.c
-        }));
-
-        var t, s;
-        if (n.col === 0) {
-          t = el('text', { x: n.x - 14, y: (n.y0 + n.y1) / 2 - 3, 'text-anchor': 'end', class: 'flow-label' });
-          s = el('text', { x: n.x - 14, y: (n.y0 + n.y1) / 2 + 13, 'text-anchor': 'end', class: 'flow-sub' });
-        } else if (n.col === 1) {
-          t = el('text', { x: n.x + NODE_W / 2, y: n.y0 - 20, 'text-anchor': 'middle', class: 'flow-label' });
-          s = el('text', { x: n.x + NODE_W / 2, y: n.y0 - 6, 'text-anchor': 'middle', class: 'flow-sub' });
-        } else {
-          t = el('text', { x: n.x + NODE_W, y: n.y0 - 20, 'text-anchor': 'end', class: 'flow-label' });
-          s = el('text', { x: n.x + NODE_W, y: n.y0 - 6, 'text-anchor': 'end', class: 'flow-sub' });
-        }
-        t.textContent = n.label;
-        s.textContent = n.sub;
-        nodeLayer.appendChild(t);
-        if (n.sub) nodeLayer.appendChild(s);
-      });
-
-      // flowing particles — data actually moving
-      if (reduced) return;
-
-      var pLayer = el('g', {});
-      svg.appendChild(pLayer);
-      var particles = [];
-
-      flows.forEach(function (f) {
-        var len = f.path.getTotalLength();
-        if (!len) return;
-        for (var i = 0; i < f.count; i++) {
-          var dot = el('circle', { r: 2.1, fill: f.color, opacity: '0.9' });
-          pLayer.appendChild(dot);
-          particles.push({
-            dot: dot,
-            path: f.path,
-            len: len,
-            t: Math.random(),
-            speed: 0.0011 + Math.random() * 0.0011
-          });
-        }
-      });
-
-      var running = true;
-      function tick() {
-        if (!running) return;
-        for (var i = 0; i < particles.length; i++) {
-          var p = particles[i];
-          p.t += p.speed;
-          if (p.t > 1) p.t -= 1;
-          var pt = p.path.getPointAtLength(p.t * p.len);
-          p.dot.setAttribute('cx', pt.x);
-          p.dot.setAttribute('cy', pt.y);
-        }
-        requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-
-      // stop animating when the hero is off-screen
-      var heroSection = document.getElementById('hero');
-      if (heroSection && 'IntersectionObserver' in window) {
-        new IntersectionObserver(function (entries) {
-          entries.forEach(function (e) {
-            if (e.isIntersecting && !running) { running = true; requestAnimationFrame(tick); }
-            else if (!e.isIntersecting) { running = false; }
-          });
-        }, { threshold: 0 }).observe(heroSection);
-      }
-    }
-
-    /* ──────────────────────────────────────────────
-       FIG 2 / FIG 4 — encoded stat marks
+       encoded project marks
        ────────────────────────────────────────────── */
     function buildMarks() {
       document.querySelectorAll('[data-mark]').forEach(function (host) {
@@ -1545,151 +777,6 @@
     }
 
     /* ──────────────────────────────────────────────
-       FIG 3 — career as a Gantt chart
-       ────────────────────────────────────────────── */
-    function buildGantt() {
-      var svg = document.getElementById('gantt');
-      var source = document.getElementById('careerSource');
-      var detail = document.getElementById('careerDetail');
-      if (!svg || !source) return;
-
-      var roles = Array.prototype.map.call(source.querySelectorAll('li'), function (li) {
-        return {
-          start: li.dataset.start,
-          end: li.dataset.end,
-          color: PAL[li.dataset.c] || PAL.c5,
-          role: li.dataset.role,
-          org: li.dataset.org,
-          desc: li.textContent.trim()
-        };
-      });
-
-      var EDU = [
-        { at: '2009-06', label: 'BBA (Hons)' },
-        { at: '2014-06', label: 'MS Management Sciences' },
-        { at: '2017-06', label: 'HCD training' }
-      ];
-
-      var toTime = function (s) { return new Date(+s.slice(0, 4), +s.slice(5, 7) - 1, 1).getTime(); };
-      var T0 = toTime('2009-01'), T1 = toTime('2026-12');
-      var X0 = 20, X1 = 862;
-      var x = function (t) { return X0 + (t - T0) / (T1 - T0) * (X1 - X0); };
-
-      var ROW_H = 54, TOP = 22;
-      var axisY = TOP + roles.length * ROW_H + 14;
-
-      // gridlines + axis
-      var grid = el('g', {});
-      svg.appendChild(grid);
-      for (var yr = 2010; yr <= 2026; yr += 2) {
-        var gx = x(toTime(yr + '-01'));
-        grid.appendChild(el('line', { x1: gx, x2: gx, y1: TOP - 6, y2: axisY, class: 'gantt-grid' }));
-        var lab = el('text', { x: gx, y: axisY + 16, 'text-anchor': 'middle', class: 'gantt-axis' });
-        lab.textContent = yr;
-        grid.appendChild(lab);
-      }
-      grid.appendChild(el('line', { x1: X0, x2: X1, y1: axisY, y2: axisY, class: 'gantt-baseline' }));
-
-      // education milestones below the axis
-      EDU.forEach(function (e, i) {
-        var ex = x(toTime(e.at));
-        var ey = axisY + 26 + (i % 2) * 16; // stagger so adjacent labels can't collide
-        var dia = el('path', {
-          d: 'M' + ex + ',' + ey + ' l5,5 l-5,5 l-5,-5 z',
-          fill: PAL.c3, opacity: '0.9'
-        });
-        svg.appendChild(dia);
-        var t = el('text', { x: ex + 10, y: ey + 9, class: 'gantt-edu' });
-        t.textContent = e.label;
-        svg.appendChild(t);
-      });
-
-      var bars = [];
-
-      roles.forEach(function (r, i) {
-        var rowY = TOP + i * ROW_H;
-        var g = el('g', { class: 'gantt-row', tabindex: '0', role: 'button' });
-        g.setAttribute('aria-label', r.role + ', ' + r.org);
-
-        // full-width invisible hit area: short bars are otherwise unhoverable
-        g.appendChild(el('rect', {
-          x: X0, y: rowY, width: X1 - X0, height: ROW_H - 6,
-          fill: 'transparent', 'pointer-events': 'all'
-        }));
-
-        var roleT = el('text', { x: X0, y: rowY + 14, class: 'gantt-role' });
-        roleT.textContent = r.role;
-        g.appendChild(roleT);
-
-        var metaT = el('text', { x: X1, y: rowY + 14, 'text-anchor': 'end', class: 'gantt-meta' });
-        metaT.textContent = fmt(r.start) + ' – ' + (r.end === '2026-09' ? 'present' : fmt(r.end));
-        g.appendChild(metaT);
-
-        var bx = x(toTime(r.start));
-        var bw = Math.max(6, x(toTime(r.end)) - bx);
-        var bar = el('rect', {
-          x: bx, y: rowY + 24, width: bw, height: 18, rx: 9,
-          fill: r.color, opacity: '0.78', class: 'gantt-bar'
-        });
-        if (!reduced) {
-          bar.style.transform = 'scaleX(0)';
-          bar.style.transformOrigin = bx + 'px 0px';
-          bar.style.transition = 'transform 0.85s cubic-bezier(.2,.7,.2,1) ' + (i * 70) + 'ms, opacity 0.2s';
-        }
-        g.appendChild(bar);
-
-        var title = el('title', {});
-        title.textContent = r.role + ' · ' + r.org;
-        g.appendChild(title);
-
-        svg.appendChild(g);
-        bars.push(bar);
-
-        function activate() { setDetail(r); bars.forEach(function (b) { b.setAttribute('opacity', '0.28'); }); bar.setAttribute('opacity', '1'); }
-        g.addEventListener('mouseenter', activate);
-        g.addEventListener('focus', activate);
-        g.addEventListener('click', activate);
-      });
-
-      svg.addEventListener('mouseleave', function () {
-        bars.forEach(function (b) { b.setAttribute('opacity', '0.78'); });
-        setDetail(roles[0]);
-      });
-
-      function fmt(s) {
-        var m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-        return m[+s.slice(5, 7) - 1] + ' ' + s.slice(0, 4);
-      }
-
-      function setDetail(r) {
-        if (!detail) return;
-        detail.style.setProperty('--dc', r.color);
-        detail.innerHTML = '';
-        var h = document.createElement('h3');
-        h.textContent = r.role;
-        var m = document.createElement('div');
-        m.className = 'meta';
-        m.textContent = r.org;
-        var p = document.createElement('p');
-        p.textContent = r.desc;
-        detail.appendChild(h); detail.appendChild(m); detail.appendChild(p);
-      }
-
-      setDetail(roles[0]);
-
-      // grow the bars in when the chart scrolls into view
-      if (!reduced && 'IntersectionObserver' in window) {
-        new IntersectionObserver(function (entries, obs) {
-          entries.forEach(function (e) {
-            if (!e.isIntersecting) return;
-            bars.forEach(function (b) { b.style.transform = 'scaleX(1)'; });
-            obs.disconnect();
-          });
-        }, { threshold: 0.2 }).observe(svg);
-      }
-    }
-
-    /* ──────────────────────────────────────────────
        page behaviour
        ────────────────────────────────────────────── */
     function initReveals() {
@@ -1757,9 +844,7 @@
       });
     }
 
-    buildFlow();
     buildMarks();
-    buildGantt();
     initReveals();
     initNav();
     initMagnetic();
