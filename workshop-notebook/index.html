@@ -8,7 +8,7 @@
   <link rel="icon" href="/favicon.ico" sizes="48x48" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=DM+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
 /* Minimalist, modern, fresh. Same palette as shahzad.work: soft paper background, graph-grid, one clear accent.
    Layout is one narrow column built for a phone held in a room; Capture is home, Agenda and Day sit behind a tab bar.
@@ -19,8 +19,8 @@
   --rec: #ff3d8b; --rec-ink: #ffffff;
   --k-note: #6f7590; --k-decision: #0a8f7e; --k-action: #1479d1; --k-question: #b87400; --k-quote: #d6246f; --k-photo: #e8402c;
   --danger: #d6342a; --shadow: 0 1px 2px rgba(18,22,42,.04), 0 8px 24px -12px rgba(18,22,42,.12);
-  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --body: "Inter", "Segoe UI", system-ui, sans-serif;
+  --display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --body: "DM Sans", "Segoe UI", system-ui, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
   color-scheme: light;
 }
@@ -157,6 +157,36 @@ textarea.field { min-height: 120px; max-height: 50vh; }
 .daybox { margin-top: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow); }
 .daybox p { margin: 0; max-width: 65ch; }
 .meta-line .link { font: 500 12px/1.4 var(--mono); padding: 0; }
+
+/* ---- Bold look: white paper, thick black outlines, hard shadows, yellow highlights ---- */
+:root,:root:not([data-theme=light]){ color-scheme:light;--bg:#fff;--surface:#fff;--ink:#0a0a0a;--muted:#555;--line:#0a0a0a;--grid:transparent;--accent:#ffd400;--accent-deep:#0a0a0a;--accent-ink:#0a0a0a;--rec:#ff3d8b;--hl:#ffd400;--hl-ink:#0a0a0a;--shadow:4px 4px 0 #0a0a0a;--k-note:#555;--k-decision:#0a7a4b;--k-action:#1a4fd6;--k-question:#b05a00;--k-quote:#b0176a;--k-photo:#c0321b}
+
+body{ font-family:'DM Sans',sans-serif;background-image:none}
+#title,.here-title,.mic-status{ font-family:'Space Grotesk',sans-serif;font-weight:700}
+
+.top{ background:#fff;border-bottom:2px solid #0a0a0a;backdrop-filter:none}
+.btn,.chip,.mic-side select{ border:2px solid #0a0a0a;border-radius:10px}
+.btn.primary{ background:var(--accent);color:#0a0a0a;box-shadow:3px 3px 0 #0a0a0a}
+.btn.primary:hover{ box-shadow:3px 3px 0 #0a0a0a}
+
+.mic{ background:var(--accent);color:#0a0a0a;border:2px solid #0a0a0a;box-shadow:4px 4px 0 #0a0a0a;border-radius:20px}
+.mic[aria-pressed=true]{ background:var(--rec);color:#fff;animation:none}
+
+.chip[aria-pressed=true]{ background:#0a0a0a;color:#fff}
+.here,.sess,.daybox,textarea.field,.stats span,.empty{ border:2px solid #0a0a0a;border-radius:14px;box-shadow:var(--shadow)}
+.sess{ box-shadow:none}
+.stats span{ box-shadow:none}
+
+.pill{ background:transparent;border:1.5px solid currentColor;border-radius:6px}
+.tabs{ background:#fff;border-top:2px solid #0a0a0a;backdrop-filter:none}
+.tab{ border-radius:10px}
+.tab[aria-selected=true]{ background:var(--accent);color:#0a0a0a;border:2px solid #0a0a0a}
+.tab[aria-selected=true] small{ color:#0a0a0a}
+
+.note{ border-top:2px solid #0a0a0a}
+.mic[aria-pressed="true"]{ animation:none }
+.sess[data-here="true"]{ border-color:#0a0a0a; box-shadow:5px 5px 0 var(--accent) }
+.tab{ transition:none }
 </style>
 </head>
 <body>
