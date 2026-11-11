@@ -33,11 +33,12 @@
       --mono: 'JetBrains Mono', ui-monospace, monospace;
     }
 
-    .acc-1 { --c: var(--c1); --ci: var(--c1i); }
-    .acc-2 { --c: var(--c2); --ci: var(--c2i); }
-    .acc-4 { --c: var(--c4); --ci: var(--c4i); }
-    .acc-5 { --c: var(--c5); --ci: var(--c5i); }
-    .acc-7 { --c: var(--c7); --ci: var(--c7i); }
+    /* each tile: its base colour, a legible ink, and the three colours it blooms into on hover */
+    .acc-1 { --c: var(--c1); --ci: var(--c1i); --g2: #ffab00; --g3: #ff3d8b; }
+    .acc-2 { --c: var(--c2); --ci: var(--c2i); --g2: #ff5a45; --g3: #ff3d8b; }
+    .acc-4 { --c: var(--c4); --ci: var(--c4i); --g2: #62c624; --g3: #ffd23f; }
+    .acc-5 { --c: var(--c5); --ci: var(--c5i); --g2: #8b5cf6; --g3: #ff3d8b; }
+    .acc-7 { --c: var(--c7); --ci: var(--c7i); --g2: #ff5a45; --g3: #ffab00; }
 
     html { scroll-behavior: smooth; }
 
@@ -121,12 +122,52 @@
       flex-direction: column;
       justify-content: space-between;
       overflow: hidden;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      isolation: isolate;
+      transition: transform 0.25s ease, box-shadow 0.35s ease;
     }
 
-    .work:hover .tile, .work:focus-visible .tile {
+    /* layer 1: a vibrant colour bloom with a soft glow that follows the pointer */
+    .tile::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(circle at var(--mx, 30%) var(--my, 20%), rgba(255,255,255,0.6), transparent 46%),
+        linear-gradient(135deg, var(--c) 0%, var(--g2) 58%, var(--g3) 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    /* layer 2: a diagonal band of light that sweeps across */
+    .tile::after {
+      content: '';
+      position: absolute;
+      inset: -10% -60%;
+      z-index: -1;
+      background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,0.7) 50%, transparent 62%);
+      transform: translateX(-70%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .work:hover .tile, .work:focus-visible .tile, .work:active .tile {
       transform: translateY(-5px);
-      box-shadow: 0 22px 36px -22px color-mix(in srgb, var(--c) 85%, #12162a);
+      box-shadow:
+        0 24px 40px -20px color-mix(in srgb, var(--g2) 80%, #12162a),
+        0 0 0 1px rgba(255,255,255,0.35) inset;
+    }
+
+    .work:hover .tile::before, .work:focus-visible .tile::before, .work:active .tile::before { opacity: 1; }
+
+    .work:hover .tile::after, .work:focus-visible .tile::after, .work:active .tile::after {
+      opacity: 1;
+      transform: translateX(70%);
+      transition: transform 0.95s cubic-bezier(.2,.7,.2,1), opacity 0.2s ease;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tile::after { display: none; }
     }
     .work:focus-visible { outline: 2px solid var(--ink); outline-offset: 5px; border-radius: 4px; }
 
@@ -237,7 +278,8 @@
       <nav aria-label="Main">
         <a href="#work">all work</a>
         <a href="mailto:shahzadshakeel98@gmail.com">contact</a>
-        <a href="https://linkedin.com/in/ishexad" target="_blank" rel="noopener">linkedin</a>
+        <a href="https://www.linkedin.com/in/shahzad-shakeel-4202a12b/" target="_blank" rel="noopener">linkedin</a>
+        <a href="https://x.com/ishexad" target="_blank" rel="noopener">x</a>
         <a href="https://github.com/ishexad" target="_blank" rel="noopener">github</a>
       </nav>
     </header>
@@ -342,7 +384,19 @@
       els.forEach(function (e) { io.observe(e); });
     }
 
+    // the glow on a tile follows the pointer
+    function initGlow() {
+      document.querySelectorAll('.tile').forEach(function (t) {
+        t.addEventListener('pointermove', function (e) {
+          var r = t.getBoundingClientRect();
+          t.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+          t.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+        });
+      });
+    }
+
     buildMarks();
+    initGlow();
     initReveals();
   })();
   </script>
